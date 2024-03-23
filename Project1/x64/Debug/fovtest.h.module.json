@@ -1,0 +1,22 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "x64\\Debug\\fovTest.h.obj",
+            "outputs": [
+                "E:\\visualworkplace\\LH\\Project1\\x64\\Debug\\vc143.pdb",
+                "x64\\Debug\\",
+                "E:\\visualworkplace\\LH\\Project1\\x64\\Debug\\fovTest.h.ifc"
+            ],
+            "provides": [
+                {
+                    "logical-name": "fovTest.h",
+                    "source-path": "e:\\visualworkplace\\lh\\project1\\fovtest.h",
+                    "lookup-method": "absolute"
+                }
+            ],
+            "requires": []
+        }
+    ]
+}

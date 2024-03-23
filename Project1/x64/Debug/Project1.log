@@ -1,0 +1,1158 @@
+﻿  正在扫描源以查找模块依赖项...
+  fovTest.h
+  正在编译...
+  fovTest.h
+D:\opencv\opencv\build\include\opencv2\flann\allocator.h(73,18): warning C5260: 常量变量 "cvflann::WORDSIZE" 在包含的标头文件上下文中具有内部链接，但在导入的标头单元上下文中具有外部链接。如果要跨翻译单元共享它，请考虑将其声明为“内联”; 若要表达将它本地用于此翻译单元的意向，则考虑将其声明为“静态”。
+D:\opencv\opencv\build\include\opencv2\flann\allocator.h(74,19): warning C5260: 常量变量 "cvflann::BLOCKSIZE" 在包含的标头文件上下文中具有内部链接，但在导入的标头单元上下文中具有外部链接。如果要跨翻译单元共享它，请考虑将其声明为“内联”; 若要表达将它本地用于此翻译单元的意向，则考虑将其声明为“静态”。
+  AIAlgorithmToDetectSolderJointDefects.cpp
+E:\visualworkplace\LH\Project1\AIAlgorithmToDetectSolderJointDefects.cpp(76,20): warning C4244: “初始化”: 从“__int64”转换到“int”，可能丢失数据
+  biSeNetOpenvion.cpp
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_common.h(297,19): warning C4275: 非 dll 接口 class“std::runtime_error”用作 dll 接口 struct“InferenceEngine::details::InferenceEngineException”的基
+D:\VisualStudio\IDE\VC\Tools\MSVC\14.37.32822\include\stdexcept(101,19): message : 参见“std::runtime_error”的声明
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_common.h(296,67): message : 参见“InferenceEngine::details::InferenceEngineException”的声明
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_layouts.h(145,16): warning C4251: “InferenceEngine::BlockingDesc::blockedDims”: class“std::vector<size_t,std::allocator<size_t>>”需要有 dll 接口由 class“InferenceEngine::BlockingDesc”的客户端使用
+D:\opencv\opencv\build\include\opencv2\core\mat.hpp(2753,14): message : 参见“std::vector<size_t,std::allocator<size_t>>”的声明
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_layouts.h(147,16): warning C4251: “InferenceEngine::BlockingDesc::strides”: class“std::vector<size_t,std::allocator<size_t>>”需要有 dll 接口由 class“InferenceEngine::BlockingDesc”的客户端使用
+D:\opencv\opencv\build\include\opencv2\core\mat.hpp(2753,14): message : 参见“std::vector<size_t,std::allocator<size_t>>”的声明
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_layouts.h(149,16): warning C4251: “InferenceEngine::BlockingDesc::order”: class“std::vector<size_t,std::allocator<size_t>>”需要有 dll 接口由 class“InferenceEngine::BlockingDesc”的客户端使用
+D:\opencv\opencv\build\include\opencv2\core\mat.hpp(2753,14): message : 参见“std::vector<size_t,std::allocator<size_t>>”的声明
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_layouts.h(152,16): warning C4251: “InferenceEngine::BlockingDesc::offsetPaddingToData”: class“std::vector<size_t,std::allocator<size_t>>”需要有 dll 接口由 class“InferenceEngine::BlockingDesc”的客户端使用
+D:\opencv\opencv\build\include\opencv2\core\mat.hpp(2753,14): message : 参见“std::vector<size_t,std::allocator<size_t>>”的声明
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_layouts.h(326,16): warning C4251: “InferenceEngine::TensorDesc::dims”: class“std::vector<size_t,std::allocator<size_t>>”需要有 dll 接口由 class“InferenceEngine::TensorDesc”的客户端使用
+D:\opencv\opencv\build\include\opencv2\core\mat.hpp(2753,14): message : 参见“std::vector<size_t,std::allocator<size_t>>”的声明
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_layouts.h(330,15): warning C4251: “InferenceEngine::TensorDesc::precision”: class“InferenceEngine::Precision”需要有 dll 接口由 class“InferenceEngine::TensorDesc”的客户端使用
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_precision.hpp(23,7): message : 参见“InferenceEngine::Precision”的声明
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_blob.h(716,41): warning C4251: “InferenceEngine::TBlob<float,std::enable_if<true,void>>::_allocator”: class“std::shared_ptr<_Ty>”需要有 dll 接口由 class“InferenceEngine::TBlob<float,std::enable_if<true,void>>”的客户端使用
+          with
+          [
+              _Ty=InferenceEngine::IAllocator
+          ]
+D:\VisualStudio\IDE\VC\Tools\MSVC\14.37.32822\include\memory(3135,16): message : 参见“std::shared_ptr<_Ty>”的声明
+          with
+          [
+              _Ty=InferenceEngine::IAllocator
+          ]
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_blob.h(813,80): message : 查看对正在编译的 类 模板 实例化“InferenceEngine::TBlob<float,std::enable_if<true,void>>”的引用
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_blob.h(721,27): warning C4251: “InferenceEngine::TBlob<float,std::enable_if<true,void>>::_handle”: class“std::shared_ptr<void>”需要有 dll 接口由 class“InferenceEngine::TBlob<float,std::enable_if<true,void>>”的客户端使用
+D:\opencv\opencv\build\include\opencv2\core\mat.hpp(581,10): message : 参见“std::shared_ptr<void>”的声明
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_blob.h(716,41): warning C4251: “InferenceEngine::TBlob<double,std::enable_if<true,void>>::_allocator”: class“std::shared_ptr<_Ty>”需要有 dll 接口由 class“InferenceEngine::TBlob<double,std::enable_if<true,void>>”的客户端使用
+          with
+          [
+              _Ty=InferenceEngine::IAllocator
+          ]
+D:\VisualStudio\IDE\VC\Tools\MSVC\14.37.32822\include\memory(3135,16): message : 参见“std::shared_ptr<_Ty>”的声明
+          with
+          [
+              _Ty=InferenceEngine::IAllocator
+          ]
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_blob.h(814,81): message : 查看对正在编译的 类 模板 实例化“InferenceEngine::TBlob<double,std::enable_if<true,void>>”的引用
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_blob.h(721,27): warning C4251: “InferenceEngine::TBlob<double,std::enable_if<true,void>>::_handle”: class“std::shared_ptr<void>”需要有 dll 接口由 class“InferenceEngine::TBlob<double,std::enable_if<true,void>>”的客户端使用
+D:\opencv\opencv\build\include\opencv2\core\mat.hpp(581,10): message : 参见“std::shared_ptr<void>”的声明
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_blob.h(716,41): warning C4251: “InferenceEngine::TBlob<int8_t,std::enable_if<true,void>>::_allocator”: class“std::shared_ptr<_Ty>”需要有 dll 接口由 class“InferenceEngine::TBlob<int8_t,std::enable_if<true,void>>”的客户端使用
+          with
+          [
+              _Ty=InferenceEngine::IAllocator
+          ]
+D:\VisualStudio\IDE\VC\Tools\MSVC\14.37.32822\include\memory(3135,16): message : 参见“std::shared_ptr<_Ty>”的声明
+          with
+          [
+              _Ty=InferenceEngine::IAllocator
+          ]
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_blob.h(815,81): message : 查看对正在编译的 类 模板 实例化“InferenceEngine::TBlob<int8_t,std::enable_if<true,void>>”的引用
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_blob.h(721,27): warning C4251: “InferenceEngine::TBlob<int8_t,std::enable_if<true,void>>::_handle”: class“std::shared_ptr<void>”需要有 dll 接口由 class“InferenceEngine::TBlob<int8_t,std::enable_if<true,void>>”的客户端使用
+D:\opencv\opencv\build\include\opencv2\core\mat.hpp(581,10): message : 参见“std::shared_ptr<void>”的声明
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_blob.h(716,41): warning C4251: “InferenceEngine::TBlob<uint8_t,std::enable_if<true,void>>::_allocator”: class“std::shared_ptr<_Ty>”需要有 dll 接口由 class“InferenceEngine::TBlob<uint8_t,std::enable_if<true,void>>”的客户端使用
+          with
+          [
+              _Ty=InferenceEngine::IAllocator
+          ]
+D:\VisualStudio\IDE\VC\Tools\MSVC\14.37.32822\include\memory(3135,16): message : 参见“std::shared_ptr<_Ty>”的声明
+          with
+          [
+              _Ty=InferenceEngine::IAllocator
+          ]
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_blob.h(816,82): message : 查看对正在编译的 类 模板 实例化“InferenceEngine::TBlob<uint8_t,std::enable_if<true,void>>”的引用
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_blob.h(721,27): warning C4251: “InferenceEngine::TBlob<uint8_t,std::enable_if<true,void>>::_handle”: class“std::shared_ptr<void>”需要有 dll 接口由 class“InferenceEngine::TBlob<uint8_t,std::enable_if<true,void>>”的客户端使用
+D:\opencv\opencv\build\include\opencv2\core\mat.hpp(581,10): message : 参见“std::shared_ptr<void>”的声明
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_blob.h(716,41): warning C4251: “InferenceEngine::TBlob<int16_t,std::enable_if<true,void>>::_allocator”: class“std::shared_ptr<_Ty>”需要有 dll 接口由 class“InferenceEngine::TBlob<int16_t,std::enable_if<true,void>>”的客户端使用
+          with
+          [
+              _Ty=InferenceEngine::IAllocator
+          ]
+D:\VisualStudio\IDE\VC\Tools\MSVC\14.37.32822\include\memory(3135,16): message : 参见“std::shared_ptr<_Ty>”的声明
+          with
+          [
+              _Ty=InferenceEngine::IAllocator
+          ]
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_blob.h(817,82): message : 查看对正在编译的 类 模板 实例化“InferenceEngine::TBlob<int16_t,std::enable_if<true,void>>”的引用
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_blob.h(721,27): warning C4251: “InferenceEngine::TBlob<int16_t,std::enable_if<true,void>>::_handle”: class“std::shared_ptr<void>”需要有 dll 接口由 class“InferenceEngine::TBlob<int16_t,std::enable_if<true,void>>”的客户端使用
+D:\opencv\opencv\build\include\opencv2\core\mat.hpp(581,10): message : 参见“std::shared_ptr<void>”的声明
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_blob.h(716,41): warning C4251: “InferenceEngine::TBlob<uint16_t,std::enable_if<true,void>>::_allocator”: class“std::shared_ptr<_Ty>”需要有 dll 接口由 class“InferenceEngine::TBlob<uint16_t,std::enable_if<true,void>>”的客户端使用
+          with
+          [
+              _Ty=InferenceEngine::IAllocator
+          ]
+D:\VisualStudio\IDE\VC\Tools\MSVC\14.37.32822\include\memory(3135,16): message : 参见“std::shared_ptr<_Ty>”的声明
+          with
+          [
+              _Ty=InferenceEngine::IAllocator
+          ]
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_blob.h(818,83): message : 查看对正在编译的 类 模板 实例化“InferenceEngine::TBlob<uint16_t,std::enable_if<true,void>>”的引用
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_blob.h(721,27): warning C4251: “InferenceEngine::TBlob<uint16_t,std::enable_if<true,void>>::_handle”: class“std::shared_ptr<void>”需要有 dll 接口由 class“InferenceEngine::TBlob<uint16_t,std::enable_if<true,void>>”的客户端使用
+D:\opencv\opencv\build\include\opencv2\core\mat.hpp(581,10): message : 参见“std::shared_ptr<void>”的声明
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_blob.h(716,41): warning C4251: “InferenceEngine::TBlob<int32_t,std::enable_if<true,void>>::_allocator”: class“std::shared_ptr<_Ty>”需要有 dll 接口由 class“InferenceEngine::TBlob<int32_t,std::enable_if<true,void>>”的客户端使用
+          with
+          [
+              _Ty=InferenceEngine::IAllocator
+          ]
+D:\VisualStudio\IDE\VC\Tools\MSVC\14.37.32822\include\memory(3135,16): message : 参见“std::shared_ptr<_Ty>”的声明
+          with
+          [
+              _Ty=InferenceEngine::IAllocator
+          ]
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_blob.h(819,82): message : 查看对正在编译的 类 模板 实例化“InferenceEngine::TBlob<int32_t,std::enable_if<true,void>>”的引用
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_blob.h(721,27): warning C4251: “InferenceEngine::TBlob<int32_t,std::enable_if<true,void>>::_handle”: class“std::shared_ptr<void>”需要有 dll 接口由 class“InferenceEngine::TBlob<int32_t,std::enable_if<true,void>>”的客户端使用
+D:\opencv\opencv\build\include\opencv2\core\mat.hpp(581,10): message : 参见“std::shared_ptr<void>”的声明
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_blob.h(716,41): warning C4251: “InferenceEngine::TBlob<uint32_t,std::enable_if<true,void>>::_allocator”: class“std::shared_ptr<_Ty>”需要有 dll 接口由 class“InferenceEngine::TBlob<uint32_t,std::enable_if<true,void>>”的客户端使用
+          with
+          [
+              _Ty=InferenceEngine::IAllocator
+          ]
+D:\VisualStudio\IDE\VC\Tools\MSVC\14.37.32822\include\memory(3135,16): message : 参见“std::shared_ptr<_Ty>”的声明
+          with
+          [
+              _Ty=InferenceEngine::IAllocator
+          ]
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_blob.h(820,83): message : 查看对正在编译的 类 模板 实例化“InferenceEngine::TBlob<uint32_t,std::enable_if<true,void>>”的引用
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_blob.h(721,27): warning C4251: “InferenceEngine::TBlob<uint32_t,std::enable_if<true,void>>::_handle”: class“std::shared_ptr<void>”需要有 dll 接口由 class“InferenceEngine::TBlob<uint32_t,std::enable_if<true,void>>”的客户端使用
+D:\opencv\opencv\build\include\opencv2\core\mat.hpp(581,10): message : 参见“std::shared_ptr<void>”的声明
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_blob.h(716,41): warning C4251: “InferenceEngine::TBlob<long,std::enable_if<true,void>>::_allocator”: class“std::shared_ptr<_Ty>”需要有 dll 接口由 class“InferenceEngine::TBlob<long,std::enable_if<true,void>>”的客户端使用
+          with
+          [
+              _Ty=InferenceEngine::IAllocator
+          ]
+D:\VisualStudio\IDE\VC\Tools\MSVC\14.37.32822\include\memory(3135,16): message : 参见“std::shared_ptr<_Ty>”的声明
+          with
+          [
+              _Ty=InferenceEngine::IAllocator
+          ]
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_blob.h(821,79): message : 查看对正在编译的 类 模板 实例化“InferenceEngine::TBlob<long,std::enable_if<true,void>>”的引用
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_blob.h(721,27): warning C4251: “InferenceEngine::TBlob<long,std::enable_if<true,void>>::_handle”: class“std::shared_ptr<void>”需要有 dll 接口由 class“InferenceEngine::TBlob<long,std::enable_if<true,void>>”的客户端使用
+D:\opencv\opencv\build\include\opencv2\core\mat.hpp(581,10): message : 参见“std::shared_ptr<void>”的声明
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_blob.h(716,41): warning C4251: “InferenceEngine::TBlob<__int64,std::enable_if<true,void>>::_allocator”: class“std::shared_ptr<_Ty>”需要有 dll 接口由 class“InferenceEngine::TBlob<__int64,std::enable_if<true,void>>”的客户端使用
+          with
+          [
+              _Ty=InferenceEngine::IAllocator
+          ]
+D:\VisualStudio\IDE\VC\Tools\MSVC\14.37.32822\include\memory(3135,16): message : 参见“std::shared_ptr<_Ty>”的声明
+          with
+          [
+              _Ty=InferenceEngine::IAllocator
+          ]
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_blob.h(822,84): message : 查看对正在编译的 类 模板 实例化“InferenceEngine::TBlob<__int64,std::enable_if<true,void>>”的引用
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_blob.h(721,27): warning C4251: “InferenceEngine::TBlob<__int64,std::enable_if<true,void>>::_handle”: class“std::shared_ptr<void>”需要有 dll 接口由 class“InferenceEngine::TBlob<__int64,std::enable_if<true,void>>”的客户端使用
+D:\opencv\opencv\build\include\opencv2\core\mat.hpp(581,10): message : 参见“std::shared_ptr<void>”的声明
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_blob.h(716,41): warning C4251: “InferenceEngine::TBlob<unsigned long,std::enable_if<true,void>>::_allocator”: class“std::shared_ptr<_Ty>”需要有 dll 接口由 class“InferenceEngine::TBlob<unsigned long,std::enable_if<true,void>>”的客户端使用
+          with
+          [
+              _Ty=InferenceEngine::IAllocator
+          ]
+D:\VisualStudio\IDE\VC\Tools\MSVC\14.37.32822\include\memory(3135,16): message : 参见“std::shared_ptr<_Ty>”的声明
+          with
+          [
+              _Ty=InferenceEngine::IAllocator
+          ]
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_blob.h(823,88): message : 查看对正在编译的 类 模板 实例化“InferenceEngine::TBlob<unsigned long,std::enable_if<true,void>>”的引用
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_blob.h(721,27): warning C4251: “InferenceEngine::TBlob<unsigned long,std::enable_if<true,void>>::_handle”: class“std::shared_ptr<void>”需要有 dll 接口由 class“InferenceEngine::TBlob<unsigned long,std::enable_if<true,void>>”的客户端使用
+D:\opencv\opencv\build\include\opencv2\core\mat.hpp(581,10): message : 参见“std::shared_ptr<void>”的声明
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_blob.h(716,41): warning C4251: “InferenceEngine::TBlob<unsigned __int64,std::enable_if<true,void>>::_allocator”: class“std::shared_ptr<_Ty>”需要有 dll 接口由 class“InferenceEngine::TBlob<unsigned __int64,std::enable_if<true,void>>”的客户端使用
+          with
+          [
+              _Ty=InferenceEngine::IAllocator
+          ]
+D:\VisualStudio\IDE\VC\Tools\MSVC\14.37.32822\include\memory(3135,16): message : 参见“std::shared_ptr<_Ty>”的声明
+          with
+          [
+              _Ty=InferenceEngine::IAllocator
+          ]
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_blob.h(824,93): message : 查看对正在编译的 类 模板 实例化“InferenceEngine::TBlob<unsigned __int64,std::enable_if<true,void>>”的引用
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_blob.h(721,27): warning C4251: “InferenceEngine::TBlob<unsigned __int64,std::enable_if<true,void>>::_handle”: class“std::shared_ptr<void>”需要有 dll 接口由 class“InferenceEngine::TBlob<unsigned __int64,std::enable_if<true,void>>”的客户端使用
+D:\opencv\opencv\build\include\opencv2\core\mat.hpp(581,10): message : 参见“std::shared_ptr<void>”的声明
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_blob.h(716,41): warning C4251: “InferenceEngine::TBlob<bool,std::enable_if<true,void>>::_allocator”: class“std::shared_ptr<_Ty>”需要有 dll 接口由 class“InferenceEngine::TBlob<bool,std::enable_if<true,void>>”的客户端使用
+          with
+          [
+              _Ty=InferenceEngine::IAllocator
+          ]
+D:\VisualStudio\IDE\VC\Tools\MSVC\14.37.32822\include\memory(3135,16): message : 参见“std::shared_ptr<_Ty>”的声明
+          with
+          [
+              _Ty=InferenceEngine::IAllocator
+          ]
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_blob.h(825,79): message : 查看对正在编译的 类 模板 实例化“InferenceEngine::TBlob<bool,std::enable_if<true,void>>”的引用
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_blob.h(721,27): warning C4251: “InferenceEngine::TBlob<bool,std::enable_if<true,void>>::_handle”: class“std::shared_ptr<void>”需要有 dll 接口由 class“InferenceEngine::TBlob<bool,std::enable_if<true,void>>”的客户端使用
+D:\opencv\opencv\build\include\opencv2\core\mat.hpp(581,10): message : 参见“std::shared_ptr<void>”的声明
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_blob.h(716,41): warning C4251: “InferenceEngine::TBlob<char,std::enable_if<true,void>>::_allocator”: class“std::shared_ptr<_Ty>”需要有 dll 接口由 class“InferenceEngine::TBlob<char,std::enable_if<true,void>>”的客户端使用
+          with
+          [
+              _Ty=InferenceEngine::IAllocator
+          ]
+D:\VisualStudio\IDE\VC\Tools\MSVC\14.37.32822\include\memory(3135,16): message : 参见“std::shared_ptr<_Ty>”的声明
+          with
+          [
+              _Ty=InferenceEngine::IAllocator
+          ]
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_blob.h(826,79): message : 查看对正在编译的 类 模板 实例化“InferenceEngine::TBlob<char,std::enable_if<true,void>>”的引用
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_blob.h(721,27): warning C4251: “InferenceEngine::TBlob<char,std::enable_if<true,void>>::_handle”: class“std::shared_ptr<void>”需要有 dll 接口由 class“InferenceEngine::TBlob<char,std::enable_if<true,void>>”的客户端使用
+D:\opencv\opencv\build\include\opencv2\core\mat.hpp(581,10): message : 参见“std::shared_ptr<void>”的声明
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_compound_blob.h(113,28): warning C4251: “InferenceEngine::CompoundBlob::_blobs”: class“std::vector<InferenceEngine::Blob::Ptr,std::allocator<InferenceEngine::Blob::Ptr>>”需要有 dll 接口由 class“InferenceEngine::CompoundBlob”的客户端使用
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_compound_blob.h(42,38): message : 参见“std::vector<InferenceEngine::Blob::Ptr,std::allocator<InferenceEngine::Blob::Ptr>>”的声明
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_data.h(160,27): warning C4251: “InferenceEngine::Data::_impl”: class“std::shared_ptr<InferenceEngine::Data::Impl>”需要有 dll 接口由 class“InferenceEngine::Data”的客户端使用
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_data.h(160,10): message : 参见“std::shared_ptr<InferenceEngine::Data::Impl>”的声明
+F:\w_openvino_toolkit_windows_2022.2.0.7713.af16ea1d79a_x86_64\runtime\include\ie\ie_data.h(166,17): warning C4251: “InferenceEngine::Data::name”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 class“InferenceEngine::Data”的客户端使用
+D:\VisualStudio\IDE\VC\Tools\MSVC\14.37.32822\include\xstring(5119,29): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+E:\visualworkplace\LH\Project1\biSeNetOpenvion.cpp(140,20): warning C4101: “endd”: 未引用的局部变量
+  colorMethod.cpp
+  eliminateYoloBackground.cpp
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(20,76): warning C4305: “参数”: 从“double”到“float”截断
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(53,44): warning C4244: “参数”: 从“float”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(52,44): warning C4244: “参数”: 从“float”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(51,62): warning C4244: “参数”: 从“float”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(50,70): warning C4244: “参数”: 从“float”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(63,76): warning C4305: “参数”: 从“double”到“float”截断
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(72,76): warning C4305: “参数”: 从“double”到“float”截断
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(313,126): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(313,110): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(313,95): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(314,157): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(314,140): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(314,113): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(314,98): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(319,123): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(319,111): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(319,99): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(320,180): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(320,139): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(320,126): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(320,100): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(325,126): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(325,110): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(325,95): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(326,157): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(326,140): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(326,113): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(326,98): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(327,123): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(327,111): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(327,99): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(328,180): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(328,139): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(328,126): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(328,100): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(384,126): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(384,110): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(384,95): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(385,157): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(385,140): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(385,113): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(385,98): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(390,123): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(390,111): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(390,99): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(391,180): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(391,139): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(391,126): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(391,100): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(396,126): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(396,110): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(396,95): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(397,157): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(397,140): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(397,113): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(397,98): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(398,123): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(398,111): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(398,99): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(399,180): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(399,139): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(399,126): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(399,100): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(442,18): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(502,14): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
+  fovRoutePlan.cpp
+  fovTest.cpp
+E:\visualworkplace\LH\Project1\fovTest.cpp(79,51): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\fovTest.cpp(79,30): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\fovTest.cpp(80,43): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\fovTest.cpp(80,27): warning C4244: “参数”: 从“const _Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\fovTest.cpp(81,55): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\fovTest.cpp(81,30): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\fovTest.cpp(82,52): warning C4244: “参数”: 从“const _Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\fovTest.cpp(82,30): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+  parseqOcr.cpp
+  patchDetection.cpp
+E:\visualworkplace\LH\Project1\patchDetection.cpp(6,49): warning C4244: “参数”: 从“double”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+E:\visualworkplace\LH\Project1\patchDetection.cpp(6,33): warning C4244: “参数”: 从“double”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+E:\visualworkplace\LH\Project1\patchDetection.cpp(9,66): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+  CameraCalibration.cpp
+  edline.cpp
+E:\visualworkplace\LH\Project1\edline.cpp(91,46): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+E:\visualworkplace\LH\Project1\edline.cpp(263,34): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+  fov_puzzle.cpp
+E:\visualworkplace\LH\Project1\fov_puzzle.cpp(65,31): warning C4244: “=”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\fov_puzzle.cpp(69,32): warning C4244: “=”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\fov_puzzle.cpp(84,22): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\fov_puzzle.cpp(83,22): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\fov_puzzle.cpp(82,22): warning C4244: “参数”: 从“float”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\fov_puzzle.cpp(81,46): warning C4244: “参数”: 从“float”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\fov_puzzle.cpp(254,50): warning C4244: “参数”: 从“double”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+E:\visualworkplace\LH\Project1\fov_puzzle.cpp(254,32): warning C4244: “参数”: 从“double”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+E:\visualworkplace\LH\Project1\fov_puzzle.cpp(256,56): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+  halconMatch.cpp
+E:\visualworkplace\LH\Project1\halconMatch.cpp(39,56): warning C4244: “参数”: 从“int”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+E:\visualworkplace\LH\Project1\halconMatch.cpp(39,44): warning C4244: “参数”: 从“int”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+E:\visualworkplace\LH\Project1\halconMatch.cpp(236,21): warning C4244: “=”: 从“double”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+E:\visualworkplace\LH\Project1\halconMatch.cpp(237,21): warning C4244: “=”: 从“double”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+E:\visualworkplace\LH\Project1\halconMatch.cpp(238,29): warning C4244: “=”: 从“double”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+E:\visualworkplace\LH\Project1\halconMatch.cpp(239,31): warning C4244: “=”: 从“double”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+E:\visualworkplace\LH\Project1\halconMatch.cpp(287,69): warning C4244: “参数”: 从“double”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\halconMatch.cpp(287,54): warning C4244: “参数”: 从“double”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\halconMatch.cpp(299,118): warning C4244: “参数”: 从“double”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\halconMatch.cpp(299,103): warning C4244: “参数”: 从“double”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\halconMatch.cpp(299,89): warning C4244: “参数”: 从“double”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\halconMatch.cpp(299,52): warning C4244: “参数”: 从“double”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\halconMatch.cpp(311,25): warning C4244: “初始化”: 从“_Tp”转换到“int”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+E:\visualworkplace\LH\Project1\halconMatch.cpp(312,23): warning C4244: “初始化”: 从“_Tp”转换到“int”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+E:\visualworkplace\LH\Project1\halconMatch.cpp(319,15): warning C4244: “初始化”: 从“_Tp”转换到“int”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+E:\visualworkplace\LH\Project1\halconMatch.cpp(320,15): warning C4244: “初始化”: 从“_Tp”转换到“int”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+E:\visualworkplace\LH\Project1\halconMatch.cpp(321,28): warning C4244: “参数”: 从“int”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+E:\visualworkplace\LH\Project1\halconMatch.cpp(321,25): warning C4244: “参数”: 从“int”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+E:\visualworkplace\LH\Project1\halconMatch.cpp(337,27): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
+E:\visualworkplace\LH\Project1\halconMatch.cpp(417,39): warning C4244: “=”: 从“double”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+E:\visualworkplace\LH\Project1\halconMatch.cpp(418,36): warning C4244: “=”: 从“double”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+E:\visualworkplace\LH\Project1\halconMatch.cpp(473,34): warning C4244: “=”: 从“double”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+E:\visualworkplace\LH\Project1\halconMatch.cpp(474,31): warning C4244: “=”: 从“double”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+  main.cpp
+E:\visualworkplace\LH\Project1\main.cpp(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+E:\visualworkplace\LH\Project1\main.cpp(745,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+  onnx.cpp
+E:\visualworkplace\LH\Project1\onnx.cpp(35,40): warning C4244: “=”: 从“_Ty”转换到“int”，可能丢失数据
+          with
+          [
+              _Ty=int64_t
+          ]
+E:\visualworkplace\LH\Project1\onnx.cpp(36,39): warning C4244: “=”: 从“_Ty”转换到“int”，可能丢失数据
+          with
+          [
+              _Ty=int64_t
+          ]
+E:\visualworkplace\LH\Project1\onnx.cpp(37,36): warning C4244: “=”: 从“_Ty”转换到“int”，可能丢失数据
+          with
+          [
+              _Ty=int64_t
+          ]
+E:\visualworkplace\LH\Project1\onnx.cpp(38,44): warning C4244: “=”: 从“_Ty”转换到“int”，可能丢失数据
+          with
+          [
+              _Ty=int64_t
+          ]
+E:\visualworkplace\LH\Project1\onnx.cpp(46,36): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+E:\visualworkplace\LH\Project1\onnx.cpp(81,33): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+E:\visualworkplace\LH\Project1\onnx.cpp(84,42): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+E:\visualworkplace\LH\Project1\onnx.cpp(107,59): warning C4244: “=”: 从“double”转换到“_Ty”，可能丢失数据
+          with
+          [
+              _Ty=float
+          ]
+E:\visualworkplace\LH\Project1\onnx.cpp(231,73): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
+E:\visualworkplace\LH\Project1\onnx.cpp(231,41): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
+E:\visualworkplace\LH\Project1\onnx.cpp(232,70): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
+E:\visualworkplace\LH\Project1\onnx.cpp(232,41): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
+E:\visualworkplace\LH\Project1\onnx.cpp(233,82): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
+E:\visualworkplace\LH\Project1\onnx.cpp(233,38): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
+E:\visualworkplace\LH\Project1\onnx.cpp(234,79): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
+E:\visualworkplace\LH\Project1\onnx.cpp(234,38): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
+E:\visualworkplace\LH\Project1\onnx.cpp(256,28): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+E:\visualworkplace\LH\Project1\onnx.cpp(256,23): warning C4244: “初始化”: 从“double”转换到“const float”，可能丢失数据
+E:\visualworkplace\LH\Project1\onnx.cpp(288,20): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+E:\visualworkplace\LH\Project1\onnx.cpp(289,20): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+E:\visualworkplace\LH\Project1\onnx.cpp(290,20): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+E:\visualworkplace\LH\Project1\onnx.cpp(291,20): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+E:\visualworkplace\LH\Project1\onnx.cpp(303,22): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+E:\visualworkplace\LH\Project1\onnx.cpp(305,22): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+E:\visualworkplace\LH\Project1\onnx.cpp(312,22): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+E:\visualworkplace\LH\Project1\onnx.cpp(314,22): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+E:\visualworkplace\LH\Project1\onnx.cpp(318,22): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+E:\visualworkplace\LH\Project1\onnx.cpp(319,22): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+E:\visualworkplace\LH\Project1\onnx.cpp(320,22): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+E:\visualworkplace\LH\Project1\onnx.cpp(321,22): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+E:\visualworkplace\LH\Project1\onnx.cpp(372,11): warning C4244: “初始化”: 从“_Tp”转换到“int”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+E:\visualworkplace\LH\Project1\onnx.cpp(373,11): warning C4244: “初始化”: 从“_Tp”转换到“int”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+E:\visualworkplace\LH\Project1\onnx.cpp(376,20): warning C4244: “初始化”: 从“_Tp”转换到“int”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+E:\visualworkplace\LH\Project1\onnx.cpp(377,19): warning C4244: “初始化”: 从“_Tp”转换到“int”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+E:\visualworkplace\LH\Project1\onnx.cpp(384,12): warning C4244: “初始化”: 从“int”转换到“float”，可能丢失数据
+E:\visualworkplace\LH\Project1\onnx.cpp(385,12): warning C4244: “初始化”: 从“int”转换到“float”，可能丢失数据
+E:\visualworkplace\LH\Project1\onnx.cpp(387,40): warning C4244: “参数”: 从“int”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+E:\visualworkplace\LH\Project1\onnx.cpp(387,26): warning C4244: “参数”: 从“int”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+E:\visualworkplace\LH\Project1\onnx.cpp(458,146): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=int
+          ]
+          and
+          [
+              _Tp=float
+          ]
+E:\visualworkplace\LH\Project1\onnx.cpp(458,120): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=int
+          ]
+          and
+          [
+              _Tp=float
+          ]
+E:\visualworkplace\LH\Project1\onnx.cpp(459,145): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=int
+          ]
+          and
+          [
+              _Tp=float
+          ]
+E:\visualworkplace\LH\Project1\onnx.cpp(459,119): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=int
+          ]
+          and
+          [
+              _Tp=float
+          ]
+  solderDefectAI.cpp
+E:\visualworkplace\LH\Project1\solderDefectAI.cpp(71,23): warning C4244: “初始化”: 从“__int64”转换到“int”，可能丢失数据
+  splicingBoard.cpp
+  uNetOnnx.cpp
+E:\visualworkplace\LH\Project1\uNetOnnx.cpp(130,66): warning C4244: “参数”: 从“double”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\uNetOnnx.cpp(130,46): warning C4244: “参数”: 从“double”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\uNetOnnx.cpp(313,49): warning C4244: “参数”: 从“_Ty”转换到“int”，可能丢失数据
+          with
+          [
+              _Ty=int64_t
+          ]
+E:\visualworkplace\LH\Project1\uNetOnnx.cpp(313,33): warning C4244: “参数”: 从“_Ty”转换到“int”，可能丢失数据
+          with
+          [
+              _Ty=int64_t
+          ]
+E:\visualworkplace\LH\Project1\uNetOnnx.cpp(333,23): warning C4244: “初始化”: 从“const _Tp”转换到“int”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+  正在生成代码...
+  Project1.vcxproj -> E:\visualworkplace\LH\x64\Debug\Project1.exe

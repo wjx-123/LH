@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="onnx.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="fov_puzzle.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="AIAlgorithmToDetectSolderJointDefects.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraCalibration.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="patchDetection.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="splicingBoard.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="edline.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="halconMatch.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="parseqOcr.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="solderDefectAI.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="fovRoutePlan.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="fovTest.h">
+      <Filter>头文件</Filter>
+    </ClCompile>
+    <ClCompile Include="fovTest.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="colorMethod.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="uNetOnnx.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="biSeNetOpenvion.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="eliminateYoloBackground.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="onnx.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="fov_puzzle.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="AIAlgorithmToDetectSolderJointDefects.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraCalibration.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="patchDetection.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="splicingBoard.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="edline.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="halconMatch.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="solderDefectAI.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="fovRoutePlan.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="colorMethod.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="uNetOnnx.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="biSeNetOpenvion.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="eliminateYoloBackground.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

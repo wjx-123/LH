@@ -60,10 +60,19 @@ std::vector<std::pair<cv::Rect2f, std::vector<cv::Rect2f>>> eliminateYoloBackgro
     }
     else if (types == "R")//三脚
     {
+        //把三脚的三分之一正方形也中间填充一下
+        cv::rectangle(heibai, cv::Point(heibai.cols / 3, heibai.rows / 3), cv::Point(heibai.cols * 2 / 3, heibai.rows * 2 / 3), cv::Scalar(0, 0, 0), cv::FILLED);
         auto [topLeft, bottomRight] = findBoundingRectangle_heibai(heibai, 0.2);
         cv::Mat hsvImage = useHsvTest(image);//用hsv处理的图做一下交集
         cv::Rect2f black_rect = cv::Rect(topLeft.x, topLeft.y, bottomRight.x - topLeft.x, bottomRight.y - topLeft.y);
-        auto pinVector = findPinsAroundBlackBox_ofThree(heibai, black_rect, hsvImage);
+        auto pinVector = findPinsAroundBlackBox_ofThree(hsvImage, black_rect, hsvImage);//heibai
+        //截取最接近正方形的前三个矩形
+        if (pinVector.size() > 3)
+        {
+            std::sort(pinVector.begin(), pinVector.end(), compareRectsCloseToSquare);
+            // 保留最接近正方形的前三个矩形框
+            pinVector.resize(3);
+        }
         std::pair pair = { black_rect, pinVector };
         result.push_back(pair);
     }
@@ -73,6 +82,8 @@ std::vector<std::pair<cv::Rect2f, std::vector<cv::Rect2f>>> eliminateYoloBackgro
         cv::Mat hsvImage = useHsvTest(image);//用hsv处理的图做一下交集
         cv::Rect2f black_rect = cv::Rect(topLeft.x, topLeft.y, bottomRight.x - topLeft.x, bottomRight.y - topLeft.y);
         auto pinVector = findPinsAroundBlackBox(heibai, black_rect, hsvImage);
+        processRects(pinVector);
+        addSymmetricRectsIfNeeded(pinVector, black_rect);
         std::pair pair = { black_rect, pinVector };
         result.push_back(pair);
     }
@@ -841,5 +852,115 @@ void eliminateYoloBackground::moveToIntersect(cv::Rect& rectToMove, const cv::Re
             rectToMove.height += moveUpBy;
         }
     }
+}
+
+bool eliminateYoloBackground::compareRectsCloseToSquare(const cv::Rect2f& a, const cv::Rect2f& b)
+{
+    float diffA = std::abs(a.width - a.height);
+    float diffB = std::abs(b.width - b.height);
+    return diffA < diffB; // 按照接近正方形的程度排序
+}
+
+bool eliminateYoloBackground::rectsAreSimilar(const cv::Rect2f& a, const cv::Rect2f& b)
+{
+    return std::abs(a.x - b.x) < SIMILARITY_THRESHOLD &&
+        std::abs(a.y - b.y) < SIMILARITY_THRESHOLD &&
+        std::abs(a.width - b.width) < SIMILARITY_THRESHOLD &&
+        std::abs(a.height - b.height) < SIMILARITY_THRESHOLD;
+}
+
+cv::Rect2f eliminateYoloBackground::findTemplateRect(const std::vector<cv::Rect2f>& rects)
+{
+    std::vector<std::pair<cv::Rect2f, int>> frequency; // 矩形及其出现频率
+    for (const auto& rect : rects) {
+        bool found = false;
+        for (auto& item : frequency) {
+            if (rectsAreSimilar(rect, item.first)) {
+                item.second++;
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            frequency.push_back({ rect, 1 });
+        }
+    }
+
+    auto maxElem = std::max_element(frequency.begin(), frequency.end(),
+        [](const auto& a, const auto& b) {
+            return a.second < b.second;
+        });
+
+    return maxElem->first;
+}
+
+void eliminateYoloBackground::filterRects(std::vector<cv::Rect2f>& rects, const cv::Rect2f& templateRect)
+{
+    float templateArea = templateRect.area();
+    rects.erase(std::remove_if(rects.begin(), rects.end(),
+        [templateArea](const cv::Rect2f& rect) {
+            return rect.area() > 2 * templateArea || rect.area() < templateArea / 2;
+        }),
+        rects.end());
+}
+
+void eliminateYoloBackground::processRects(std::vector<cv::Rect2f>& rects)
+{
+    cv::Rect2f templateRect = findTemplateRect(rects);
+    filterRects(rects, templateRect);
+}
+
+cv::Rect2f eliminateYoloBackground::calculateSymmetricRect(const cv::Rect2f& sourceRect, const cv::Rect2f& black_rect)
+{
+    cv::Point2f center_of_black = cv::Point2f(black_rect.x + black_rect.width / 2, black_rect.y + black_rect.height / 2);
+    cv::Point2f source_center = cv::Point2f(sourceRect.x + sourceRect.width / 2, sourceRect.y + sourceRect.height / 2);
+    cv::Point2f sym_center;
+
+    // 计算对称中心点
+    sym_center.x = center_of_black.x + (center_of_black.x - source_center.x);
+    sym_center.y = center_of_black.y + (center_of_black.y - source_center.y);
+
+    // 根据对称中心点创建对称矩形
+    cv::Rect2f symmetricRect(sym_center.x - sourceRect.width / 2, sym_center.y - sourceRect.height / 2, sourceRect.width, sourceRect.height);
+
+    return symmetricRect;
+}
+
+bool eliminateYoloBackground::isOverlappingMoreThanHalf(const cv::Rect2f& rect1, const cv::Rect2f& rect2)
+{
+    cv::Rect2f intersection = rect1 & rect2;
+    float intersectionArea = intersection.area();
+    return intersectionArea >= rect2.area() * 0.5 || intersectionArea >= rect1.area() * 0.5;
+}
+
+void eliminateYoloBackground::addSymmetricRectsIfNeeded(std::vector<cv::Rect2f>& rects, const cv::Rect2f& black_rect)
+{
+    float symmetryAxisY = black_rect.y + (black_rect.height / 2.0f);
+    std::vector<cv::Rect2f> newRects;
+
+    for (const auto& rect : rects) {
+        float centerY = rect.y + (rect.height / 2.0f);
+        float symmetricalCenterY = (symmetryAxisY - centerY) + symmetryAxisY;
+        cv::Rect2f symmetricalRect(rect.x, symmetricalCenterY - (rect.height / 2.0f), rect.width, rect.height);
+
+        // 检查是否已经存在对称的矩形
+        bool exists = std::any_of(rects.begin(), rects.end(), [&symmetricalRect](const cv::Rect2f& r) {
+            float rCenterY = r.y + (r.height / 2.0f);
+            float symRectCenterY = symmetricalRect.y + (symmetricalRect.height / 2.0f);
+            // 检查 y 方向上中心点是否接近
+            if (std::abs(rCenterY - symRectCenterY) <= r.height / 2.0f) {
+                // 检查重叠面积是否超过 50%
+                cv::Rect2f intersection = r & symmetricalRect;
+                return (intersection.area() >= r.area() * 0.5 || intersection.area() >= symmetricalRect.area() * 0.5);
+            }
+            return false;
+            });
+
+        if (!exists) {
+            newRects.push_back(symmetricalRect);
+        }
+    }
+
+    rects.insert(rects.end(), newRects.begin(), newRects.end());
 }
 

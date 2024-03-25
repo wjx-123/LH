@@ -1155,8 +1155,8 @@ namespace fs = std::filesystem;
 int main() 
 {
     eliminateYoloBackground e;
-    // Load your image
-    cv::Mat image = cv::imread("C:\\Users\\LENOVO\\Pictures\\smt\\2499.jpg");//C:\\Users\\LENOVO\\Pictures\\smt\\7.png
+    // Load your image C://Users//LENOVO//Pictures//smt//compimg//compimg//0.jpg
+    cv::Mat image = cv::imread("C://Users//LENOVO//Pictures//smt//compimg//compimg//21.jpg");//C:\\Users\\LENOVO\\Pictures\\smt\\4.jpg
 
  //   // Define the color range for BFS
  //   int colorRange = 10; 
@@ -1279,7 +1279,7 @@ int main()
     //单张调用函数测试
     
     start = clock();
-    auto res = e.getBoundAndPin(image,"D");//T/R/D
+    auto res = e.getBoundAndPin(image,"T");//T/R/D
     end = clock();
     std::cout << "all:" << (static_cast<double>(end) - start) / CLOCKS_PER_SEC << std::endl;
     cv::rectangle(image, res[0].first, cv::Scalar(0, 255, 255), 4);

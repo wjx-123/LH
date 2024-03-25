@@ -24,9 +24,11 @@ public:
 	//特把三引脚的分出
 	std::vector<cv::Rect2f> findPinsAroundBlackBox_ofThree(cv::Mat& img, cv::Rect2f& blackBox, cv::Mat& hsvImg);
 
-	cv::Mat test(cv::Mat &img, std::string types);//轮廓信息测试
+	//轮廓信息测试
+	cv::Mat test(cv::Mat &img, std::string types);
 
-	cv::Mat useHsvTest(cv::Mat& image);//使用hsv从原图中把引脚筛出来
+	//使用hsv从原图中把引脚筛出来
+	cv::Mat useHsvTest(cv::Mat& image);
 
 private:
 	//全部搜索，输入每一个小区域 后面两个是两个基准线 0代表下面的边，1代表左边的，2代表上边，3代表右边
@@ -55,4 +57,31 @@ private:
 
 	//调整引脚框位置(两脚类专用)
 	void moveToIntersect(cv::Rect& rectToMove, const cv::Rect& referenceRect);
+
+	//判断函数--矩形是否更接近正方形(三脚类专用)
+	static bool compareRectsCloseToSquare(const cv::Rect2f& a, const cv::Rect2f& b);
+
+	//判断函数--矩形是否近似相等(多脚类专用)
+	static bool rectsAreSimilar(const cv::Rect2f& a, const cv::Rect2f& b);
+
+	//查找出现频率最高的“模板”矩形(多脚类专用)
+	cv::Rect2f findTemplateRect(const std::vector<cv::Rect2f>& rects);
+
+	//过滤掉面积大于模板面积两倍的矩形(多脚类专用)
+	void filterRects(std::vector<cv::Rect2f>& rects, const cv::Rect2f& templateRect);
+
+	//处理多引脚矩形
+	void processRects(std::vector<cv::Rect2f>& rects);
+
+	//计算对称矩形(多引脚专用)
+	cv::Rect2f calculateSymmetricRect(const cv::Rect2f& sourceRect, const cv::Rect2f& black_rect);
+
+	//判断对称位置的矩形是否存在(多引脚专用)
+	bool isOverlappingMoreThanHalf(const cv::Rect2f& rect1, const cv::Rect2f& rect2);
+
+	//根据对称添加矩形(多引脚专用)
+	void addSymmetricRectsIfNeeded(std::vector<cv::Rect2f>& rects, const cv::Rect2f& black_rect);
+private:
+
+	static constexpr float SIMILARITY_THRESHOLD = 5.0f;
 };

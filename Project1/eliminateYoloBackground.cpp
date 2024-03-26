@@ -24,36 +24,46 @@ std::vector<std::pair<cv::Rect2f, std::vector<cv::Rect2f>>> eliminateYoloBackgro
         //cv::rectangle(image, black_rect, cv::Scalar(255, 0, 0), 2);
         cv::Mat topImg = heibai({ 0,0,static_cast<int>(image.cols),static_cast<int>(black_rect.y) });
         cv::Mat bottomImg = heibai({ 0,static_cast<int>(black_rect.y + black_rect.height),static_cast<int>(image.cols),static_cast<int>(image.rows - (black_rect.y + black_rect.height)) });
-        std::vector<std::vector<cv::Point>> contours;
-        cv::findContours(topImg, contours, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE);
-        // 计算所有轮廓的最小外接矩形
-        cv::Rect boundingBox;
-        for (size_t i = 0; i < contours.size(); i++) {
-            boundingBox |= cv::boundingRect(contours[i]);
-        }
-
-        //cv::rectangle(topImg, boundingBox, cv::Scalar(255), 2);
-        //cv::rectangle(image, boundingBox, cv::Scalar(0, 255, 0), 4);
-
-        contours.clear();
-
-        cv::findContours(bottomImg, contours, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE);
-
-        cv::Rect boundingBox1;
-        for (size_t i = 0; i < contours.size(); i++) {
-            boundingBox1 |= cv::boundingRect(contours[i]);
-        }
-        //cv::rectangle(bottomImg, boundingBox1, cv::Scalar(255), 2);
-        //cv::rectangle(image, { boundingBox1.x, static_cast<int>(boundingBox1.y + (black_rect.y + black_rect.height)) ,boundingBox1 .width,boundingBox1.height}, cv::Scalar(0, 255, 0), 4);
-        moveToIntersect(boundingBox, black_rect);
-        tPin.push_back(boundingBox);
-        cv::Rect boundingBox1Adjusted(static_cast<float>(boundingBox1.x),
-            static_cast<float>(boundingBox1.y + black_rect.y + black_rect.height),
-            static_cast<float>(boundingBox1.width),
-            static_cast<float>(boundingBox1.height));
+        /*扩散*/
+        cv::bitwise_not(topImg, topImg);
+        auto [topLeft_top, bottomRight_top] = findBoundingRectangle_heibai(topImg, 0.5);
+        cv::Rect topImg_rect = cv::Rect(topLeft_top.x, topLeft_top.y, bottomRight_top.x - topLeft_top.x, bottomRight_top.y - topLeft_top.y);
+        moveToIntersect(topImg_rect, black_rect);
+        cv::bitwise_not(bottomImg, bottomImg);
+        auto [topLeft_bottom, bottomRight_bottom] = findBoundingRectangle_heibai(bottomImg, 0.5);
+        cv::Rect2f bottomImg_rect = cv::Rect(topLeft_bottom.x, topLeft_bottom.y, bottomRight_bottom.x - topLeft_bottom.x, bottomRight_bottom.y - topLeft_bottom.y);
+        cv::Rect boundingBox1Adjusted(static_cast<float>(bottomImg_rect.x),
+                static_cast<float>(bottomImg_rect.y + black_rect.y + black_rect.height),
+                static_cast<float>(bottomImg_rect.width),
+                static_cast<float>(bottomImg_rect.height));
         moveToIntersect(boundingBox1Adjusted, black_rect);
+        tPin.push_back(topImg_rect);
         tPin.push_back(boundingBox1Adjusted);
-        //tPin.push_back({ static_cast<float>(boundingBox1.x), static_cast<float>(boundingBox1.y + (black_rect.y + black_rect.height)) ,static_cast<float>(boundingBox1.width),static_cast<float>(boundingBox1.height) });
+
+        // 异步地反转上部图像并寻找边界矩形
+        //auto futureTop = std::async(std::launch::async, [&]() {
+        //    cv::bitwise_not(topImg, topImg); // 反转颜色
+        //    auto [topLeft_top, bottomRight_top] = findBoundingRectangle_heibai(topImg, 0.5);
+        //    cv::Rect topImg_rect(topLeft_top.x, topLeft_top.y, bottomRight_top.x - topLeft_top.x, bottomRight_top.y - topLeft_top.y);
+        //    moveToIntersect(topImg_rect, black_rect);
+        //    return topImg_rect;
+        //    });
+
+        //// 异步地反转下部图像并寻找边界矩形
+        //auto futureBottom = std::async(std::launch::async, [&]() {
+        //    cv::bitwise_not(bottomImg, bottomImg); // 反转颜色
+        //    auto [topLeft_bottom, bottomRight_bottom] = findBoundingRectangle_heibai(bottomImg, 0.5);
+        //    cv::Rect bottomImg_rect(topLeft_bottom.x, topLeft_bottom.y + black_rect.y + black_rect.height, bottomRight_bottom.x - topLeft_bottom.x, bottomRight_bottom.y - topLeft_bottom.y);
+        //    moveToIntersect(bottomImg_rect, black_rect);
+        //    return bottomImg_rect;
+        //    });
+
+        //// 获取异步操作的结果
+        //cv::Rect topImg_rect = futureTop.get();
+        //cv::Rect bottomImg_rect = futureBottom.get();
+        //tPin.push_back(topImg_rect);
+        //tPin.push_back(bottomImg_rect);
+
         std::pair pair  = { black_rect ,tPin };
         result.push_back(pair);
         return result;

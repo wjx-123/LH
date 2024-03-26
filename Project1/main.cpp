@@ -1156,7 +1156,7 @@ int main()
 {
     eliminateYoloBackground e;
     // Load your image C://Users//LENOVO//Pictures//smt//compimg//compimg//0.jpg
-    cv::Mat image = cv::imread("C://Users//LENOVO//Pictures//smt//compimg//compimg//21.jpg");//C:\\Users\\LENOVO\\Pictures\\smt\\4.jpg
+    cv::Mat image = cv::imread("C://Users//LENOVO//Pictures//smt//compimg//compimg//13.jpg");//C:\\Users\\LENOVO\\Pictures\\smt\\4.jpg
 
  //   // Define the color range for BFS
  //   int colorRange = 10; 

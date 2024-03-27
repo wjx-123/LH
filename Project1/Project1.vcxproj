@@ -147,6 +147,7 @@
     <ClCompile Include="fovRoutePlan.cpp" />
     <ClCompile Include="fovTest.cpp" />
     <ClCompile Include="fovTest.h" />
+    <ClCompile Include="onnx2.cpp" />
     <ClCompile Include="parseqOcr.cpp" />
     <ClCompile Include="patchDetection.cpp" />
     <ClCompile Include="CameraCalibration.cpp" />
@@ -165,6 +166,7 @@
     <ClInclude Include="colorMethod.h" />
     <ClInclude Include="eliminateYoloBackground.h" />
     <ClInclude Include="fovRoutePlan.h" />
+    <ClInclude Include="onnx2.h" />
     <ClInclude Include="patchDetection.h" />
     <ClInclude Include="CameraCalibration.h" />
     <ClInclude Include="edline.h" />

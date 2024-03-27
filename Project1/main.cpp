@@ -1149,6 +1149,7 @@
 #include "halconMatch.h"
 #include <time.h>
 #include <filesystem>
+#include "onnx2.h"
 
 namespace fs = std::filesystem;
 
@@ -1156,7 +1157,7 @@ int main()
 {
     eliminateYoloBackground e;
     // Load your image C://Users//LENOVO//Pictures//smt//compimg//compimg//0.jpg
-    cv::Mat image = cv::imread("C://Users//LENOVO//Pictures//smt//compimg//compimg//13.jpg");//C:\\Users\\LENOVO\\Pictures\\smt\\4.jpg
+    cv::Mat image = cv::imread("C:\\Users\\LENOVO\\Pictures\\smt\\10.jpg");//C:\\Users\\LENOVO\\Pictures\\smt\\4.jpg
 
  //   // Define the color range for BFS
  //   int colorRange = 10; 
@@ -1278,15 +1279,19 @@ int main()
 
     //单张调用函数测试
     
-    start = clock();
-    auto res = e.getBoundAndPin(image,"T");//T/R/D
-    end = clock();
-    std::cout << "all:" << (static_cast<double>(end) - start) / CLOCKS_PER_SEC << std::endl;
-    cv::rectangle(image, res[0].first, cv::Scalar(0, 255, 255), 4);
-    for (int i = 0; i < res[0].second.size(); i++)
-    {
-        cv::rectangle(image, res[0].second[i], cv::Scalar(0, 255, 0), 4);
-    }
+    //start = clock();
+    //auto res = e.getBoundAndPin(image,"T");//T/R/D
+    //end = clock();
+    //std::cout << "all:" << (static_cast<double>(end) - start) / CLOCKS_PER_SEC << std::endl;
+    //cv::rectangle(image, res.first, cv::Scalar(0, 255, 255), 4);
+    //for (int i = 0; i < res.second.size(); i++)
+    //{
+    //    cv::rectangle(image, res.second[i], cv::Scalar(0, 255, 0), 4);
+    //}
+
+
+
+
     //hsv筛选原图引脚测试
     //e.useHsvTest(image);
 
@@ -1334,5 +1339,26 @@ int main()
     //// 绘制外接矩形
     //cv::rectangle(bottomImg, boundingBox1, cv::Scalar(255), 2);
     //cv::rectangle(image, { boundingBox1.x, static_cast<int>(boundingBox1.y + (recttt.y + recttt.height)) ,boundingBox1 .width,boundingBox1.height}, cv::Scalar(0, 255, 0), 4);
+    
+    /*用模型测试分类以及检测效果*/
+    Net_config yolo_nets = { 0.4, 0.4, 0.4,"class_five.onnx" };//bestrpc.onnx   10.12_rpc
+    YOLO yolo_model(yolo_nets);
+    cv::Mat img1 = cv::imread("C:\\Users\\LENOVO\\Pictures\\1\\1\\1.jpg");//image\\1.jpg
+    auto smt_frame = yolo_model.getCPCoordinate(img1);
+    for (int i = 0; i < smt_frame.size(); i++)
+    {
+        cv::rectangle(img1, smt_frame[i].first, cv::Scalar(0, 255, 0), 4);
+        for (int j = 0; j < smt_frame[i].second.size(); j++)
+        {
+            if (smt_frame[i].second[j].x > 0 && smt_frame[i].second[j].y > 0 && smt_frame[i].second[j].width > 0 && smt_frame[i].second[j].height > 0)
+            {
+                cv::rectangle(img1, smt_frame[i].second[j], cv::Scalar(255, 255, 0), 4);
+            }
+            else
+            {
+                std::cout << "超出范围" << std::endl;
+            }
+        }
+    }
     return 0;
 }

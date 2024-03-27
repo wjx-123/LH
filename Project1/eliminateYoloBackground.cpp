@@ -8,9 +8,8 @@ eliminateYoloBackground::~eliminateYoloBackground()
 {
 }
 
-std::vector<std::pair<cv::Rect2f, std::vector<cv::Rect2f>>> eliminateYoloBackground::getBoundAndPin(cv::Mat& image, std::string types)
+std::pair<cv::Rect2f, std::vector<cv::Rect2f>> eliminateYoloBackground::getBoundAndPin(cv::Mat& image, std::string types)
 {
-    std::vector<std::pair<cv::Rect2f, std::vector<cv::Rect2f>>> result;
     cv::Mat heibai = test(image,types);
     if (types == "T")//两脚
     {
@@ -37,6 +36,8 @@ std::vector<std::pair<cv::Rect2f, std::vector<cv::Rect2f>>> eliminateYoloBackgro
                 static_cast<float>(bottomImg_rect.width),
                 static_cast<float>(bottomImg_rect.height));
         moveToIntersect(boundingBox1Adjusted, black_rect);
+        cv::rectangle(image, topImg_rect, cv::Scalar(255, 0, 0), 2);
+        cv::rectangle(image, boundingBox1Adjusted, cv::Scalar(255, 0, 0), 2);
         tPin.push_back(topImg_rect);
         tPin.push_back(boundingBox1Adjusted);
 
@@ -65,8 +66,7 @@ std::vector<std::pair<cv::Rect2f, std::vector<cv::Rect2f>>> eliminateYoloBackgro
         //tPin.push_back(bottomImg_rect);
 
         std::pair pair  = { black_rect ,tPin };
-        result.push_back(pair);
-        return result;
+        return pair;
     }
     else if (types == "R")//三脚
     {
@@ -84,7 +84,7 @@ std::vector<std::pair<cv::Rect2f, std::vector<cv::Rect2f>>> eliminateYoloBackgro
             pinVector.resize(3);
         }
         std::pair pair = { black_rect, pinVector };
-        result.push_back(pair);
+        return pair;
     }
     else
     {
@@ -95,11 +95,8 @@ std::vector<std::pair<cv::Rect2f, std::vector<cv::Rect2f>>> eliminateYoloBackgro
         processRects(pinVector);
         addSymmetricRectsIfNeeded(pinVector, black_rect);
         std::pair pair = { black_rect, pinVector };
-        result.push_back(pair);
+        return pair;
     }
-    
-    
-    return result;
 }
 
 std::pair<cv::Point, cv::Point> eliminateYoloBackground::findBoundingRectangle(const cv::Mat& img, int colorRange)
@@ -817,7 +814,7 @@ void eliminateYoloBackground::adjustRect(cv::Rect2f& rect, const cv::Size& image
         }
         else {
             // 两边都过于接近时，调整宽度为图片宽度的三分之一
-            rect.width = imageSize.width / 3.0f;
+            rect.width = imageSize.width * 0.75f;/// 3.0f
             rect.x = imageCenterX - rect.width / 2.0f;
         }
     }
@@ -916,8 +913,12 @@ void eliminateYoloBackground::filterRects(std::vector<cv::Rect2f>& rects, const 
 
 void eliminateYoloBackground::processRects(std::vector<cv::Rect2f>& rects)
 {
-    cv::Rect2f templateRect = findTemplateRect(rects);
-    filterRects(rects, templateRect);
+    if (rects.size() > 1) 
+    {
+        cv::Rect2f templateRect = findTemplateRect(rects);
+        filterRects(rects, templateRect);
+    }
+    
 }
 
 cv::Rect2f eliminateYoloBackground::calculateSymmetricRect(const cv::Rect2f& sourceRect, const cv::Rect2f& black_rect)

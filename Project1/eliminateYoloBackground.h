@@ -12,7 +12,7 @@ public:
 	~eliminateYoloBackground();
 
 	//调用函数 输入扣出的小图和类型(两脚T/三脚R/多脚D) 返回vector<pair>
-	std::vector<std::pair<cv::Rect2f, std::vector<cv::Rect2f>>> getBoundAndPin(cv::Mat& image,std::string types);
+	std::pair<cv::Rect2f, std::vector<cv::Rect2f>> getBoundAndPin(cv::Mat& image,std::string types);
 
 	//BFS并查找小黑块边界矩形
 	std::pair<cv::Point, cv::Point> findBoundingRectangle(const cv::Mat& img, int colorRange);

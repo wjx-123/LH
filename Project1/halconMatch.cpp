@@ -17,6 +17,8 @@ int HMatch::getNumberOfPanel(cv::Rect2f firstRect, cv::Size2f imageSize)
 }
 void HMatch::getPanelFrames(int numberOfPanel, cv::Mat Image, cv::Rect2f model, std::vector<cv::Rect2f>& result)
 {
+    float xModel = model.x;
+    float yModel = model.y;
     std::cout<< getNumberOfPanel(Image.size(), model) << std::endl;
     double temp = (double)Image.cols / SCALE_FACTOR;//转化系数
     resizeImage(Image);//压缩图片
@@ -25,6 +27,20 @@ void HMatch::getPanelFrames(int numberOfPanel, cv::Mat Image, cv::Rect2f model, 
     HalconCpp::HObject Himage = MatToHImage(Image);//大图mat转halcon
     std::vector<cv::Point2f> centerPoints = HalconMatch(numberOfPanel, Himage, model);
     result = fromPointToRect(centerPoints,model,temp);
+    
+
+    for (auto& rect : result) {
+        // 计算当前矩形框的中心点坐标
+
+        // 如果处于同一水平线上，则将矩形框的 y 坐标设置为模板图的 y 坐标
+        if (std::abs(rect.y - yModel) < 50) {
+            rect.y = yModel;
+        }
+        // 如果处于同一竖直线上，则将矩形框的 x 坐标设置为模板图的 x 坐标
+        if (std::abs(rect.x - xModel) < 50) {
+            rect.x = xModel;
+        }
+    }
 }
 
 void HMatch::getMaskShift(int numberOfPanel, cv::Mat dMask, cv::Mat mMask, cv::Rect2f& result)

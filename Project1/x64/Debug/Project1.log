@@ -1,60 +1,114 @@
 ﻿  正在扫描源以查找模块依赖项...
-  onnx2.cpp
-E:\visualworkplace\LH\Project1\onnx2.cpp(36,40): warning C4244: “=”: 从“_Ty”转换到“int”，可能丢失数据
+  halconMatch.cpp
+E:\visualworkplace\LH\Project1\halconMatch.cpp(55,56): warning C4244: “参数”: 从“int”转换到“_Tp”，可能丢失数据
           with
           [
-              _Ty=int64_t
+              _Tp=float
           ]
-E:\visualworkplace\LH\Project1\onnx2.cpp(37,39): warning C4244: “=”: 从“_Ty”转换到“int”，可能丢失数据
+E:\visualworkplace\LH\Project1\halconMatch.cpp(55,44): warning C4244: “参数”: 从“int”转换到“_Tp”，可能丢失数据
           with
           [
-              _Ty=int64_t
+              _Tp=float
           ]
-E:\visualworkplace\LH\Project1\onnx2.cpp(38,36): warning C4244: “=”: 从“_Ty”转换到“int”，可能丢失数据
+E:\visualworkplace\LH\Project1\halconMatch.cpp(252,21): warning C4244: “=”: 从“double”转换到“_Tp”，可能丢失数据
           with
           [
-              _Ty=int64_t
+              _Tp=float
           ]
-E:\visualworkplace\LH\Project1\onnx2.cpp(39,44): warning C4244: “=”: 从“_Ty”转换到“int”，可能丢失数据
+E:\visualworkplace\LH\Project1\halconMatch.cpp(253,21): warning C4244: “=”: 从“double”转换到“_Tp”，可能丢失数据
           with
           [
-              _Ty=int64_t
+              _Tp=float
           ]
-E:\visualworkplace\LH\Project1\onnx2.cpp(47,36): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(82,33): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(85,42): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(108,59): warning C4244: “=”: 从“double”转换到“_Ty”，可能丢失数据
+E:\visualworkplace\LH\Project1\halconMatch.cpp(254,29): warning C4244: “=”: 从“double”转换到“_Tp”，可能丢失数据
           with
           [
-              _Ty=float
+              _Tp=float
           ]
-E:\visualworkplace\LH\Project1\onnx2.cpp(231,73): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(231,41): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(232,70): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(232,41): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(233,82): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(233,38): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(234,79): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(234,38): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(256,28): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(256,23): warning C4244: “初始化”: 从“double”转换到“const float”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(288,20): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(289,20): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(290,20): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(291,20): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(303,22): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(305,22): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(312,22): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(314,22): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(318,22): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(319,22): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(320,22): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(321,22): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(402,32): warning C4101: “e”: 未引用的局部变量
-E:\visualworkplace\LH\Project1\onnx2.cpp(425,19): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(426,19): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(429,25): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(431,26): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(435,16): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(436,16): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
+E:\visualworkplace\LH\Project1\halconMatch.cpp(255,31): warning C4244: “=”: 从“double”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+E:\visualworkplace\LH\Project1\halconMatch.cpp(303,69): warning C4244: “参数”: 从“double”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\halconMatch.cpp(303,54): warning C4244: “参数”: 从“double”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\halconMatch.cpp(315,118): warning C4244: “参数”: 从“double”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\halconMatch.cpp(315,103): warning C4244: “参数”: 从“double”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\halconMatch.cpp(315,89): warning C4244: “参数”: 从“double”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\halconMatch.cpp(315,52): warning C4244: “参数”: 从“double”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\halconMatch.cpp(327,25): warning C4244: “初始化”: 从“_Tp”转换到“int”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+E:\visualworkplace\LH\Project1\halconMatch.cpp(328,23): warning C4244: “初始化”: 从“_Tp”转换到“int”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+E:\visualworkplace\LH\Project1\halconMatch.cpp(335,15): warning C4244: “初始化”: 从“_Tp”转换到“int”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+E:\visualworkplace\LH\Project1\halconMatch.cpp(336,15): warning C4244: “初始化”: 从“_Tp”转换到“int”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+E:\visualworkplace\LH\Project1\halconMatch.cpp(337,28): warning C4244: “参数”: 从“int”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+E:\visualworkplace\LH\Project1\halconMatch.cpp(337,25): warning C4244: “参数”: 从“int”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+E:\visualworkplace\LH\Project1\halconMatch.cpp(353,27): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
+E:\visualworkplace\LH\Project1\halconMatch.cpp(433,39): warning C4244: “=”: 从“double”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+E:\visualworkplace\LH\Project1\halconMatch.cpp(434,36): warning C4244: “=”: 从“double”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+E:\visualworkplace\LH\Project1\halconMatch.cpp(489,34): warning C4244: “=”: 从“double”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+E:\visualworkplace\LH\Project1\halconMatch.cpp(490,31): warning C4244: “=”: 从“double”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
   Project1.vcxproj -> E:\visualworkplace\LH\x64\Debug\Project1.exe

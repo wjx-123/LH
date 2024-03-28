@@ -1157,7 +1157,7 @@ int main()
 {
     eliminateYoloBackground e;
     // Load your image C://Users//LENOVO//Pictures//smt//compimg//compimg//0.jpg
-    cv::Mat image = cv::imread("C:\\Users\\LENOVO\\Pictures\\smt\\10.jpg");//C:\\Users\\LENOVO\\Pictures\\smt\\4.jpg
+    cv::Mat image = cv::imread("C:\\Users\\LENOVO\\Pictures\\smt\\0.jpg");//C:\\Users\\LENOVO\\Pictures\\smt\\4.jpg
 
  //   // Define the color range for BFS
  //   int colorRange = 10; 
@@ -1280,7 +1280,7 @@ int main()
     //单张调用函数测试
     
     //start = clock();
-    //auto res = e.getBoundAndPin(image,"T");//T/R/D
+    //auto res = e.getBoundAndPin(image,"R");//T/R/D
     //end = clock();
     //std::cout << "all:" << (static_cast<double>(end) - start) / CLOCKS_PER_SEC << std::endl;
     //cv::rectangle(image, res.first, cv::Scalar(0, 255, 255), 4);
@@ -1296,12 +1296,17 @@ int main()
     //e.useHsvTest(image);
 
     /*算拼版数量*/
-    /*HMatch halcon;
-    cv::Mat imagegg = cv::imread("C:\\Users\\LENOVO\\Pictures\\image\\1.jpg");
-    cv::Rect2f firstRect(6000,10,3000,4000);
+    std::vector<cv::Rect2f> res;
+    HMatch halcon;
+    cv::Mat imagegg = cv::imread("C:\\Users\\LENOVO\\Pictures\\pinban.jpg");
+    cv::Rect2f firstRect(843,1530,5941,8206);
     int aaa = halcon.getNumberOfPanel(firstRect, imagegg.size());
-    cv::rectangle(imagegg, firstRect, cv::Scalar(0, 255, 0), 10);*/
-
+    halcon.getPanelFrames(aaa,imagegg,firstRect,res);
+    //cv::rectangle(imagegg, firstRect, cv::Scalar(0, 255, 0), 10);
+    for (auto temp : res)
+    {
+        cv::rectangle(imagegg, temp, cv::Scalar(0, 255, 0), 10);
+    }
 
     /*黑色掩膜覆盖*/
     //cv::Mat heibai = e.test(image);
@@ -1341,24 +1346,31 @@ int main()
     //cv::rectangle(image, { boundingBox1.x, static_cast<int>(boundingBox1.y + (recttt.y + recttt.height)) ,boundingBox1 .width,boundingBox1.height}, cv::Scalar(0, 255, 0), 4);
     
     /*用模型测试分类以及检测效果*/
-    Net_config yolo_nets = { 0.4, 0.4, 0.4,"class_five.onnx" };//bestrpc.onnx   10.12_rpc
-    YOLO yolo_model(yolo_nets);
-    cv::Mat img1 = cv::imread("C:\\Users\\LENOVO\\Pictures\\1\\1\\1.jpg");//image\\1.jpg
-    auto smt_frame = yolo_model.getCPCoordinate(img1);
-    for (int i = 0; i < smt_frame.size(); i++)
-    {
-        cv::rectangle(img1, smt_frame[i].first, cv::Scalar(0, 255, 0), 4);
-        for (int j = 0; j < smt_frame[i].second.size(); j++)
-        {
-            if (smt_frame[i].second[j].x > 0 && smt_frame[i].second[j].y > 0 && smt_frame[i].second[j].width > 0 && smt_frame[i].second[j].height > 0)
-            {
-                cv::rectangle(img1, smt_frame[i].second[j], cv::Scalar(255, 255, 0), 4);
-            }
-            else
-            {
-                std::cout << "超出范围" << std::endl;
-            }
-        }
-    }
+    //Net_config yolo_nets = { 0.4, 0.4, 0.4,"class_five.onnx" };//bestrpc.onnx   10.12_rpc
+    //YOLO yolo_model(yolo_nets);
+    //cv::Mat img1 = cv::imread("C:\\Users\\LENOVO\\Pictures\\1\\1\\1.jpg");//image\\1.jpg
+    //start = clock();
+    //auto smt_frame = yolo_model.getCPCoordinate(img1);
+    //cv::imwrite("C:\\Users\\LENOVO\\Pictures\\1\\1\\2.jpg",img1);
+    //end = clock();
+    //std::cout << "all:" << (static_cast<double>(end) - start) / CLOCKS_PER_SEC << std::endl;
+    //int nums = 0;
+    //for (int i = 0; i < smt_frame.size(); i++)
+    //{
+    //    cv::rectangle(img1, smt_frame[i].first, cv::Scalar(0, 255, 0), 4);
+    //    for (int j = 0; j < smt_frame[i].second.size(); j++)
+    //    {
+    //        if (smt_frame[i].second[j].x > 0 && smt_frame[i].second[j].y > 0 && smt_frame[i].second[j].width > 0 && smt_frame[i].second[j].height > 0)
+    //        {
+    //            cv::rectangle(img1, smt_frame[i].second[j], cv::Scalar(255, 255, 0), 4);
+    //        }
+    //        else
+    //        {
+    //            nums++;
+    //        }
+    //    }
+    //}
+    //std::cout << "超出范围:" <<nums<< std::endl;
+
     return 0;
 }

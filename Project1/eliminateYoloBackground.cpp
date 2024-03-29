@@ -13,11 +13,21 @@ std::pair<cv::Rect2f, std::vector<cv::Rect2f>> eliminateYoloBackground::getBound
     cv::Mat heibai = test(image,types);
     if (types == "T")//两脚
     {
+        bool ifTransform = false;
+        //判断是否是竖直的
+        if (heibai.rows < heibai.cols) 
+        {
+            ifTransform = true;
+            cv::transpose(image, image); // 转置
+            cv::flip(image, image, 0);   // 沿y轴翻转
+            cv::transpose(heibai, heibai); // 转置
+            cv::flip(heibai, heibai, 0);   // 沿y轴翻转
+        }
         std::vector<cv::Rect2f> tPin;
         cv::Rect2f rectHeibai = { static_cast<float>(image.cols * 0.3), static_cast<float>(image.rows * 0.35), static_cast<float>(image.cols * 0.35), static_cast<float>(image.rows * 0.25) };
         cv::rectangle(heibai, rectHeibai, cv::Scalar(0, 0, 0), cv::FILLED);
         auto [topLeft, bottomRight] = findBoundingRectangle_heibai(heibai, 0.1);
-        cv::Rect2f black_rect = cv::Rect(topLeft.x, topLeft.y, bottomRight.x - topLeft.x, bottomRight.y - topLeft.y);
+        cv::Rect black_rect = cv::Rect(topLeft.x, topLeft.y, bottomRight.x - topLeft.x, bottomRight.y - topLeft.y);
         //cv::rectangle(image, black_rect, cv::Scalar(0, 255, 100), 2);
         adjustRect(black_rect, image.size());
         //cv::rectangle(image, black_rect, cv::Scalar(255, 0, 0), 2);
@@ -36,8 +46,18 @@ std::pair<cv::Rect2f, std::vector<cv::Rect2f>> eliminateYoloBackground::getBound
                 static_cast<float>(bottomImg_rect.width),
                 static_cast<float>(bottomImg_rect.height));
         moveToIntersect(boundingBox1Adjusted, black_rect);
-        cv::rectangle(image, topImg_rect, cv::Scalar(255, 0, 0), 2);
-        cv::rectangle(image, boundingBox1Adjusted, cv::Scalar(255, 0, 0), 2);
+
+        if (ifTransform = true)
+        {
+            cv::flip(image, image, 0);   // 沿 y 轴翻转
+            cv::transpose(image, image);
+            transformRectCoordinates(topImg_rect);
+            transformRectCoordinates(boundingBox1Adjusted);
+            transformRectCoordinates(black_rect);
+        }
+
+        /*cv::rectangle(image, topImg_rect, cv::Scalar(255, 0, 0), 2);
+        cv::rectangle(image, boundingBox1Adjusted, cv::Scalar(255, 0, 0), 2);*/
         tPin.push_back(topImg_rect);
         tPin.push_back(boundingBox1Adjusted);
 
@@ -753,7 +773,7 @@ void eliminateYoloBackground::filterRectangles(std::vector<cv::Rect>& rectangles
     rectangles.erase(newEnd, rectangles.end());
 }
 
-void eliminateYoloBackground::adjustRect(cv::Rect2f& rect, const cv::Size& imageSize)
+void eliminateYoloBackground::adjustRect(cv::Rect& rect, const cv::Size& imageSize)
 {
     //// 定义"过近"的阈值
     const float threshold_short = 60.0;
@@ -859,6 +879,21 @@ void eliminateYoloBackground::moveToIntersect(cv::Rect& rectToMove, const cv::Re
             rectToMove.height += moveUpBy;
         }
     }
+}
+
+void eliminateYoloBackground::transformRectCoordinates(cv::Rect& rect)
+{
+    // 将竖直方向的 x 坐标赋值给新的 y 坐标
+    float x = rect.y;
+    // 将竖直方向的 y 坐标转换为新的 x 坐标
+    float y = rect.x;
+    rect.x = x;
+    rect.y = y;
+
+    // 交换宽度和高度
+    float temp = rect.width;
+    rect.width = rect.height;
+    rect.height = temp;
 }
 
 bool eliminateYoloBackground::compareRectsCloseToSquare(const cv::Rect2f& a, const cv::Rect2f& b)

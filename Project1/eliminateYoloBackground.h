@@ -53,10 +53,13 @@ private:
 	void filterRectangles(std::vector<cv::Rect>& rectangles, const cv::Rect& rectInit, int closestEdge, double thresholdRatio);
 
 	//调整黑块位置(两脚类专用)
-	void adjustRect(cv::Rect2f& rect, const cv::Size& imageSize);
+	void adjustRect(cv::Rect& rect, const cv::Size& imageSize);
 
 	//调整引脚框位置(两脚类专用)
 	void moveToIntersect(cv::Rect& rectToMove, const cv::Rect& referenceRect);
+
+	//反转图片后转化坐标(两脚类专用)
+	void transformRectCoordinates(cv::Rect& rect);
 
 	//判断函数--矩形是否更接近正方形(三脚类专用)
 	static bool compareRectsCloseToSquare(const cv::Rect2f& a, const cv::Rect2f& b);

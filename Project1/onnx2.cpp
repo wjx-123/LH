@@ -7,7 +7,7 @@ YOLO::YOLO(Net_config config)
 	this->nmsThreshold = config.nmsThreshold;
 	this->objThreshold = config.objThreshold;
 
-	std::string classesFile = "class_five.names";
+	std::string classesFile = "class1.names";
 	std::string model_path = config.modelpath;
 	std::wstring widestr = std::wstring(model_path.begin(), model_path.end());
 	//OrtStatus* status = OrtSessionOptionsAppendExecutionProvider_CUDA(sessionOptions, 0);
@@ -46,7 +46,7 @@ YOLO::YOLO(Net_config config)
 	class_names.push_back("c");*/
 	this->num_class = class_names.size();
 
-	if (endsWith(config.modelpath, "class_five.onnx"))
+	if (endsWith(config.modelpath, "best_rtp.onnx"))
 	{
 		anchors = (float*)anchors_1280;
 		this->num_stride = 4;
@@ -320,10 +320,6 @@ std::vector<std::pair<cv::Rect2f, std::vector<cv::Rect2f>>> YOLO::detect(cv::Mat
 									xmax = xmax + 0.4 * img_width;
 									ymax = ymax + 0.4 * img_height;
 								}
-								if (xmin < 0 || ymin < 0 || xmax < 0 || ymax < 0)
-								{
-									continue;
-								}
 								generate_boxes.push_back(BoxInfo{ xmin, ymin, xmax, ymax, max_class_socre, max_ind });
 							}
 						}
@@ -339,13 +335,12 @@ std::vector<std::pair<cv::Rect2f, std::vector<cv::Rect2f>>> YOLO::detect(cv::Mat
 	// Perform non maximum suppression to eliminate redundant overlapping boxes with
 	// lower confidences
 	nms(generate_boxes);
-
 	for (size_t i = 0; i < generate_boxes.size(); ++i)
 	{
 		int xmin = int(generate_boxes[i].x1);
 		int ymin = int(generate_boxes[i].y1);
 		rectangle(frame, cv::Point(xmin, ymin), cv::Point(int(generate_boxes[i].x2), int(generate_boxes[i].y2)), cv::Scalar(0, 255, 0), 3);
-		std::string label = cv::format("%.2f", generate_boxes[i].score);
+		std::string label = std::format("%.2f", generate_boxes[i].score);
 		label = this->class_names[generate_boxes[i].label] + ":" + label;
 		putText(frame, label, cv::Point(xmin, ymin - 5), cv::FONT_HERSHEY_SIMPLEX, 0.75, cv::Scalar(0, 255, 0), 1);
 	}
@@ -425,19 +420,16 @@ std::vector<std::tuple<cv::Mat, int, int>> YOLO::splitImage(const cv::Mat& img, 
 	int num_blocks_w = std::ceil(img_width / (float)(max_width * (1 - overlap)));
 	int num_blocks_h = std::ceil(img_height / (float)(max_height * (1 - overlap)));
 
-	int block_width = img_width / num_blocks_w;
-	int actual_block_width = block_width / (1 - overlap);
-	int block_height = img_height / num_blocks_h;
-	int actual_block_height = block_height / (1 - overlap);
-
 	for (int h = 0; h < num_blocks_h; ++h) {
 		for (int w = 0; w < num_blocks_w; ++w) {
-			int x_start = w * block_width - std::floor(w * block_width * overlap);
-			int y_start = h * block_height - std::floor(h * block_height * overlap);
+			int x_start = w * max_width - std::floor(w * max_width * overlap);
+			int y_start = h * max_height - std::floor(h * max_height * overlap);
 			x_start = std::max(0, x_start);
 			y_start = std::max(0, y_start);
-			int x_end = std::min(img_width, x_start + actual_block_width);
-			int y_end = std::min(img_height, y_start + actual_block_height);
+
+			// 对于最后一个块，直接使用图像的宽度和高度作为结束坐标
+			int x_end = (w == num_blocks_w - 1) ? img_width : std::min(img_width, x_start + max_width);
+			int y_end = (h == num_blocks_h - 1) ? img_height : std::min(img_height, y_start + max_height);
 
 			cv::Rect region(x_start, y_start, x_end - x_start, y_end - y_start);
 			cv::Mat img_block = img(region);
@@ -450,11 +442,15 @@ std::vector<std::tuple<cv::Mat, int, int>> YOLO::splitImage(const cv::Mat& img, 
 
 std::vector<std::pair<cv::Rect2f, std::vector<cv::Rect2f>>> YOLO::getCPCoordinate(cv::Mat& img)
 {
+	clock_t start1, end1;
 	std::vector<std::pair<cv::Rect2f, std::vector<cv::Rect2f>>> res;
 	auto splittedImages = splitImage(img);
 	for (int i = 0; i < splittedImages.size(); i++)
 	{
+		start1 = clock();
 		auto simImg_vectorOfRect = detect(std::get<0>(splittedImages[i]));
+		end1 = clock();
+		std::cout << "一张检测:" << (static_cast<double>(end1) - start1) / CLOCKS_PER_SEC << std::endl;
 		int x_image = std::get<1>(splittedImages[i]);
 		int y_image = std::get<2>(splittedImages[i]);
 		for (int j = 0; j < simImg_vectorOfRect.size(); j++)

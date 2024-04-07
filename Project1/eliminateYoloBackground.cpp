@@ -108,7 +108,7 @@ std::pair<cv::Rect2f, std::vector<cv::Rect2f>> eliminateYoloBackground::getBound
     }
     else
     {
-        auto [topLeft, bottomRight] = findBoundingRectangle_heibai(heibai, 0.2);
+        auto [topLeft, bottomRight] = findBoundingRectangle_heibai(heibai, 0.3);
         cv::Mat hsvImage = useHsvTest(image);//用hsv处理的图做一下交集
         cv::Rect2f black_rect = cv::Rect(topLeft.x, topLeft.y, bottomRight.x - topLeft.x, bottomRight.y - topLeft.y);
         auto pinVector = findPinsAroundBlackBox(heibai, black_rect, hsvImage);

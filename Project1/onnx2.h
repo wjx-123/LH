@@ -98,7 +98,7 @@ private:
 	/*
 	* ·Ö¸îÍ¼Æ¬
 	*/
-	std::vector<std::tuple<cv::Mat, int, int>> splitImage(const cv::Mat& img, int max_width = 2448, int max_height = 2048, float overlap = 0.1);
+	std::vector<std::tuple<cv::Mat, int, int>> splitImage(const cv::Mat& img, int max_width = 2500, int max_height = 2500, float overlap = 0.0);
 
 	std::vector<std::pair<cv::Rect2f, std::vector<cv::Rect2f>>> detect(cv::Mat& frame);
 };

@@ -1,58 +1,594 @@
 ﻿  正在扫描源以查找模块依赖项...
-  onnx2.cpp
-E:\visualworkplace\LH\Project1\onnx2.cpp(36,40): warning C4244: “=”: 从“_Ty”转换到“int”，可能丢失数据
+  eliminateYoloBackground.cpp
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(29,76): warning C4305: “参数”: 从“double”到“float”截断
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(51,50): warning C4244: “参数”: 从“float”转换到“_Tp”，可能丢失数据
           with
           [
-              _Ty=int64_t
+              _Tp=int
           ]
-E:\visualworkplace\LH\Project1\onnx2.cpp(37,39): warning C4244: “=”: 从“_Ty”转换到“int”，可能丢失数据
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(50,50): warning C4244: “参数”: 从“float”转换到“_Tp”，可能丢失数据
           with
           [
-              _Ty=int64_t
+              _Tp=int
           ]
-E:\visualworkplace\LH\Project1\onnx2.cpp(38,36): warning C4244: “=”: 从“_Ty”转换到“int”，可能丢失数据
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(49,68): warning C4244: “参数”: 从“float”转换到“_Tp”，可能丢失数据
           with
           [
-              _Ty=int64_t
+              _Tp=int
           ]
-E:\visualworkplace\LH\Project1\onnx2.cpp(39,44): warning C4244: “=”: 从“_Ty”转换到“int”，可能丢失数据
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(48,72): warning C4244: “参数”: 从“float”转换到“_Tp”，可能丢失数据
           with
           [
-              _Ty=int64_t
+              _Tp=int
           ]
-E:\visualworkplace\LH\Project1\onnx2.cpp(47,36): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(82,33): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(85,42): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(108,59): warning C4244: “=”: 从“double”转换到“_Ty”，可能丢失数据
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(76,76): warning C4305: “参数”: 从“double”到“float”截断
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(93,76): warning C4305: “参数”: 从“double”到“float”截断
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(333,126): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
           with
           [
-              _Ty=float
+              _Tp=float
           ]
-E:\visualworkplace\LH\Project1\onnx2.cpp(231,73): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(231,41): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(232,70): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(232,41): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(233,82): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(233,38): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(234,79): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(234,38): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(256,28): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(256,23): warning C4244: “初始化”: 从“double”转换到“const float”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(288,20): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(289,20): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(290,20): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(291,20): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(303,22): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(305,22): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(312,22): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(314,22): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(318,22): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(319,22): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(320,22): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(321,22): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(397,32): warning C4101: “e”: 未引用的局部变量
-E:\visualworkplace\LH\Project1\onnx2.cpp(420,19): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(421,19): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(425,16): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
-E:\visualworkplace\LH\Project1\onnx2.cpp(426,16): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(333,110): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(333,95): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(334,157): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(334,140): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(334,113): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(334,98): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(339,123): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(339,111): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(339,99): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(340,180): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(340,139): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(340,126): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(340,100): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(345,126): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(345,110): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(345,95): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(346,157): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(346,140): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(346,113): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(346,98): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(347,123): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(347,111): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(347,99): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(348,180): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(348,139): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(348,126): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(348,100): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(404,126): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(404,110): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(404,95): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(405,157): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(405,140): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(405,113): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(405,98): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(410,123): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(410,111): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(410,99): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(411,180): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(411,139): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(411,126): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(411,100): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(416,126): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(416,110): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(416,95): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(417,157): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(417,140): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(417,113): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(417,98): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(418,123): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(418,111): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(418,99): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(419,180): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(419,139): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(419,126): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(419,100): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(462,18): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(522,14): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(815,35): warning C4244: “=”: 从“float”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(819,42): warning C4244: “=”: 从“float”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(820,35): warning C4244: “=”: 从“float”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(828,35): warning C4244: “=”: 从“float”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(832,44): warning C4244: “=”: 从“float”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(833,35): warning C4244: “=”: 从“float”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(873,22): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(874,23): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(883,13): warning C4244: “初始化”: 从“_Tp”转换到“float”，可能丢失数据
+          with
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(885,13): warning C4244: “初始化”: 从“_Tp”转换到“float”，可能丢失数据
+          with
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(886,14): warning C4244: “=”: 从“float”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(887,14): warning C4244: “=”: 从“float”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(890,16): warning C4244: “初始化”: 从“_Tp”转换到“float”，可能丢失数据
+          with
+          [
+              _Tp=int
+          ]
+E:\visualworkplace\LH\Project1\eliminateYoloBackground.cpp(892,19): warning C4244: “=”: 从“float”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=int
+          ]
   Project1.vcxproj -> E:\visualworkplace\LH\x64\Debug\Project1.exe

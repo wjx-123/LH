@@ -58,6 +58,9 @@ private:
 	//调整引脚框位置(两脚类专用)
 	void moveToIntersect(cv::Rect& rectToMove, const cv::Rect& referenceRect);
 
+	//如果引脚框过小，则调整位置成百分之八十,且在图片正中心
+	void rectTooSmall(cv::Point& topLeft, cv::Point& bottomRight, const cv::Mat& img);
+
 	//反转图片后转化坐标(两脚类专用)
 	void transformRectCoordinates(cv::Rect& rect);
 

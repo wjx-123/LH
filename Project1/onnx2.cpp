@@ -339,11 +339,12 @@ std::vector<std::pair<cv::Rect2f, std::vector<cv::Rect2f>>> YOLO::detect(cv::Mat
 	{
 		int xmin = int(generate_boxes[i].x1);
 		int ymin = int(generate_boxes[i].y1);
-		rectangle(frame, cv::Point(xmin, ymin), cv::Point(int(generate_boxes[i].x2), int(generate_boxes[i].y2)), cv::Scalar(0, 255, 0), 3);
+		rectangle(img, cv::Point(xmin, ymin), cv::Point(int(generate_boxes[i].x2), int(generate_boxes[i].y2)), cv::Scalar(0, 255, 0), 3);
 		std::string label = std::format("%.2f", generate_boxes[i].score);
 		label = this->class_names[generate_boxes[i].label] + ":" + label;
-		putText(frame, label, cv::Point(xmin, ymin - 5), cv::FONT_HERSHEY_SIMPLEX, 0.75, cv::Scalar(0, 255, 0), 1);
+		putText(img, label, cv::Point(xmin, ymin - 5), cv::FONT_HERSHEY_SIMPLEX, 0.75, cv::Scalar(0, 255, 0), 1);
 	}
+	cv::imwrite("C:\\Users\\LENOVO\\Pictures\\1\\1\\7_ini.jpg", img);
 	auto smt_frame = getBlackPosition(generate_boxes, frame);
 	generate_boxes.clear();
 	return smt_frame;
@@ -371,17 +372,17 @@ std::vector<std::pair<cv::Rect2f, std::vector<cv::Rect2f>>> YOLO::getBlackPositi
 			// 从大图中把这个小图扣出来
 			cv::Mat smallSmtImg = frame(smtRect).clone();
 			std::string typeOfLable;
-			if (generate_boxes[i].label == 0 || generate_boxes[i].label == 1 || generate_boxes[i].label == 2)
-			{
-				typeOfLable = "T";
-			}
-			else if (generate_boxes[i].label == 3)
+			if (generate_boxes[i].label == 0)
 			{
 				typeOfLable = "R";
 			}
+			else if (generate_boxes[i].label == 1)
+			{
+				typeOfLable = "T";
+			}
 			else
 			{
-				typeOfLable = "D";
+				typeOfLable = "P";
 			}
 
 			auto temp = eliminateYoloBackground.getBoundAndPin(smallSmtImg, typeOfLable);

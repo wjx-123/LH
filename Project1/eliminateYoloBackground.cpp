@@ -11,7 +11,7 @@ eliminateYoloBackground::~eliminateYoloBackground()
 std::pair<cv::Rect2f, std::vector<cv::Rect2f>> eliminateYoloBackground::getBoundAndPin(cv::Mat& image, std::string types)
 {
     cv::Mat heibai = test(image,types);
-    if (types == "T")//两脚
+    if (types == "R")//两脚
     {
         bool ifTransform = false;
         //判断是否是竖直的
@@ -24,9 +24,9 @@ std::pair<cv::Rect2f, std::vector<cv::Rect2f>> eliminateYoloBackground::getBound
             cv::flip(heibai, heibai, 0);   // 沿y轴翻转
         }
         std::vector<cv::Rect2f> tPin;
-        cv::Rect2f rectHeibai = { static_cast<float>(image.cols * 0.3), static_cast<float>(image.rows * 0.35), static_cast<float>(image.cols * 0.35), static_cast<float>(image.rows * 0.25) };
+        cv::Rect2f rectHeibai = { static_cast<float>(image.cols * 0.3), static_cast<float>(image.rows * 0.35), static_cast<float>(image.cols * 0.4), static_cast<float>(image.rows * 0.4) };
         cv::rectangle(heibai, rectHeibai, cv::Scalar(0, 0, 0), cv::FILLED);
-        auto [topLeft, bottomRight] = findBoundingRectangle_heibai(heibai, 0.1);
+        auto [topLeft, bottomRight] = findBoundingRectangle_heibai(heibai, 0.2);
         cv::Rect black_rect = cv::Rect(topLeft.x, topLeft.y, bottomRight.x - topLeft.x, bottomRight.y - topLeft.y);
         //cv::rectangle(image, black_rect, cv::Scalar(0, 255, 100), 2);
         adjustRect(black_rect, image.size());
@@ -36,18 +36,24 @@ std::pair<cv::Rect2f, std::vector<cv::Rect2f>> eliminateYoloBackground::getBound
         /*扩散*/
         cv::bitwise_not(topImg, topImg);
         auto [topLeft_top, bottomRight_top] = findBoundingRectangle_heibai(topImg, 0.5);
+        //判断如果这个框过小，则生成一个
+        rectTooSmall(topLeft_top,bottomRight_top,topImg);
         cv::Rect topImg_rect = cv::Rect(topLeft_top.x, topLeft_top.y, bottomRight_top.x - topLeft_top.x, bottomRight_top.y - topLeft_top.y);
         moveToIntersect(topImg_rect, black_rect);
         cv::bitwise_not(bottomImg, bottomImg);
         auto [topLeft_bottom, bottomRight_bottom] = findBoundingRectangle_heibai(bottomImg, 0.5);
+        //判断如果这个框过小，则生成一个
+        rectTooSmall(topLeft_bottom, bottomRight_bottom, bottomImg);
         cv::Rect2f bottomImg_rect = cv::Rect(topLeft_bottom.x, topLeft_bottom.y, bottomRight_bottom.x - topLeft_bottom.x, bottomRight_bottom.y - topLeft_bottom.y);
         cv::Rect boundingBox1Adjusted(static_cast<float>(bottomImg_rect.x),
                 static_cast<float>(bottomImg_rect.y + black_rect.y + black_rect.height),
                 static_cast<float>(bottomImg_rect.width),
                 static_cast<float>(bottomImg_rect.height));
         moveToIntersect(boundingBox1Adjusted, black_rect);
+        //最后的判断，修改大小
+        //boundingBox1Adjusted = boundingBox1Adjusted.width * boundingBox1Adjusted.height <= bottomImg.rows * bottomImg.cols * 0.6 ? cv::Rect((bottomImg.cols - int(bottomImg.cols * 0.8)) / 2, (bottomImg.rows - int(bottomImg.rows * 0.8)) / 2, bottomImg.cols * 0.8, bottomImg.rows * 0.8) : boundingBox1Adjusted;
 
-        if (ifTransform = true)
+        if (ifTransform == true)
         {
             cv::flip(image, image, 0);   // 沿 y 轴翻转
             cv::transpose(image, image);
@@ -60,35 +66,10 @@ std::pair<cv::Rect2f, std::vector<cv::Rect2f>> eliminateYoloBackground::getBound
         cv::rectangle(image, boundingBox1Adjusted, cv::Scalar(255, 0, 0), 2);*/
         tPin.push_back(topImg_rect);
         tPin.push_back(boundingBox1Adjusted);
-
-        // 异步地反转上部图像并寻找边界矩形
-        //auto futureTop = std::async(std::launch::async, [&]() {
-        //    cv::bitwise_not(topImg, topImg); // 反转颜色
-        //    auto [topLeft_top, bottomRight_top] = findBoundingRectangle_heibai(topImg, 0.5);
-        //    cv::Rect topImg_rect(topLeft_top.x, topLeft_top.y, bottomRight_top.x - topLeft_top.x, bottomRight_top.y - topLeft_top.y);
-        //    moveToIntersect(topImg_rect, black_rect);
-        //    return topImg_rect;
-        //    });
-
-        //// 异步地反转下部图像并寻找边界矩形
-        //auto futureBottom = std::async(std::launch::async, [&]() {
-        //    cv::bitwise_not(bottomImg, bottomImg); // 反转颜色
-        //    auto [topLeft_bottom, bottomRight_bottom] = findBoundingRectangle_heibai(bottomImg, 0.5);
-        //    cv::Rect bottomImg_rect(topLeft_bottom.x, topLeft_bottom.y + black_rect.y + black_rect.height, bottomRight_bottom.x - topLeft_bottom.x, bottomRight_bottom.y - topLeft_bottom.y);
-        //    moveToIntersect(bottomImg_rect, black_rect);
-        //    return bottomImg_rect;
-        //    });
-
-        //// 获取异步操作的结果
-        //cv::Rect topImg_rect = futureTop.get();
-        //cv::Rect bottomImg_rect = futureBottom.get();
-        //tPin.push_back(topImg_rect);
-        //tPin.push_back(bottomImg_rect);
-
         std::pair pair  = { black_rect ,tPin };
         return pair;
     }
-    else if (types == "R")//三脚
+    else if (types == "T")//三脚
     {
         //把三脚的三分之一正方形也中间填充一下
         cv::rectangle(heibai, cv::Point(heibai.cols / 3, heibai.rows / 3), cv::Point(heibai.cols * 2 / 3, heibai.rows * 2 / 3), cv::Scalar(0, 0, 0), cv::FILLED);
@@ -107,6 +88,7 @@ std::pair<cv::Rect2f, std::vector<cv::Rect2f>> eliminateYoloBackground::getBound
         return pair;
     }
     else
+
     {
         auto [topLeft, bottomRight] = findBoundingRectangle_heibai(heibai, 0.3);
         cv::Mat hsvImage = useHsvTest(image);//用hsv处理的图做一下交集
@@ -881,6 +863,20 @@ void eliminateYoloBackground::moveToIntersect(cv::Rect& rectToMove, const cv::Re
     }
 }
 
+void eliminateYoloBackground::rectTooSmall(cv::Point& topLeft, cv::Point& bottomRight, const cv::Mat& img)
+{
+    int boxWidth = bottomRight.x - topLeft.x;
+    int boxHeight = bottomRight.y - topLeft.y;
+    double boxArea = boxWidth * boxHeight;
+    double imgArea = img.rows * img.cols;
+    if (boxArea < imgArea * 0.6) {
+        int newWidth = img.cols * 0.8;
+        int newHeight = img.rows * 0.8;
+        topLeft = cv::Point((img.cols - newWidth) / 2, (img.rows - newHeight) / 2);
+        bottomRight = cv::Point(topLeft.x + newWidth, topLeft.y + newHeight);
+    }
+}
+
 void eliminateYoloBackground::transformRectCoordinates(cv::Rect& rect)
 {
     // 将竖直方向的 x 坐标赋值给新的 y 坐标
@@ -997,7 +993,7 @@ void eliminateYoloBackground::addSymmetricRectsIfNeeded(std::vector<cv::Rect2f>&
             if (std::abs(rCenterY - symRectCenterY) <= r.height / 2.0f) {
                 // 检查重叠面积是否超过 50%
                 cv::Rect2f intersection = r & symmetricalRect;
-                return (intersection.area() >= r.area() * 0.5 || intersection.area() >= symmetricalRect.area() * 0.5);
+                return (intersection.area() >= r.area() * 0.2 || intersection.area() >= symmetricalRect.area() * 0.2);
             }
             return false;
             });

@@ -1371,6 +1371,6 @@ int main()
         }
     }
     std::cout << "³¬³ö·¶Î§:" <<nums<< std::endl;
-    //cv::imwrite("C:\\Users\\LENOVO\\Pictures\\1\\1\\6.jpg", img1);
+    cv::imwrite("C:\\Users\\LENOVO\\Pictures\\1\\1\\7.jpg", img1);
     return 0;
 }

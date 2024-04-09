@@ -71,13 +71,13 @@ private:
 	static bool rectsAreSimilar(const cv::Rect2f& a, const cv::Rect2f& b);
 
 	//查找出现频率最高的“模板”矩形(多脚类专用)
-	cv::Rect2f findTemplateRect(const std::vector<cv::Rect2f>& rects);
+	cv::Rect2f findTemplateRect(const std::vector<cv::Rect2f>& rects, cv::Rect2f black_rect);
 
 	//过滤掉面积大于模板面积两倍的矩形(多脚类专用)
-	void filterRects(std::vector<cv::Rect2f>& rects, const cv::Rect2f& templateRect);
+	void filterRects(std::vector<cv::Rect2f>& rects, const cv::Rect2f& templateRect, cv::Rect2f black_rect);
 
 	//处理多引脚矩形
-	void processRects(std::vector<cv::Rect2f>& rects);
+	void processRects(std::vector<cv::Rect2f>& rects, cv::Rect2f black_rect);
 
 	//计算对称矩形(多引脚专用)
 	cv::Rect2f calculateSymmetricRect(const cv::Rect2f& sourceRect, const cv::Rect2f& black_rect);
@@ -90,4 +90,7 @@ private:
 private:
 
 	static constexpr float SIMILARITY_THRESHOLD = 5.0f;
+
+	int templateWidth = 160;//findTemplateRect用
+	int templateHeight = 50;
 };

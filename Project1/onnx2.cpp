@@ -344,7 +344,7 @@ std::vector<std::pair<cv::Rect2f, std::vector<cv::Rect2f>>> YOLO::detect(cv::Mat
 		label = this->class_names[generate_boxes[i].label] + ":" + label;
 		putText(img, label, cv::Point(xmin, ymin - 5), cv::FONT_HERSHEY_SIMPLEX, 0.75, cv::Scalar(0, 255, 0), 1);
 	}
-	cv::imwrite("C:\\Users\\LENOVO\\Pictures\\1\\1\\7_ini.jpg", img);
+	//cv::imwrite("C:\\Users\\LENOVO\\Pictures\\1\\1\\7_ini.jpg", img);
 	auto smt_frame = getBlackPosition(generate_boxes, frame);
 	generate_boxes.clear();
 	return smt_frame;

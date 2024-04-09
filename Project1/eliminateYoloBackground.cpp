@@ -26,7 +26,7 @@ std::pair<cv::Rect2f, std::vector<cv::Rect2f>> eliminateYoloBackground::getBound
         std::vector<cv::Rect2f> tPin;
         cv::Rect2f rectHeibai = { static_cast<float>(image.cols * 0.3), static_cast<float>(image.rows * 0.35), static_cast<float>(image.cols * 0.4), static_cast<float>(image.rows * 0.4) };
         cv::rectangle(heibai, rectHeibai, cv::Scalar(0, 0, 0), cv::FILLED);
-        auto [topLeft, bottomRight] = findBoundingRectangle_heibai(heibai, 0.2);
+        auto [topLeft, bottomRight] = findBoundingRectangle_heibai(heibai, 0.8);
         cv::Rect black_rect = cv::Rect(topLeft.x, topLeft.y, bottomRight.x - topLeft.x, bottomRight.y - topLeft.y);
         //cv::rectangle(image, black_rect, cv::Scalar(0, 255, 100), 2);
         adjustRect(black_rect, image.size());
@@ -93,9 +93,16 @@ std::pair<cv::Rect2f, std::vector<cv::Rect2f>> eliminateYoloBackground::getBound
         auto [topLeft, bottomRight] = findBoundingRectangle_heibai(heibai, 0.3);
         cv::Mat hsvImage = useHsvTest(image);//用hsv处理的图做一下交集
         cv::Rect2f black_rect = cv::Rect(topLeft.x, topLeft.y, bottomRight.x - topLeft.x, bottomRight.y - topLeft.y);
+        //cv::rectangle(image, black_rect, cv::Scalar(0, 255, 100), 2);
         auto pinVector = findPinsAroundBlackBox(heibai, black_rect, hsvImage);
-        processRects(pinVector);
+        processRects(pinVector, black_rect);
+      /*  for (auto a : pinVector) {
+            cv::rectangle(image, a, cv::Scalar(255, 255, 11), 2);
+        }*/
         addSymmetricRectsIfNeeded(pinVector, black_rect);
+  /*      for (auto a : pinVector) {
+            cv::rectangle(image, a, cv::Scalar(100, 255, 0), 2);
+        }*/
         std::pair pair = { black_rect, pinVector };
         return pair;
     }
@@ -369,7 +376,7 @@ std::vector<cv::Rect2f> eliminateYoloBackground::findPinsAroundBlackBox(cv::Mat&
     //用hsv图取交集筛选矩形
     for (auto temp : res)
     {
-        cv::rectangle(img, temp, cv::Scalar(255), 2);
+        //cv::rectangle(img, temp, cv::Scalar(255), 2);
         if (containsWhitePixel(hsvImg, temp))
         {
             finalRes.push_back(temp);
@@ -907,47 +914,128 @@ bool eliminateYoloBackground::rectsAreSimilar(const cv::Rect2f& a, const cv::Rec
         std::abs(a.height - b.height) < SIMILARITY_THRESHOLD;
 }
 
-cv::Rect2f eliminateYoloBackground::findTemplateRect(const std::vector<cv::Rect2f>& rects)
+cv::Rect2f eliminateYoloBackground::findTemplateRect(const std::vector<cv::Rect2f>& rects, cv::Rect2f black_rect)
 {
-    std::vector<std::pair<cv::Rect2f, int>> frequency; // 矩形及其出现频率
+    //根据出现频率判断
+    //std::vector<std::pair<cv::Rect2f, int>> frequency; // 矩形及其出现频率
+    //for (const auto& rect : rects) {
+    //    bool found = false;
+    //    for (auto& item : frequency) {
+    //        if (rectsAreSimilar(rect, item.first)) {
+    //            item.second++;
+    //            found = true;
+    //            break;
+    //        }
+    //    }
+    //    if (!found) {
+    //        frequency.push_back({ rect, 1 });
+    //    }
+    //}
+
+    //auto maxElem = std::max_element(frequency.begin(), frequency.end(),
+    //    [](const auto& a, const auto& b) {
+    //        return a.second < b.second;
+    //    });
+
+    //return maxElem->first;
+    //根据是否接近固定模板判断
+    int count_vertical = 0;
+    int count_horizontal = 0;
+
+    // 确定black_rect的长边是水平还是垂直
+    bool black_rect_is_horizontal = black_rect.width > black_rect.height;
+
     for (const auto& rect : rects) {
-        bool found = false;
-        for (auto& item : frequency) {
-            if (rectsAreSimilar(rect, item.first)) {
-                item.second++;
-                found = true;
-                break;
+        // 计算矩形的长宽比
+        float aspectRatioRect = rect.width / rect.height;
+        float aspectRatioTemplate = templateWidth / templateHeight;
+
+        // 如果black_rect的长边是水平的，我们期望模板的长边是垂直的，反之亦然
+        if (black_rect_is_horizontal) {
+            // 模板应为垂直，长边/宽边比应接近于aspectRatioTemplate
+            if (aspectRatioRect < 1) {
+                count_vertical++;
             }
         }
-        if (!found) {
-            frequency.push_back({ rect, 1 });
+        else {
+            // 模板应为水平，宽边/长边比应接近于1/aspectRatioTemplate
+            if (aspectRatioRect > 1) {
+                count_horizontal++;
+            }
         }
     }
 
-    auto maxElem = std::max_element(frequency.begin(), frequency.end(),
-        [](const auto& a, const auto& b) {
-            return a.second < b.second;
-        });
-
-    return maxElem->first;
+    // 根据统计的频率决定模板尺寸，同时考虑black_rect的长边方向
+    if (black_rect_is_horizontal) {
+        // 如果black_rect的长边是水平的，返回垂直模板
+        if (count_vertical > count_horizontal) {
+            return cv::Rect2f(0, 0, templateHeight, templateWidth); // 垂直
+        }
+        else {
+            return cv::Rect2f(0, 0, templateWidth, templateHeight); // 水平
+        }
+    }
+    else {
+        // 如果black_rect的长边是垂直的，返回水平模板
+        if (count_horizontal > count_vertical) {
+            return cv::Rect2f(0, 0, templateWidth, templateHeight); // 水平
+        }
+        else {
+            return cv::Rect2f(0, 0, templateHeight, templateWidth); // 垂直
+        }
+    }
 }
 
-void eliminateYoloBackground::filterRects(std::vector<cv::Rect2f>& rects, const cv::Rect2f& templateRect)
+void eliminateYoloBackground::filterRects(std::vector<cv::Rect2f>& rects, const cv::Rect2f& templateRect, cv::Rect2f black_rect)
 {
     float templateArea = templateRect.area();
+    //这段是为了调整小于模板一半的矩形位置
+    for (auto& rect : rects) {
+        float area = rect.area();
+
+        // 如果矩形小于模板的一半，则调整它
+        if (area < templateArea / 2) {
+            // 检查并调整rect以贴近black_rect
+            bool isLeftClose = std::abs(rect.x - black_rect.br().x) < 5;
+            bool isRightClose = std::abs(rect.br().x - black_rect.x) < 5;
+            bool isTopClose = std::abs(rect.y - black_rect.br().y) < 5;
+            bool isBottomClose = std::abs(rect.br().y - black_rect.y) < 5;
+
+            // 调整大小为模板大小
+            rect.width = templateRect.width;
+            rect.height = templateRect.height;
+
+            // 根据靠近black_rect的边对齐
+            if (isLeftClose) {
+                rect.x = black_rect.br().x;
+            }
+            else if (isRightClose) {
+                rect.x = black_rect.x - templateRect.width;
+            }
+
+            if (isTopClose) {
+                rect.y = black_rect.br().y;
+            }
+            else if (isBottomClose) {
+                rect.y = black_rect.y - templateRect.height;
+            }
+        }
+    }
+
+
     rects.erase(std::remove_if(rects.begin(), rects.end(),
         [templateArea](const cv::Rect2f& rect) {
-            return rect.area() > 2 * templateArea || rect.area() < templateArea / 2;
+            return rect.area() > 2 * templateArea ;//|| rect.area() < templateArea / 2
         }),
         rects.end());
 }
 
-void eliminateYoloBackground::processRects(std::vector<cv::Rect2f>& rects)
+void eliminateYoloBackground::processRects(std::vector<cv::Rect2f>& rects, cv::Rect2f black_rect)
 {
     if (rects.size() > 1) 
     {
-        cv::Rect2f templateRect = findTemplateRect(rects);
-        filterRects(rects, templateRect);
+        cv::Rect2f templateRect = findTemplateRect(rects, black_rect);
+        filterRects(rects, templateRect, black_rect);
     }
     
 }
@@ -977,23 +1065,35 @@ bool eliminateYoloBackground::isOverlappingMoreThanHalf(const cv::Rect2f& rect1,
 
 void eliminateYoloBackground::addSymmetricRectsIfNeeded(std::vector<cv::Rect2f>& rects, const cv::Rect2f& black_rect)
 {
-    float symmetryAxisY = black_rect.y + (black_rect.height / 2.0f);
+    // 判断black_rect的长边方向
+    bool isHorizontalLongEdge = black_rect.width > black_rect.height;
+    float symmetryAxis = isHorizontalLongEdge ? (black_rect.y + black_rect.height / 2.0f) : (black_rect.x + black_rect.width / 2.0f);
     std::vector<cv::Rect2f> newRects;
 
     for (const auto& rect : rects) {
-        float centerY = rect.y + (rect.height / 2.0f);
-        float symmetricalCenterY = (symmetryAxisY - centerY) + symmetryAxisY;
-        cv::Rect2f symmetricalRect(rect.x, symmetricalCenterY - (rect.height / 2.0f), rect.width, rect.height);
+        cv::Rect2f symmetricalRect;
+        if (isHorizontalLongEdge) {
+            // 如果black_rect的长边是水平的，进行垂直方向上的镜像
+            float centerY = rect.y + (rect.height / 2.0f);
+            float symmetricalCenterY = (symmetryAxis - centerY) + symmetryAxis;
+            symmetricalRect = cv::Rect2f(rect.x, symmetricalCenterY - (rect.height / 2.0f), rect.width, rect.height);
+        }
+        else {
+            // 如果black_rect的长边是垂直的，进行水平方向上的镜像
+            float centerX = rect.x + (rect.width / 2.0f);
+            float symmetricalCenterX = (symmetryAxis - centerX) + symmetryAxis;
+            symmetricalRect = cv::Rect2f(symmetricalCenterX - (rect.width / 2.0f), rect.y, rect.width, rect.height);
+        }
 
         // 检查是否已经存在对称的矩形
         bool exists = std::any_of(rects.begin(), rects.end(), [&symmetricalRect](const cv::Rect2f& r) {
-            float rCenterY = r.y + (r.height / 2.0f);
-            float symRectCenterY = symmetricalRect.y + (symmetricalRect.height / 2.0f);
-            // 检查 y 方向上中心点是否接近
-            if (std::abs(rCenterY - symRectCenterY) <= r.height / 2.0f) {
-                // 检查重叠面积是否超过 50%
+            float rCenter = r.y + (r.height / 2.0f);
+            float symRectCenter = symmetricalRect.y + (symmetricalRect.height / 2.0f);
+            // 对于垂直镜像，检查Y方向中心点是否接近；对于水平镜像，类似地检查X方向
+            if (std::abs(rCenter - symRectCenter) <= r.height * 0.8) {  // 此处的条件可以根据需要调整
                 cv::Rect2f intersection = r & symmetricalRect;
-                return (intersection.area() >= r.area() * 0.2 || intersection.area() >= symmetricalRect.area() * 0.2);
+                // 检查重叠面积是否超过某个阈值，此处设为10%，可以根据具体情况调整
+                return (intersection.area() >= r.area() * 0.1 || intersection.area() >= symmetricalRect.area() * 0.1);
             }
             return false;
             });
@@ -1003,6 +1103,7 @@ void eliminateYoloBackground::addSymmetricRectsIfNeeded(std::vector<cv::Rect2f>&
         }
     }
 
+    // 将不存在的对称矩形添加到原列表中
     rects.insert(rects.end(), newRects.begin(), newRects.end());
 }
 

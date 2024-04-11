@@ -24,6 +24,9 @@ public:
 	//特把三引脚的分出
 	std::vector<cv::Rect2f> findPinsAroundBlackBox_ofThree(cv::Mat& img, cv::Rect2f& blackBox, cv::Mat& hsvImg);
 
+	//根据方向信息生成引脚框(三脚类专用)
+	std::vector<cv::Rect2f> addSquareBasedOnWhitePixels(cv::Mat& img, cv::Rect2f& blackBox);
+
 	//轮廓信息测试
 	cv::Mat test(cv::Mat &img, std::string types);
 

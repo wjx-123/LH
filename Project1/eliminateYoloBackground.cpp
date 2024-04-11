@@ -71,19 +71,28 @@ std::pair<cv::Rect2f, std::vector<cv::Rect2f>> eliminateYoloBackground::getBound
     }
     else if (types == "T")//三脚
     {
-        //把三脚的三分之一正方形也中间填充一下
+        //把三脚的三分之一引脚框也中间填充一下
         cv::rectangle(heibai, cv::Point(heibai.cols / 3, heibai.rows / 3), cv::Point(heibai.cols * 2 / 3, heibai.rows * 2 / 3), cv::Scalar(0, 0, 0), cv::FILLED);
         auto [topLeft, bottomRight] = findBoundingRectangle_heibai(heibai, 0.2);
         cv::Mat hsvImage = useHsvTest(image);//用hsv处理的图做一下交集
         cv::Rect2f black_rect = cv::Rect(topLeft.x, topLeft.y, bottomRight.x - topLeft.x, bottomRight.y - topLeft.y);
-        auto pinVector = findPinsAroundBlackBox_ofThree(hsvImage, black_rect, hsvImage);//heibai
-        //截取最接近正方形的前三个矩形
-        if (pinVector.size() > 3)
+        if (black_rect.width * black_rect.height < 12025)
         {
-            std::sort(pinVector.begin(), pinVector.end(), compareRectsCloseToSquare);
-            // 保留最接近正方形的前三个矩形框
-            pinVector.resize(3);
+            return {};
         }
+        /*异步检测的方法*/
+        //auto pinVector = findPinsAroundBlackBox_ofThree(hsvImage, black_rect, hsvImage);//heibai
+        ////截取最接近引脚框的前三个矩形
+        //if (pinVector.size() > 3)
+        //{
+        //    std::sort(pinVector.begin(), pinVector.end(), compareRectsCloseToSquare);
+        //    // 保留最接近引脚框的前三个矩形框
+        //    pinVector.resize(3);
+        //}
+
+        /*根据方向直接生成*/
+        auto pinVector = addSquareBasedOnWhitePixels(heibai,black_rect);
+
         std::pair pair = { black_rect, pinVector };
         return pair;
     }
@@ -93,6 +102,10 @@ std::pair<cv::Rect2f, std::vector<cv::Rect2f>> eliminateYoloBackground::getBound
         auto [topLeft, bottomRight] = findBoundingRectangle_heibai(heibai, 0.3);
         cv::Mat hsvImage = useHsvTest(image);//用hsv处理的图做一下交集
         cv::Rect2f black_rect = cv::Rect(topLeft.x, topLeft.y, bottomRight.x - topLeft.x, bottomRight.y - topLeft.y);
+        if (black_rect.width * black_rect.height < 100000) 
+        {
+            return {};
+        }
         //cv::rectangle(image, black_rect, cv::Scalar(0, 255, 100), 2);
         auto pinVector = findPinsAroundBlackBox(heibai, black_rect, hsvImage);
         processRects(pinVector, black_rect);
@@ -456,6 +469,91 @@ std::vector<cv::Rect2f> eliminateYoloBackground::findPinsAroundBlackBox_ofThree(
         }
     }
     return finalRes;
+}
+
+std::vector<cv::Rect2f> eliminateYoloBackground::addSquareBasedOnWhitePixels(cv::Mat& image, cv::Rect2f& black_rect)
+{
+    std::vector<cv::Rect2f> squares;
+
+    // 判断黑框的长边是宽度还是高度
+    bool isHeightLonger = black_rect.height > black_rect.width;
+    cv::Mat part1, part2;
+
+    // 根据黑框的长边来切分图像
+    if (isHeightLonger) {
+        // 高度是长边，按宽度切分成左右两部分
+        part1 = image(cv::Rect(0, black_rect.y, black_rect.x, black_rect.height));
+        part2 = image(cv::Rect(black_rect.x + black_rect.width, black_rect.y, image.cols - (black_rect.x + black_rect.width), black_rect.height));
+    }
+    else {
+        // 宽度是长边，按高度切分成上下两部分
+        part1 = image(cv::Rect(black_rect.x, 0, black_rect.width, black_rect.y));
+        part2 = image(cv::Rect(black_rect.x, black_rect.y + black_rect.height, black_rect.width, image.rows - (black_rect.y + black_rect.height)));
+    }
+
+    // 计算两部分中的白色像素数量
+    int part1WhiteCount = cv::countNonZero(part1);
+    int part2WhiteCount = cv::countNonZero(part2);
+
+    // 在像素数量多的一边画两个引脚框，少的一边画一个
+    cv::Rect2f square1, square2, square3;
+    bool isPart1More = part1WhiteCount > part2WhiteCount;
+
+    // 90x90大小的引脚框
+    float squareSize = 85.0f;
+
+    if (isHeightLonger) {
+        // 高度是长边，按宽度切分
+        if (isPart1More) {
+            // 第一部分像素多，左边画两个引脚框
+            square1 = cv::Rect2f(black_rect.x - squareSize, black_rect.y, squareSize, squareSize);
+            square2 = cv::Rect2f(black_rect.x - squareSize, black_rect.y + black_rect.height - squareSize, squareSize, squareSize);
+            // 第二部分像素少，右边画一个引脚框
+            square3 = cv::Rect2f(black_rect.x + black_rect.width, (image.rows - squareSize) / 2, squareSize, squareSize);
+        }
+        else {
+            // 第二部分像素多，右边画两个引脚框
+            square1 = cv::Rect2f(black_rect.x + black_rect.width, black_rect.y , squareSize, squareSize);
+            square2 = cv::Rect2f(black_rect.x + black_rect.width, black_rect.y + black_rect.height - squareSize, squareSize, squareSize);
+            // 第一部分像素少，左边画一个引脚框
+            square3 = cv::Rect2f(black_rect.x - squareSize, (image.rows - squareSize) / 2, squareSize, squareSize);
+        }
+    }
+    else {
+        // 宽度是长边，按高度切分
+        if (isPart1More) {
+            // 第一部分像素多，上边画两个引脚框
+            square1 = cv::Rect2f(black_rect.x, black_rect.y - squareSize, squareSize, squareSize);
+            square2 = cv::Rect2f(black_rect.x + black_rect.width - squareSize, black_rect.y - squareSize, squareSize, squareSize);
+            // 第二部分像素少，下边画一个引脚框
+            square3 = cv::Rect2f((image.cols - squareSize) / 2, black_rect.y + black_rect.height, squareSize, squareSize);
+        }
+        else {
+            // 第二部分像素多，下边画两个引脚框
+            square1 = cv::Rect2f(black_rect.x , black_rect.y + black_rect.height, squareSize, squareSize);
+            square2 = cv::Rect2f(black_rect.x + black_rect.width - squareSize, black_rect.y + black_rect.height, squareSize, squareSize);
+            // 第一部分像素少，上边画一个引脚框
+            square3 = cv::Rect2f((image.cols - squareSize) / 2, black_rect.y - squareSize, squareSize, squareSize);
+        }
+    }
+
+    //// 在图像上绘制引脚框
+    //cv::rectangle(image, square1, cv::Scalar(255), cv::FILLED);
+    //cv::rectangle(image, square2, cv::Scalar(255), cv::FILLED);
+    //if (isHeightLonger) {
+    //    // 高度是长边，绘制第三个引脚框在中间
+    //    cv::rectangle(image, square3, cv::Scalar(255), cv::FILLED);
+    //}
+    //else {
+    //    // 宽度是长边，绘制第三个引脚框在边上
+    //    cv::rectangle(image, square3, cv::Scalar(255), cv::FILLED);
+    //}
+
+    squares.push_back(square1);
+    squares.push_back(square2);
+    squares.push_back(square3);
+
+    return squares;
 }
 
 cv::Mat eliminateYoloBackground::test(cv::Mat& img, std::string types)
@@ -903,7 +1001,7 @@ bool eliminateYoloBackground::compareRectsCloseToSquare(const cv::Rect2f& a, con
 {
     float diffA = std::abs(a.width - a.height);
     float diffB = std::abs(b.width - b.height);
-    return diffA < diffB; // 按照接近正方形的程度排序
+    return diffA < diffB; // 按照接近引脚框的程度排序
 }
 
 bool eliminateYoloBackground::rectsAreSimilar(const cv::Rect2f& a, const cv::Rect2f& b)

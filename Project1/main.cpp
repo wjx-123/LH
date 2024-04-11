@@ -1348,7 +1348,7 @@ int main()
     /*用模型测试分类以及检测效果*/
     Net_config yolo_nets = { 0.4, 0.4, 0.4,"best_rtp.onnx" };//bestrpc.onnx   10.12_rpc
     YOLO yolo_model(yolo_nets);
-    cv::Mat img1 = cv::imread("C:\\Users\\LENOVO\\Pictures\\3_29\\2\\thumb.jpg");//image\\1.jpg
+    cv::Mat img1 = cv::imread("C:\\Users\\LENOVO\\Pictures\\3_29\\1\\thumb2.jpg");//image\\1.jpg
     start = clock();
     auto smt_frame = yolo_model.getCPCoordinate(img1);
     end = clock();

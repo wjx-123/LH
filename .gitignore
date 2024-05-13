@@ -1,13 +1,13 @@
 /.vs
 /packages
-/x64
+/x64/
 /Project1/*.jpg
 /Project1/*.onnx
 /Project1/*.names
 /Project1/*.dll
 /Project1/*.bin
 /Project1/*.xml
-/Project1/x64
+/Project1/x64/
 
 #/Project2/Project2.vcxproj
 #/Project2/Project2.vcxproj.filters

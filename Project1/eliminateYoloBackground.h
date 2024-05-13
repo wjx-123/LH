@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <opencv2/opencv.hpp>
 #include <iostream>
 #include <unordered_map>
@@ -11,89 +11,89 @@ public:
 	eliminateYoloBackground();
 	~eliminateYoloBackground();
 
-	//µ÷ÓÃº¯Êı ÊäÈë¿Û³öµÄĞ¡Í¼ºÍÀàĞÍ(Á½½ÅT/Èı½ÅR/¶à½ÅD) ·µ»Øvector<pair>
+	//è°ƒç”¨å‡½æ•° è¾“å…¥æ‰£å‡ºçš„å°å›¾å’Œç±»å‹(ä¸¤è„šT/ä¸‰è„šR/å¤šè„šD) è¿”å›vector<pair>
 	std::pair<cv::Rect2f, std::vector<cv::Rect2f>> getBoundAndPin(cv::Mat& image,std::string types);
 
-	//BFS²¢²éÕÒĞ¡ºÚ¿é±ß½ç¾ØĞÎ
+	//BFSå¹¶æŸ¥æ‰¾å°é»‘å—è¾¹ç•ŒçŸ©å½¢
 	std::pair<cv::Point, cv::Point> findBoundingRectangle(const cv::Mat& img, int colorRange);
 	std::pair<cv::Point, cv::Point> findBoundingRectangle_heibai(const cv::Mat& img, float whiteRatioThreshold);
 	
-	//´ÓÕÒµ½µÄĞ¡ºÚ¿éµÄ±ß½ç¿ªÊ¼ÏòÍâËÑË÷
+	//ä»æ‰¾åˆ°çš„å°é»‘å—çš„è¾¹ç•Œå¼€å§‹å‘å¤–æœç´¢
 	std::vector<cv::Rect2f> findPinsAroundBlackBox(cv::Mat& img, cv::Rect2f& blackBox, cv::Mat& hsvImg);
 
-	//ÌØ°ÑÈıÒı½ÅµÄ·Ö³ö
+	//ç‰¹æŠŠä¸‰å¼•è„šçš„åˆ†å‡º
 	std::vector<cv::Rect2f> findPinsAroundBlackBox_ofThree(cv::Mat& img, cv::Rect2f& blackBox, cv::Mat& hsvImg);
 
-	//¸ù¾İ·½ÏòĞÅÏ¢Éú³ÉÒı½Å¿ò(Èı½ÅÀà×¨ÓÃ)
+	//æ ¹æ®æ–¹å‘ä¿¡æ¯ç”Ÿæˆå¼•è„šæ¡†(ä¸‰è„šç±»ä¸“ç”¨)
 	std::vector<cv::Rect2f> addSquareBasedOnWhitePixels(cv::Mat& img, cv::Rect2f& blackBox);
 
-	//ÂÖÀªĞÅÏ¢²âÊÔ
+	//è½®å»“ä¿¡æ¯æµ‹è¯•
 	cv::Mat test(cv::Mat &img, std::string types);
 
-	//Ê¹ÓÃhsv´ÓÔ­Í¼ÖĞ°ÑÒı½ÅÉ¸³öÀ´
+	//ä½¿ç”¨hsvä»åŸå›¾ä¸­æŠŠå¼•è„šç­›å‡ºæ¥
 	cv::Mat useHsvTest(cv::Mat& image);
 
 private:
-	//È«²¿ËÑË÷£¬ÊäÈëÃ¿Ò»¸öĞ¡ÇøÓò ºóÃæÁ½¸öÊÇÁ½¸ö»ù×¼Ïß 0´ú±íÏÂÃæµÄ±ß£¬1´ú±í×ó±ßµÄ£¬2´ú±íÉÏ±ß£¬3´ú±íÓÒ±ß
+	//å…¨éƒ¨æœç´¢ï¼Œè¾“å…¥æ¯ä¸€ä¸ªå°åŒºåŸŸ åé¢ä¸¤ä¸ªæ˜¯ä¸¤ä¸ªåŸºå‡†çº¿ 0ä»£è¡¨ä¸‹é¢çš„è¾¹ï¼Œ1ä»£è¡¨å·¦è¾¹çš„ï¼Œ2ä»£è¡¨ä¸Šè¾¹ï¼Œ3ä»£è¡¨å³è¾¹
 	std::vector<cv::Rect> getPinRect(cv::Mat& imgInit, cv::Rect rectInit, char baseline, int closestEdge);
 
-	//ÌØ°ÑÈıÒı½Å·Ö³ö
+	//ç‰¹æŠŠä¸‰å¼•è„šåˆ†å‡º
 	std::vector<cv::Rect> getPinRect_ofThree(cv::Mat& imgInit, cv::Rect rectInit, char baseline, int closestEdge);
 
-	//¼ÆËã°×É«ÏñËØµÄÊıÁ¿
+	//è®¡ç®—ç™½è‰²åƒç´ çš„æ•°é‡
 	int countWhitePixels(const cv::Mat& line);
 
-	//ÒÔ×ó±ß½çÎª»ù×¼£¬ºÏ²¢¾ØĞÎ
+	//ä»¥å·¦è¾¹ç•Œä¸ºåŸºå‡†ï¼Œåˆå¹¶çŸ©å½¢
 	void mergeRectanglesByLeftEdge(std::vector<cv::Rect>& rectangles, int threshold);
 
-	//ÒÔÉÏ±ß½çÎª»ù×¼£¬ºÏ²¢¾ØĞÎ
+	//ä»¥ä¸Šè¾¹ç•Œä¸ºåŸºå‡†ï¼Œåˆå¹¶çŸ©å½¢
 	void mergeRectanglesByTopEdge(std::vector<cv::Rect>& rectangles, int threshold);
 
-	//¼ì²é¾ØĞÎÖĞÊÇ·ñÓĞ°×É«ÏñËØµã
+	//æ£€æŸ¥çŸ©å½¢ä¸­æ˜¯å¦æœ‰ç™½è‰²åƒç´ ç‚¹
 	bool containsWhitePixel(const cv::Mat& image, const cv::Rect& rect);
 
-	//¸ù¾İ¾àÀëÖĞĞÄ¾ØĞÎµÄ¾àÀëÉ¸Ñ¡
+	//æ ¹æ®è·ç¦»ä¸­å¿ƒçŸ©å½¢çš„è·ç¦»ç­›é€‰
 	void filterRectangles(std::vector<cv::Rect>& rectangles, const cv::Rect& rectInit, int closestEdge, double thresholdRatio);
 
-	//µ÷ÕûºÚ¿éÎ»ÖÃ(Á½½ÅÀà×¨ÓÃ)
+	//è°ƒæ•´é»‘å—ä½ç½®(ä¸¤è„šç±»ä¸“ç”¨)
 	void adjustRect(cv::Rect& rect, const cv::Size& imageSize);
 
-	//µ÷ÕûÒı½Å¿òÎ»ÖÃ(Á½½ÅÀà×¨ÓÃ)
+	//è°ƒæ•´å¼•è„šæ¡†ä½ç½®(ä¸¤è„šç±»ä¸“ç”¨)
 	void moveToIntersect(cv::Rect& rectToMove, const cv::Rect& referenceRect);
 
-	//Èç¹ûÒı½Å¿ò¹ıĞ¡£¬Ôòµ÷ÕûÎ»ÖÃ³É°Ù·ÖÖ®°ËÊ®,ÇÒÔÚÍ¼Æ¬ÕıÖĞĞÄ
+	//å¦‚æœå¼•è„šæ¡†è¿‡å°ï¼Œåˆ™è°ƒæ•´ä½ç½®æˆç™¾åˆ†ä¹‹å…«å,ä¸”åœ¨å›¾ç‰‡æ­£ä¸­å¿ƒ
 	void rectTooSmall(cv::Point& topLeft, cv::Point& bottomRight, const cv::Mat& img);
 
-	//·´×ªÍ¼Æ¬ºó×ª»¯×ø±ê(Á½½ÅÀà×¨ÓÃ)
+	//åè½¬å›¾ç‰‡åè½¬åŒ–åæ ‡(ä¸¤è„šç±»ä¸“ç”¨)
 	void transformRectCoordinates(cv::Rect& rect);
 
-	//ÅĞ¶Ïº¯Êı--¾ØĞÎÊÇ·ñ¸ü½Ó½üÕı·½ĞÎ(Èı½ÅÀà×¨ÓÃ)
+	//åˆ¤æ–­å‡½æ•°--çŸ©å½¢æ˜¯å¦æ›´æ¥è¿‘æ­£æ–¹å½¢(ä¸‰è„šç±»ä¸“ç”¨)
 	static bool compareRectsCloseToSquare(const cv::Rect2f& a, const cv::Rect2f& b);
 
-	//ÅĞ¶Ïº¯Êı--¾ØĞÎÊÇ·ñ½üËÆÏàµÈ(¶à½ÅÀà×¨ÓÃ)
+	//åˆ¤æ–­å‡½æ•°--çŸ©å½¢æ˜¯å¦è¿‘ä¼¼ç›¸ç­‰(å¤šè„šç±»ä¸“ç”¨)
 	static bool rectsAreSimilar(const cv::Rect2f& a, const cv::Rect2f& b);
 
-	//²éÕÒ³öÏÖÆµÂÊ×î¸ßµÄ¡°Ä£°å¡±¾ØĞÎ(¶à½ÅÀà×¨ÓÃ)
+	//æŸ¥æ‰¾å‡ºç°é¢‘ç‡æœ€é«˜çš„â€œæ¨¡æ¿â€çŸ©å½¢(å¤šè„šç±»ä¸“ç”¨)
 	cv::Rect2f findTemplateRect(const std::vector<cv::Rect2f>& rects, cv::Rect2f black_rect);
 
-	//¹ıÂËµôÃæ»ı´óÓÚÄ£°åÃæ»ıÁ½±¶µÄ¾ØĞÎ(¶à½ÅÀà×¨ÓÃ)
+	//è¿‡æ»¤æ‰é¢ç§¯å¤§äºæ¨¡æ¿é¢ç§¯ä¸¤å€çš„çŸ©å½¢(å¤šè„šç±»ä¸“ç”¨)
 	void filterRects(std::vector<cv::Rect2f>& rects, const cv::Rect2f& templateRect, cv::Rect2f black_rect);
 
-	//´¦Àí¶àÒı½Å¾ØĞÎ
+	//å¤„ç†å¤šå¼•è„šçŸ©å½¢
 	void processRects(std::vector<cv::Rect2f>& rects, cv::Rect2f black_rect);
 
-	//¼ÆËã¶Ô³Æ¾ØĞÎ(¶àÒı½Å×¨ÓÃ)
+	//è®¡ç®—å¯¹ç§°çŸ©å½¢(å¤šå¼•è„šä¸“ç”¨)
 	cv::Rect2f calculateSymmetricRect(const cv::Rect2f& sourceRect, const cv::Rect2f& black_rect);
 
-	//ÅĞ¶Ï¶Ô³ÆÎ»ÖÃµÄ¾ØĞÎÊÇ·ñ´æÔÚ(¶àÒı½Å×¨ÓÃ)
+	//åˆ¤æ–­å¯¹ç§°ä½ç½®çš„çŸ©å½¢æ˜¯å¦å­˜åœ¨(å¤šå¼•è„šä¸“ç”¨)
 	bool isOverlappingMoreThanHalf(const cv::Rect2f& rect1, const cv::Rect2f& rect2);
 
-	//¸ù¾İ¶Ô³ÆÌí¼Ó¾ØĞÎ(¶àÒı½Å×¨ÓÃ)
+	//æ ¹æ®å¯¹ç§°æ·»åŠ çŸ©å½¢(å¤šå¼•è„šä¸“ç”¨)
 	void addSymmetricRectsIfNeeded(std::vector<cv::Rect2f>& rects, const cv::Rect2f& black_rect);
 private:
 
 	static constexpr float SIMILARITY_THRESHOLD = 5.0f;
 
-	int templateWidth = 160;//findTemplateRectÓÃ
+	int templateWidth = 160;//findTemplateRectç”¨
 	int templateHeight = 50;
 };

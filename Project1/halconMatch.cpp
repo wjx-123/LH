@@ -17,6 +17,7 @@ int HMatch::getNumberOfPanel(cv::Rect2f firstRect, cv::Size2f imageSize)
 }
 void HMatch::getPanelFrames(int numberOfPanel, cv::Mat Image, cv::Rect2f model, std::vector<cv::Rect2f>& result)
 {
+    /*基于ncc的匹配*/
     float xModel = model.x;
     float yModel = model.y;
     std::cout<< getNumberOfPanel(Image.size(), model) << std::endl;
@@ -25,22 +26,15 @@ void HMatch::getPanelFrames(int numberOfPanel, cv::Mat Image, cv::Rect2f model, 
     singleImage(Image);//转单通道
     ZoomChange(model,temp);//缩放model
     HalconCpp::HObject Himage = MatToHImage(Image);//大图mat转halcon
-    std::vector<cv::Point2f> centerPoints = HalconMatch(numberOfPanel, Himage, model);
+    std::vector<cv::Point2f> centerPoints = HalconMatch_ncc(numberOfPanel, Himage, model);
     result = fromPointToRect(centerPoints,model,temp);
-    
+    alignRectangles(result,model);
 
-    for (auto& rect : result) {
-        // 计算当前矩形框的中心点坐标
-
-        // 如果处于同一水平线上，则将矩形框的 y 坐标设置为模板图的 y 坐标
-        if (std::abs(rect.y - yModel) < 50) {
-            rect.y = yModel;
-        }
-        // 如果处于同一竖直线上，则将矩形框的 x 坐标设置为模板图的 x 坐标
-        if (std::abs(rect.x - xModel) < 50) {
-            rect.x = xModel;
-        }
-    }
+    /*基于shape的匹配*/
+    //HalconCpp::HObject HImage = MatToHImage(Image);
+    ////HalconCpp::HObject MImage = MatToHImage(modelImg);
+    //std::vector<cv::Point2f> centerPoints = HalconMatch_shape(numberOfPanel,HImage,model);
+    //result = fromPointToRect(centerPoints, model,1);
 }
 
 void HMatch::getMaskShift(int numberOfPanel, cv::Mat dMask, cv::Mat mMask, cv::Rect2f& result)
@@ -55,6 +49,73 @@ void HMatch::getMaskShift(int numberOfPanel, cv::Mat dMask, cv::Mat mMask, cv::R
     cv::Rect2f model = cv::Rect2f(0,0,mMask.cols, mMask.rows);
     auto temp = fromPointToRect(centerPoints, model, 1);
     result = temp[0];
+}
+
+std::vector<std::pair<float, float>> HMatch::matchRectangles(const cv::Mat& srcImage, const cv::Rect2f& templateRect, const std::vector<cv::Rect2f>& rectangles, float scale)
+{
+    std::vector<std::pair<float, float>> offsets;
+
+    // 对模板图像进行缩放
+    cv::Mat templateImage = srcImage(templateRect);
+    cv::resize(templateImage, templateImage, cv::Size(), scale, scale, cv::INTER_AREA);
+
+    // 特征检测器和描述符
+    auto detector = cv::SIFT::create();
+    std::vector<cv::KeyPoint> templateKeyPoints;
+    cv::Mat templateDescriptors;
+    detector->detectAndCompute(templateImage, cv::noArray(), templateKeyPoints, templateDescriptors);
+
+    // 创建匹配器
+    cv::BFMatcher matcher(cv::NORM_L2);
+
+    // 遍历矩形
+    for (const auto& rect : rectangles) {
+        cv::Mat rectImage = srcImage(rect);
+        cv::resize(rectImage, rectImage, cv::Size(), scale, scale, cv::INTER_AREA);  // 对每个矩形图像进行缩放
+
+        std::vector<cv::KeyPoint> rectKeyPoints;
+        cv::Mat rectDescriptors;
+        detector->detectAndCompute(rectImage, cv::noArray(), rectKeyPoints, rectDescriptors);
+
+        // 特征匹配
+        std::vector<cv::DMatch> matches;
+        matcher.match(templateDescriptors, rectDescriptors, matches);
+
+        // 筛选好的匹配
+        double max_dist = 0; double min_dist = 100;
+        for (int i = 0; i < templateDescriptors.rows; i++) {
+            double dist = matches[i].distance;
+            if (dist < min_dist) min_dist = dist;
+            if (dist > max_dist) max_dist = dist;
+        }
+        std::vector<cv::DMatch> good_matches;
+        for (int i = 0; i < templateDescriptors.rows; i++) {
+            if (matches[i].distance <= std::max(2 * min_dist, 0.02)) {
+                good_matches.push_back(matches[i]);
+            }
+        }
+
+        // 估计变换矩阵
+        std::vector<cv::Point2f> obj;
+        std::vector<cv::Point2f> scene;
+        for (size_t i = 0; i < good_matches.size(); i++) {
+            obj.push_back(templateKeyPoints[good_matches[i].queryIdx].pt);
+            scene.push_back(rectKeyPoints[good_matches[i].trainIdx].pt);
+        }
+        cv::Mat H = cv::findHomography(obj, scene, cv::RANSAC);
+
+        // 计算偏移
+        if (!H.empty()) {
+            double dx = H.at<double>(0, 2) / scale; // 修正缩放因子
+            double dy = H.at<double>(1, 2) / scale; // 修正缩放因子
+            offsets.push_back(std::make_pair(dx, dy));
+        }
+        else {
+            offsets.push_back(std::make_pair(0.0f, 0.0f)); // No match found or poor matching
+        }
+    }
+
+    return offsets;
 }
 
 void HMatch::singleImage(cv::Mat& Image)
@@ -255,7 +316,7 @@ void HMatch::ZoomChange(cv::Rect2f &rect, double temp)
     rect.height = rect.height / temp;
 }
 
-std::vector<cv::Point2f> HMatch::HalconMatch(int numberOfPanel, HalconCpp::HObject Himage, cv::Rect2f modelRect)
+std::vector<cv::Point2f> HMatch::HalconMatch_ncc(int numberOfPanel, HalconCpp::HObject Himage, cv::Rect2f modelRect)
 {
     HalconCpp::HObject  ho_ModelRegion, ho_TemplateImage;
 
@@ -303,6 +364,77 @@ std::vector<cv::Point2f> HMatch::HalconMatch(int numberOfPanel, HalconCpp::HObje
             result.push_back(cv::Point(hv_Column[i].D(), hv_Row[i].D()));
         }
     return result;
+}
+
+std::vector<cv::Point2f> HMatch::HalconMatch_shape(int numberOfPanel, HalconCpp::HObject Himage, cv::Rect2f modelRect)
+{
+    // 本地图像变量
+    HalconCpp::HObject ho_ModelRegion, ho_TemplateImage, ho_ModelContours, ho_TransContours;
+    HalconCpp::HTuple hv_ModelID, hv_Angle, hv_Row, hv_Column, hv_Score, hv_HomMat2D;
+    HalconCpp::SetSystem("border_shape_models", "false");
+    // 使用 OpenCV 矩形参数在 Halcon 中生成模型区域
+    HalconCpp::GenRectangle1(&ho_ModelRegion, modelRect.y, modelRect.x,
+        modelRect.y + modelRect.height, modelRect.x + modelRect.width);
+
+    // 提取模板图像
+    HalconCpp::ReduceDomain(Himage, ho_ModelRegion, &ho_TemplateImage);
+
+    try
+    {
+        // 创建形状模型
+        CreateShapeModel(ho_TemplateImage, 6, HalconCpp::HTuple(0).TupleRad(), HalconCpp::HTuple(360).TupleRad(),
+            HalconCpp::HTuple(0.028).TupleRad(), (HalconCpp::HTuple("point_reduction_high").Append("no_pregeneration")),
+            "use_polarity", ((HalconCpp::HTuple(78).Append(136)).Append(51)), 4, &hv_ModelID);
+    }
+    catch (HalconCpp::HException& e) {
+        std::cerr << "Error in CreateShapeModel: " << e.ErrorMessage() << std::endl;
+    }
+   
+
+    // 获取模型轮廓
+    HalconCpp::GetShapeModelContours(&ho_ModelContours, hv_ModelID, 1);
+
+    // 准备返回的结果，使用cv::Point2f
+    std::vector<cv::Point2f> foundPositions;
+
+    try
+    {
+        /*HalconCpp::FindShapeModel(Himage, hv_ModelID, 0, HalconCpp::HTuple(360).TupleRad(), 0.5, numberOfPanel, 0.5,
+            "least_squares", HalconCpp::HTuple(), HalconCpp::HTuple(),
+            &hv_Row, &hv_Column, &hv_Angle, &hv_Score);*/
+        HalconCpp::FindShapeModel(Himage, hv_ModelID, 0, HalconCpp::HTuple(360).TupleRad(), 0.1, numberOfPanel, 0.5,
+            "least_squares", 0 ,0 ,
+            &hv_Row, &hv_Column, &hv_Angle, &hv_Score);
+    }
+    catch (HalconCpp::HException& e)
+    {
+        std::cerr << "Error in FindShapeModel: " << e.ErrorMessage() << std::endl;
+    }
+    
+
+    //if (hv_Score.Length() > 0) {
+    //        // 转换模型轮廓到检测到的位置
+    //    HalconCpp::HomMat2dIdentity(&hv_HomMat2D);
+    //    HalconCpp::HomMat2dRotate(hv_HomMat2D, hv_Angle[0], 0, 0, &hv_HomMat2D);
+    //    HalconCpp::HomMat2dTranslate(hv_HomMat2D, hv_Row[0], hv_Column[0], &hv_HomMat2D);
+    //    HalconCpp::AffineTransContourXld(ho_ModelContours, &ho_TransContours, hv_HomMat2D);
+
+    //    // 保存位置，转换为cv::Point2f
+    //    foundPositions.push_back(cv::Point2f(hv_Column[0].D(), hv_Row[0].D()));
+    //}
+    for (int i = 0; i < hv_Row.Length(); i++)
+    {
+        HalconCpp::HomMat2dIdentity(&hv_HomMat2D);
+        HalconCpp::HomMat2dRotate(hv_HomMat2D, hv_Angle[i], 0, 0, &hv_HomMat2D);
+        HalconCpp::HomMat2dTranslate(hv_HomMat2D, hv_Row[i], hv_Column[0], &hv_HomMat2D);
+        HalconCpp::AffineTransContourXld(ho_ModelContours, &ho_TransContours, hv_HomMat2D);
+
+        // 保存位置，转换为cv::Point2f
+        foundPositions.push_back(cv::Point2f(hv_Column[i].D(), hv_Row[i].D()));
+    }
+
+
+    return foundPositions;
 }
 
 std::vector<cv::Rect2f> HMatch::fromPointToRect(std::vector<cv::Point2f> points, cv::Rect2f modelRect, double temp)
@@ -494,4 +626,43 @@ std::vector<cv::Point2f> HMatch::HalconMatch_Ncc_MaskShift(int numberOfPanel, Ha
 
     // 返回匹配点或根据需求返回其他数据
     return results;
+}
+
+void HMatch::alignRectangles(std::vector<cv::Rect2f>& rects, cv::Rect2f modelRect)
+{
+    std::vector<float> recordedX;  // 用于存储之前的x坐标
+    std::vector<float> recordedY;  // 用于存储之前的y坐标
+    recordedX.push_back(modelRect.x);
+    recordedY.push_back(modelRect.y);
+
+    for (auto& rect : rects) {
+        bool xAdjusted = false;
+        bool yAdjusted = false;
+
+        // 检查x坐标是否接近之前记录的任何x坐标
+        for (float a : recordedX) {
+            if (std::abs(rect.x - a) <= 100) {
+                rect.x = a;  // 调整x坐标
+                xAdjusted = true;
+                break;  // 找到接近的x坐标后跳出循环
+            }
+        }
+
+        // 检查y坐标是否接近之前记录的任何y坐标
+        for (float a : recordedY) {
+            if (std::abs(rect.y - a) <= 100) {
+                rect.y = a;  // 调整y坐标
+                yAdjusted = true;
+                break;  // 找到接近的y坐标后跳出循环
+            }
+        }
+
+        // 如果没有调整x和y坐标，记录这个框的坐标
+        if (!xAdjusted) {
+            recordedX.push_back(rect.x);
+        }
+        if (!yAdjusted) {
+            recordedY.push_back(rect.y);
+        }
+    }
 }

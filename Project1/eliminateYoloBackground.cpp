@@ -1,4 +1,4 @@
-#include "eliminateYoloBackground.h"
+ï»¿#include "eliminateYoloBackground.h"
 
 eliminateYoloBackground::eliminateYoloBackground()
 {
@@ -11,17 +11,17 @@ eliminateYoloBackground::~eliminateYoloBackground()
 std::pair<cv::Rect2f, std::vector<cv::Rect2f>> eliminateYoloBackground::getBoundAndPin(cv::Mat& image, std::string types)
 {
     cv::Mat heibai = test(image,types);
-    if (types == "R")//Á½½Å
+    if (types == "R")//ä¸¤è„š
     {
         bool ifTransform = false;
-        //ÅĞ¶ÏÊÇ·ñÊÇÊúÖ±µÄ
+        //åˆ¤æ–­æ˜¯å¦æ˜¯ç«–ç›´çš„
         if (heibai.rows < heibai.cols) 
         {
             ifTransform = true;
-            cv::transpose(image, image); // ×ªÖÃ
-            cv::flip(image, image, 0);   // ÑØyÖá·­×ª
-            cv::transpose(heibai, heibai); // ×ªÖÃ
-            cv::flip(heibai, heibai, 0);   // ÑØyÖá·­×ª
+            cv::transpose(image, image); // è½¬ç½®
+            cv::flip(image, image, 0);   // æ²¿yè½´ç¿»è½¬
+            cv::transpose(heibai, heibai); // è½¬ç½®
+            cv::flip(heibai, heibai, 0);   // æ²¿yè½´ç¿»è½¬
         }
         std::vector<cv::Rect2f> tPin;
         cv::Rect2f rectHeibai = { static_cast<float>(image.cols * 0.3), static_cast<float>(image.rows * 0.35), static_cast<float>(image.cols * 0.4), static_cast<float>(image.rows * 0.4) };
@@ -33,16 +33,16 @@ std::pair<cv::Rect2f, std::vector<cv::Rect2f>> eliminateYoloBackground::getBound
         //cv::rectangle(image, black_rect, cv::Scalar(255, 0, 0), 2);
         cv::Mat topImg = heibai({ 0,0,static_cast<int>(image.cols),static_cast<int>(black_rect.y) });
         cv::Mat bottomImg = heibai({ 0,static_cast<int>(black_rect.y + black_rect.height),static_cast<int>(image.cols),static_cast<int>(image.rows - (black_rect.y + black_rect.height)) });
-        /*À©É¢*/
+        /*æ‰©æ•£*/
         cv::bitwise_not(topImg, topImg);
         auto [topLeft_top, bottomRight_top] = findBoundingRectangle_heibai(topImg, 0.5);
-        //ÅĞ¶ÏÈç¹ûÕâ¸ö¿ò¹ıĞ¡£¬ÔòÉú³ÉÒ»¸ö
+        //åˆ¤æ–­å¦‚æœè¿™ä¸ªæ¡†è¿‡å°ï¼Œåˆ™ç”Ÿæˆä¸€ä¸ª
         rectTooSmall(topLeft_top,bottomRight_top,topImg);
         cv::Rect topImg_rect = cv::Rect(topLeft_top.x, topLeft_top.y, bottomRight_top.x - topLeft_top.x, bottomRight_top.y - topLeft_top.y);
         moveToIntersect(topImg_rect, black_rect);
         cv::bitwise_not(bottomImg, bottomImg);
         auto [topLeft_bottom, bottomRight_bottom] = findBoundingRectangle_heibai(bottomImg, 0.5);
-        //ÅĞ¶ÏÈç¹ûÕâ¸ö¿ò¹ıĞ¡£¬ÔòÉú³ÉÒ»¸ö
+        //åˆ¤æ–­å¦‚æœè¿™ä¸ªæ¡†è¿‡å°ï¼Œåˆ™ç”Ÿæˆä¸€ä¸ª
         rectTooSmall(topLeft_bottom, bottomRight_bottom, bottomImg);
         cv::Rect2f bottomImg_rect = cv::Rect(topLeft_bottom.x, topLeft_bottom.y, bottomRight_bottom.x - topLeft_bottom.x, bottomRight_bottom.y - topLeft_bottom.y);
         cv::Rect boundingBox1Adjusted(static_cast<float>(bottomImg_rect.x),
@@ -50,12 +50,12 @@ std::pair<cv::Rect2f, std::vector<cv::Rect2f>> eliminateYoloBackground::getBound
                 static_cast<float>(bottomImg_rect.width),
                 static_cast<float>(bottomImg_rect.height));
         moveToIntersect(boundingBox1Adjusted, black_rect);
-        //×îºóµÄÅĞ¶Ï£¬ĞŞ¸Ä´óĞ¡
+        //æœ€åçš„åˆ¤æ–­ï¼Œä¿®æ”¹å¤§å°
         //boundingBox1Adjusted = boundingBox1Adjusted.width * boundingBox1Adjusted.height <= bottomImg.rows * bottomImg.cols * 0.6 ? cv::Rect((bottomImg.cols - int(bottomImg.cols * 0.8)) / 2, (bottomImg.rows - int(bottomImg.rows * 0.8)) / 2, bottomImg.cols * 0.8, bottomImg.rows * 0.8) : boundingBox1Adjusted;
 
         if (ifTransform == true)
         {
-            cv::flip(image, image, 0);   // ÑØ y Öá·­×ª
+            cv::flip(image, image, 0);   // æ²¿ y è½´ç¿»è½¬
             cv::transpose(image, image);
             transformRectCoordinates(topImg_rect);
             transformRectCoordinates(boundingBox1Adjusted);
@@ -69,30 +69,33 @@ std::pair<cv::Rect2f, std::vector<cv::Rect2f>> eliminateYoloBackground::getBound
         std::pair pair  = { black_rect ,tPin };
         return pair;
     }
-    else if (types == "T")//Èı½Å
+    else if (types == "T")//ä¸‰è„š
     {
-        //°ÑÈı½ÅµÄÈı·ÖÖ®Ò»Òı½Å¿òÒ²ÖĞ¼äÌî³äÒ»ÏÂ
+        //æŠŠä¸‰è„šçš„ä¸‰åˆ†ä¹‹ä¸€å¼•è„šæ¡†ä¹Ÿä¸­é—´å¡«å……ä¸€ä¸‹
         cv::rectangle(heibai, cv::Point(heibai.cols / 3, heibai.rows / 3), cv::Point(heibai.cols * 2 / 3, heibai.rows * 2 / 3), cv::Scalar(0, 0, 0), cv::FILLED);
-        auto [topLeft, bottomRight] = findBoundingRectangle_heibai(heibai, 0.2);
-        cv::Mat hsvImage = useHsvTest(image);//ÓÃhsv´¦ÀíµÄÍ¼×öÒ»ÏÂ½»¼¯
+        auto [topLeft, bottomRight] = findBoundingRectangle_heibai(heibai, 0.2);//0.2
+        //cv::Mat hsvImage = useHsvTest(image);//ç”¨hsvå¤„ç†çš„å›¾åšä¸€ä¸‹äº¤é›†
         cv::Rect2f black_rect = cv::Rect(topLeft.x, topLeft.y, bottomRight.x - topLeft.x, bottomRight.y - topLeft.y);
         if (black_rect.width * black_rect.height < 12025)
         {
             return {};
         }
-        /*Òì²½¼ì²âµÄ·½·¨*/
+        /*å¼‚æ­¥æ£€æµ‹çš„æ–¹æ³•*/
         //auto pinVector = findPinsAroundBlackBox_ofThree(hsvImage, black_rect, hsvImage);//heibai
-        ////½ØÈ¡×î½Ó½üÒı½Å¿òµÄÇ°Èı¸ö¾ØĞÎ
+        ////æˆªå–æœ€æ¥è¿‘å¼•è„šæ¡†çš„å‰ä¸‰ä¸ªçŸ©å½¢
         //if (pinVector.size() > 3)
         //{
         //    std::sort(pinVector.begin(), pinVector.end(), compareRectsCloseToSquare);
-        //    // ±£Áô×î½Ó½üÒı½Å¿òµÄÇ°Èı¸ö¾ØĞÎ¿ò
+        //    // ä¿ç•™æœ€æ¥è¿‘å¼•è„šæ¡†çš„å‰ä¸‰ä¸ªçŸ©å½¢æ¡†
         //    pinVector.resize(3);
         //}
 
-        /*¸ù¾İ·½ÏòÖ±½ÓÉú³É*/
+        /*æ ¹æ®æ–¹å‘ç›´æ¥ç”Ÿæˆ*/
         auto pinVector = addSquareBasedOnWhitePixels(heibai,black_rect);
-
+        cv::rectangle(image, black_rect, cv::Scalar(0, 255, 100), 2);
+        for (auto a : pinVector) {
+            cv::rectangle(image, a, cv::Scalar(100, 255, 0), 2);
+        }
         std::pair pair = { black_rect, pinVector };
         return pair;
     }
@@ -100,7 +103,7 @@ std::pair<cv::Rect2f, std::vector<cv::Rect2f>> eliminateYoloBackground::getBound
 
     {
         auto [topLeft, bottomRight] = findBoundingRectangle_heibai(heibai, 0.3);
-        cv::Mat hsvImage = useHsvTest(image);//ÓÃhsv´¦ÀíµÄÍ¼×öÒ»ÏÂ½»¼¯
+        cv::Mat hsvImage = useHsvTest(image);//ç”¨hsvå¤„ç†çš„å›¾åšä¸€ä¸‹äº¤é›†
         cv::Rect2f black_rect = cv::Rect(topLeft.x, topLeft.y, bottomRight.x - topLeft.x, bottomRight.y - topLeft.y);
         if (black_rect.width * black_rect.height < 100000) 
         {
@@ -123,18 +126,18 @@ std::pair<cv::Rect2f, std::vector<cv::Rect2f>> eliminateYoloBackground::getBound
 
 std::pair<cv::Point, cv::Point> eliminateYoloBackground::findBoundingRectangle(const cv::Mat& img, int colorRange)
 {
-    // µÃµ½ÖĞĞÄµã
+    // å¾—åˆ°ä¸­å¿ƒç‚¹
     cv::Point center(img.cols / 2, img.rows / 2);
     cv::Vec3b centerColor = img.at<cv::Vec3b>(center);
 
-    // ¶¨Òå±ß½çµÄÁ½¸öµã
+    // å®šä¹‰è¾¹ç•Œçš„ä¸¤ä¸ªç‚¹
     cv::Point topLeft(img.cols, img.rows);
     cv::Point bottomRight(0, 0);
 
-    // ¼ÇÂ¼ÏñËØ
+    // è®°å½•åƒç´ 
     std::vector<std::vector<bool>> visited(img.rows, std::vector<bool>(img.cols, false));
 
-    // Lambda ¼ì²éÏñËØ(ºÍÕıÖĞ¼äµÄÏñËØÏà±È)
+    // Lambda æ£€æŸ¥åƒç´ (å’Œæ­£ä¸­é—´çš„åƒç´ ç›¸æ¯”)
     auto isColorSimilar = [centerColor, colorRange](const cv::Vec3b& color) {
         for (int i = 0; i < 3; ++i) {
             if (std::abs(color[i] - centerColor[i]) > colorRange) return false;
@@ -151,21 +154,21 @@ std::pair<cv::Point, cv::Point> eliminateYoloBackground::findBoundingRectangle(c
         cv::Point p = q.front();
         q.pop();
 
-        // ¸üĞÂ±ß½çµã
+        // æ›´æ–°è¾¹ç•Œç‚¹
         topLeft.x = std::min(topLeft.x, p.x);
         topLeft.y = std::min(topLeft.y, p.y);
         bottomRight.x = std::max(bottomRight.x, p.x);
         bottomRight.y = std::max(bottomRight.y, p.y);
 
-        // ¼ì²éËÄ¸öÏàÁÚÏñËØ
+        // æ£€æŸ¥å››ä¸ªç›¸é‚»åƒç´ 
         for (int dy = -1; dy <= 1; ++dy) {
             for (int dx = -1; dx <= 1; ++dx) {
-                if (dx == 0 && dy == 0) continue; // Ìø¹ıÖĞĞÄµã±¾Éí
+                if (dx == 0 && dy == 0) continue; // è·³è¿‡ä¸­å¿ƒç‚¹æœ¬èº«
 
                 int newX = p.x + dx;
                 int newY = p.y + dy;
 
-                // ¼ì²é±ß½çÒÔ¼°ÏñËØÊÇ·ñÏàËÆÇÒÎ´±»·ÃÎÊ
+                // æ£€æŸ¥è¾¹ç•Œä»¥åŠåƒç´ æ˜¯å¦ç›¸ä¼¼ä¸”æœªè¢«è®¿é—®
                 if (newX >= 0 && newX < img.cols && newY >= 0 && newY < img.rows &&
                     !visited[newY][newX] && isColorSimilar(img.at<cv::Vec3b>(newY, newX))) {
                     q.push(cv::Point(newX, newY));
@@ -179,15 +182,15 @@ std::pair<cv::Point, cv::Point> eliminateYoloBackground::findBoundingRectangle(c
 
 //std::pair<cv::Point, cv::Point> eliminateYoloBackground::findBoundingRectangle_heibai(const cv::Mat& img)
 //{
-//    // µÃµ½ÖĞĞÄµã
+//    // å¾—åˆ°ä¸­å¿ƒç‚¹
 //    cv::Point center(img.cols / 2, img.rows / 2);
 //    uchar centerColor = img.at<uchar>(center);
 //
-//    // ¶¨Òå±ß½çµÄÁ½¸öµã
+//    // å®šä¹‰è¾¹ç•Œçš„ä¸¤ä¸ªç‚¹
 //    cv::Point topLeft(img.cols, img.rows);
 //    cv::Point bottomRight(0, 0);
 //
-//    // ¼ÇÂ¼ÏñËØ
+//    // è®°å½•åƒç´ 
 //    std::vector<std::vector<bool>> visited(img.rows, std::vector<bool>(img.cols, false));
 //
 //    // bfs
@@ -199,21 +202,21 @@ std::pair<cv::Point, cv::Point> eliminateYoloBackground::findBoundingRectangle(c
 //        cv::Point p = q.front();
 //        q.pop();
 //
-//        // ¸üĞÂ±ß½çµã
+//        // æ›´æ–°è¾¹ç•Œç‚¹
 //        topLeft.x = std::min(topLeft.x, p.x);
 //        topLeft.y = std::min(topLeft.y, p.y);
 //        bottomRight.x = std::max(bottomRight.x, p.x);
 //        bottomRight.y = std::max(bottomRight.y, p.y);
 //
-//        // ¼ì²éËÄ¸öÏàÁÚÏñËØ
+//        // æ£€æŸ¥å››ä¸ªç›¸é‚»åƒç´ 
 //        for (int dy = -1; dy <= 1; ++dy) {
 //            for (int dx = -1; dx <= 1; ++dx) {
-//                if (dx == 0 && dy == 0) continue; // Ìø¹ıÖĞĞÄµã±¾Éí
+//                if (dx == 0 && dy == 0) continue; // è·³è¿‡ä¸­å¿ƒç‚¹æœ¬èº«
 //
 //                int newX = p.x + dx;
 //                int newY = p.y + dy;
 //
-//                // ¼ì²é±ß½çÒÔ¼°ÏñËØÊÇ·ñÒÑ±»·ÃÎÊ
+//                // æ£€æŸ¥è¾¹ç•Œä»¥åŠåƒç´ æ˜¯å¦å·²è¢«è®¿é—®
 //                if (newX >= 0 && newX < img.cols && newY >= 0 && newY < img.rows &&
 //                    !visited[newY][newX] && img.at<uchar>(newY, newX) == centerColor) {
 //                    q.push(cv::Point(newX, newY));
@@ -235,11 +238,11 @@ std::pair<cv::Point, cv::Point> eliminateYoloBackground::findBoundingRectangle_h
     int top = center.y, bottom = center.y, left = center.x, right = center.x;
     bool stopTop = false, stopBottom = false, stopLeft = false, stopRight = false;
 
-    // À©É¢ËÑË÷µÄµü´ú¹ı³Ì
+    // æ‰©æ•£æœç´¢çš„è¿­ä»£è¿‡ç¨‹
     while (true) {
-        bool changed = false; // ÓÃÓÚÅĞ¶Ï´Ë´ÎÑ­»·ÊÇ·ñÓĞ±ß½çÀ©É¢
+        bool changed = false; // ç”¨äºåˆ¤æ–­æ­¤æ¬¡å¾ªç¯æ˜¯å¦æœ‰è¾¹ç•Œæ‰©æ•£
 
-        // ÏòÉÏÀ©É¢ËÑË÷
+        // å‘ä¸Šæ‰©æ•£æœç´¢
         if (!stopTop) {
             if (top > 0) {
                 int whiteCount = countWhitePixels(img.row(top - 1).colRange(left, right + 1));
@@ -257,7 +260,7 @@ std::pair<cv::Point, cv::Point> eliminateYoloBackground::findBoundingRectangle_h
             }
         }
 
-        // ÏòÏÂÀ©É¢ËÑË÷
+        // å‘ä¸‹æ‰©æ•£æœç´¢
         if (!stopBottom) {
             if (bottom < rows - 1) {
                 int whiteCount = countWhitePixels(img.row(bottom + 1).colRange(left, right + 1));
@@ -275,7 +278,7 @@ std::pair<cv::Point, cv::Point> eliminateYoloBackground::findBoundingRectangle_h
             }
         }
 
-        // Ïò×óÀ©É¢ËÑË÷
+        // å‘å·¦æ‰©æ•£æœç´¢
         if (!stopLeft) {
             if (left > 0) {
                 int whiteCount = countWhitePixels(img.col(left - 1).rowRange(top, bottom + 1));
@@ -293,7 +296,7 @@ std::pair<cv::Point, cv::Point> eliminateYoloBackground::findBoundingRectangle_h
             }
         }
 
-        // ÏòÓÒÀ©É¢ËÑË÷
+        // å‘å³æ‰©æ•£æœç´¢
         if (!stopRight) {
             if (right < cols - 1) {
                 int whiteCount = countWhitePixels(img.col(right + 1).rowRange(top, bottom + 1));
@@ -311,12 +314,12 @@ std::pair<cv::Point, cv::Point> eliminateYoloBackground::findBoundingRectangle_h
             }
         }
 
-        // Èç¹ûÁ½¸öÏà¶Ô±ßÍ£Ö¹À©É¢£¬ÔòÍË³öÑ­»·
+        // å¦‚æœä¸¤ä¸ªç›¸å¯¹è¾¹åœæ­¢æ‰©æ•£ï¼Œåˆ™é€€å‡ºå¾ªç¯
         /*if ((stopTop && stopBottom) || (stopLeft && stopRight)) {
             break;
         }*/
 
-        // Èç¹ûÃ»ÓĞ±ß½çÀ©É¢£¬ÇÒÊ£ÓàµÄÁ½±ßÖĞÖÁÉÙÓĞÒ»±ßÍ£Ö¹£¬ÔòÍË³öÑ­»·
+        // å¦‚æœæ²¡æœ‰è¾¹ç•Œæ‰©æ•£ï¼Œä¸”å‰©ä½™çš„ä¸¤è¾¹ä¸­è‡³å°‘æœ‰ä¸€è¾¹åœæ­¢ï¼Œåˆ™é€€å‡ºå¾ªç¯
         if (!changed) {
             break;
         }
@@ -329,46 +332,47 @@ std::pair<cv::Point, cv::Point> eliminateYoloBackground::findBoundingRectangle_h
 
 std::vector<cv::Rect2f> eliminateYoloBackground::findPinsAroundBlackBox(cv::Mat& img, cv::Rect2f& blackBox, cv::Mat& hsvImg)
 {
-    //¸ù¾İÖĞ¼äµÄ¾ØĞÎ¿ò·ÖÎªËÄ¸ö²¿·Ö£¬Òì²½ËÑË÷
+    //æ ¹æ®ä¸­é—´çš„çŸ©å½¢æ¡†åˆ†ä¸ºå››ä¸ªéƒ¨åˆ†ï¼Œå¼‚æ­¥æœç´¢
     std::vector<cv::Rect2f> res, finalRes;
     float width = blackBox.width;
     float height = blackBox.height;
 
-    // È·¶¨³¤±ßºÍ¶Ì±ß
+    // ç¡®å®šé•¿è¾¹å’ŒçŸ­è¾¹
     float longEdge = std::max(width, height);
     float shortEdge = std::min(width, height);
 
-    // ¼ì²é³¤¶Ì±ßµÄ²î¾àÊÇ·ñ³¬¹ı³¤±ßµÄ20%
+    // æ£€æŸ¥é•¿çŸ­è¾¹çš„å·®è·æ˜¯å¦è¶…è¿‡é•¿è¾¹çš„20%
     bool longEdgeIsWidth = width > height;
-    bool differenceExceedsThreshold = (longEdge - shortEdge) > longEdge * 0.2;
+    //bool differenceExceedsThreshold = (longEdge - shortEdge) > longEdge * 0.1;//0.2
+    bool differenceExceedsThreshold = (width > img.cols * 0.6) || (height > img.rows * 0.6);
 
-    // °ó¶¨³ÉÔ±º¯Êı
+    // ç»‘å®šæˆå‘˜å‡½æ•°
     auto boundFunc = std::bind(&eliminateYoloBackground::getPinRect, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4);
 
-    // ¸ù¾İ³¤¶Ì±ßµÄ²î¾àÑ¡ÔñËÑË÷µÄ±ß
+    // æ ¹æ®é•¿çŸ­è¾¹çš„å·®è·é€‰æ‹©æœç´¢çš„è¾¹
     std::future<std::vector<cv::Rect>> futureTop, futureBottom, futureLeft, futureRight;
     if (differenceExceedsThreshold && longEdgeIsWidth) {
-        // ²î¾à³¬¹ı20%£¬³¤±ßÊÇ¿í¶È£¬ËÑË÷ÉÏÏÂ·½Ïò
-        std::cout << "²î¾à³¬¹ı20%£¬³¤±ßÊÇ¿í¶È£¬ËÑË÷ÉÏÏÂ·½Ïò" << std::endl;
+        // å·®è·è¶…è¿‡20%ï¼Œé•¿è¾¹æ˜¯å®½åº¦ï¼Œæœç´¢ä¸Šä¸‹æ–¹å‘
+        std::cout << "å·®è·è¶…è¿‡20%ï¼Œé•¿è¾¹æ˜¯å®½åº¦ï¼Œæœç´¢ä¸Šä¸‹æ–¹å‘" << std::endl;
         futureTop = std::async(std::launch::async, boundFunc, std::ref(img), cv::Rect(blackBox.x, 0, blackBox.width, blackBox.y), 'L', 0);
         futureBottom = std::async(std::launch::async, boundFunc, std::ref(img), cv::Rect(blackBox.x, blackBox.y + blackBox.height, blackBox.width, img.rows - (blackBox.y + blackBox.height)), 'L', 2);
     }
     else if (differenceExceedsThreshold && !longEdgeIsWidth) {
-        // ²î¾à³¬¹ı20%£¬³¤±ßÊÇ¸ß¶È£¬ËÑË÷×óÓÒ·½Ïò
-        std::cout << "²î¾à³¬¹ı20%£¬³¤±ßÊÇ¸ß¶È£¬ËÑË÷×óÓÒ·½Ïò" << std::endl;
+        // å·®è·è¶…è¿‡20%ï¼Œé•¿è¾¹æ˜¯é«˜åº¦ï¼Œæœç´¢å·¦å³æ–¹å‘
+        std::cout << "å·®è·è¶…è¿‡20%ï¼Œé•¿è¾¹æ˜¯é«˜åº¦ï¼Œæœç´¢å·¦å³æ–¹å‘" << std::endl;
         futureLeft = std::async(std::launch::async, boundFunc, std::ref(img), cv::Rect(0, blackBox.y, blackBox.x, blackBox.height), 'T', 3);
         futureRight = std::async(std::launch::async, boundFunc, std::ref(img), cv::Rect(blackBox.x + blackBox.width, blackBox.y, img.cols - (blackBox.x + blackBox.width), blackBox.height), 'T', 1);
     }
     else {
-        // ²î¾à²»³¬¹ı20%£¬ËÑË÷ËùÓĞ·½Ïò
-        std::cout << "²î¾à²»³¬¹ı20%£¬ËÑË÷ËùÓĞ·½Ïò" << std::endl;
+        // å·®è·ä¸è¶…è¿‡20%ï¼Œæœç´¢æ‰€æœ‰æ–¹å‘
+        std::cout << "å·®è·ä¸è¶…è¿‡20%ï¼Œæœç´¢æ‰€æœ‰æ–¹å‘" << std::endl;
         futureTop = std::async(std::launch::async, boundFunc, std::ref(img), cv::Rect(blackBox.x, 0, blackBox.width, blackBox.y), 'L', 0);
         futureBottom = std::async(std::launch::async, boundFunc, std::ref(img), cv::Rect(blackBox.x, blackBox.y + blackBox.height, blackBox.width, img.rows - (blackBox.y + blackBox.height)), 'L', 2);
         futureLeft = std::async(std::launch::async, boundFunc, std::ref(img), cv::Rect(0, blackBox.y, blackBox.x, blackBox.height), 'T', 3);
         futureRight = std::async(std::launch::async, boundFunc, std::ref(img), cv::Rect(blackBox.x + blackBox.width, blackBox.y, img.cols - (blackBox.x + blackBox.width), blackBox.height), 'T', 1);
     }
 
-    // ÊÕ¼¯½á¹û
+    // æ”¶é›†ç»“æœ
     if (futureTop.valid()) {
         auto pinsTop = futureTop.get();
         res.insert(res.end(), pinsTop.begin(), pinsTop.end());
@@ -386,7 +390,7 @@ std::vector<cv::Rect2f> eliminateYoloBackground::findPinsAroundBlackBox(cv::Mat&
         res.insert(res.end(), pinsRight.begin(), pinsRight.end());
     }
 
-    //ÓÃhsvÍ¼È¡½»¼¯É¸Ñ¡¾ØĞÎ
+    //ç”¨hsvå›¾å–äº¤é›†ç­›é€‰çŸ©å½¢
     for (auto temp : res)
     {
         //cv::rectangle(img, temp, cv::Scalar(255), 2);
@@ -400,46 +404,46 @@ std::vector<cv::Rect2f> eliminateYoloBackground::findPinsAroundBlackBox(cv::Mat&
 
 std::vector<cv::Rect2f> eliminateYoloBackground::findPinsAroundBlackBox_ofThree(cv::Mat& img, cv::Rect2f& blackBox, cv::Mat& hsvImg)
 {
-    //¸ù¾İÖĞ¼äµÄ¾ØĞÎ¿ò·ÖÎªËÄ¸ö²¿·Ö£¬Òì²½ËÑË÷
+    //æ ¹æ®ä¸­é—´çš„çŸ©å½¢æ¡†åˆ†ä¸ºå››ä¸ªéƒ¨åˆ†ï¼Œå¼‚æ­¥æœç´¢
     std::vector<cv::Rect2f> res, finalRes;
     float width = blackBox.width;
     float height = blackBox.height;
 
-    // È·¶¨³¤±ßºÍ¶Ì±ß
+    // ç¡®å®šé•¿è¾¹å’ŒçŸ­è¾¹
     float longEdge = std::max(width, height);
     float shortEdge = std::min(width, height);
 
-    // ¼ì²é³¤¶Ì±ßµÄ²î¾àÊÇ·ñ³¬¹ı³¤±ßµÄ20%
+    // æ£€æŸ¥é•¿çŸ­è¾¹çš„å·®è·æ˜¯å¦è¶…è¿‡é•¿è¾¹çš„20%
     bool longEdgeIsWidth = width > height;
     bool differenceExceedsThreshold = (longEdge - shortEdge) > longEdge * 0.2;
 
-    // °ó¶¨³ÉÔ±º¯Êı
+    // ç»‘å®šæˆå‘˜å‡½æ•°
     auto boundFunc = std::bind(&eliminateYoloBackground::getPinRect_ofThree, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4);
 
-    // ¸ù¾İ³¤¶Ì±ßµÄ²î¾àÑ¡ÔñËÑË÷µÄ±ß
+    // æ ¹æ®é•¿çŸ­è¾¹çš„å·®è·é€‰æ‹©æœç´¢çš„è¾¹
     std::future<std::vector<cv::Rect>> futureTop, futureBottom, futureLeft, futureRight;
     if (differenceExceedsThreshold && longEdgeIsWidth) {
-        // ²î¾à³¬¹ı20%£¬³¤±ßÊÇ¿í¶È£¬ËÑË÷ÉÏÏÂ·½Ïò
-        std::cout << "²î¾à³¬¹ı20%£¬³¤±ßÊÇ¿í¶È£¬ËÑË÷ÉÏÏÂ·½Ïò" << std::endl;
+        // å·®è·è¶…è¿‡20%ï¼Œé•¿è¾¹æ˜¯å®½åº¦ï¼Œæœç´¢ä¸Šä¸‹æ–¹å‘
+        std::cout << "å·®è·è¶…è¿‡20%ï¼Œé•¿è¾¹æ˜¯å®½åº¦ï¼Œæœç´¢ä¸Šä¸‹æ–¹å‘" << std::endl;
         futureTop = std::async(std::launch::async, boundFunc, std::ref(img), cv::Rect(blackBox.x, 0, blackBox.width, blackBox.y), 'L', 0);
         futureBottom = std::async(std::launch::async, boundFunc, std::ref(img), cv::Rect(blackBox.x, blackBox.y + blackBox.height, blackBox.width, img.rows - (blackBox.y + blackBox.height)), 'L', 2);
     }
     else if (differenceExceedsThreshold && !longEdgeIsWidth) {
-        // ²î¾à³¬¹ı20%£¬³¤±ßÊÇ¸ß¶È£¬ËÑË÷×óÓÒ·½Ïò
-        std::cout << "²î¾à³¬¹ı20%£¬³¤±ßÊÇ¸ß¶È£¬ËÑË÷×óÓÒ·½Ïò" << std::endl;
+        // å·®è·è¶…è¿‡20%ï¼Œé•¿è¾¹æ˜¯é«˜åº¦ï¼Œæœç´¢å·¦å³æ–¹å‘
+        std::cout << "å·®è·è¶…è¿‡20%ï¼Œé•¿è¾¹æ˜¯é«˜åº¦ï¼Œæœç´¢å·¦å³æ–¹å‘" << std::endl;
         futureLeft = std::async(std::launch::async, boundFunc, std::ref(img), cv::Rect(0, blackBox.y, blackBox.x, blackBox.height), 'T', 3);
         futureRight = std::async(std::launch::async, boundFunc, std::ref(img), cv::Rect(blackBox.x + blackBox.width, blackBox.y, img.cols - (blackBox.x + blackBox.width), blackBox.height), 'T', 1);
     }
     else {
-        // ²î¾à²»³¬¹ı20%£¬ËÑË÷ËùÓĞ·½Ïò
-        std::cout << "²î¾à²»³¬¹ı20%£¬ËÑË÷ËùÓĞ·½Ïò" << std::endl;
+        // å·®è·ä¸è¶…è¿‡20%ï¼Œæœç´¢æ‰€æœ‰æ–¹å‘
+        std::cout << "å·®è·ä¸è¶…è¿‡20%ï¼Œæœç´¢æ‰€æœ‰æ–¹å‘" << std::endl;
         futureTop = std::async(std::launch::async, boundFunc, std::ref(img), cv::Rect(blackBox.x, 0, blackBox.width, blackBox.y), 'L', 0);
         futureBottom = std::async(std::launch::async, boundFunc, std::ref(img), cv::Rect(blackBox.x, blackBox.y + blackBox.height, blackBox.width, img.rows - (blackBox.y + blackBox.height)), 'L', 2);
         futureLeft = std::async(std::launch::async, boundFunc, std::ref(img), cv::Rect(0, blackBox.y, blackBox.x, blackBox.height), 'T', 3);
         futureRight = std::async(std::launch::async, boundFunc, std::ref(img), cv::Rect(blackBox.x + blackBox.width, blackBox.y, img.cols - (blackBox.x + blackBox.width), blackBox.height), 'T', 1);
     }
 
-    // ÊÕ¼¯½á¹û
+    // æ”¶é›†ç»“æœ
     if (futureTop.valid()) {
         auto pinsTop = futureTop.get();
         res.insert(res.end(), pinsTop.begin(), pinsTop.end());
@@ -457,12 +461,12 @@ std::vector<cv::Rect2f> eliminateYoloBackground::findPinsAroundBlackBox_ofThree(
         res.insert(res.end(), pinsRight.begin(), pinsRight.end());
     }
     float blackBoxArea = blackBox.width * blackBox.height;
-    //ÓÃhsvÍ¼È¡½»¼¯É¸Ñ¡¾ØĞÎ
+    //ç”¨hsvå›¾å–äº¤é›†ç­›é€‰çŸ©å½¢
     for (auto temp : res)
     {
         float tempArea = temp.width * temp.height;
 
-        // ¼ì²é¾ØĞÎtempÊÇ·ñ°üº¬°×É«ÏñËØ£¬²¢ÇÒÃæ»ı½éÓÚblackBoxµÄÎå·ÖÖ®¶şÓë1000ÏñËØÖ®¼ä
+        // æ£€æŸ¥çŸ©å½¢tempæ˜¯å¦åŒ…å«ç™½è‰²åƒç´ ï¼Œå¹¶ä¸”é¢ç§¯ä»‹äºblackBoxçš„äº”åˆ†ä¹‹äºŒä¸1000åƒç´ ä¹‹é—´
         if (containsWhitePixel(hsvImg, temp) &&
             tempArea <= (blackBoxArea * 0.4) && tempArea >= 1000) {
             finalRes.push_back(temp);
@@ -475,77 +479,77 @@ std::vector<cv::Rect2f> eliminateYoloBackground::addSquareBasedOnWhitePixels(cv:
 {
     std::vector<cv::Rect2f> squares;
 
-    // ÅĞ¶ÏºÚ¿òµÄ³¤±ßÊÇ¿í¶È»¹ÊÇ¸ß¶È
+    // åˆ¤æ–­é»‘æ¡†çš„é•¿è¾¹æ˜¯å®½åº¦è¿˜æ˜¯é«˜åº¦
     bool isHeightLonger = black_rect.height > black_rect.width;
     cv::Mat part1, part2;
 
-    // ¸ù¾İºÚ¿òµÄ³¤±ßÀ´ÇĞ·ÖÍ¼Ïñ
+    // æ ¹æ®é»‘æ¡†çš„é•¿è¾¹æ¥åˆ‡åˆ†å›¾åƒ
     if (isHeightLonger) {
-        // ¸ß¶ÈÊÇ³¤±ß£¬°´¿í¶ÈÇĞ·Ö³É×óÓÒÁ½²¿·Ö
-        part1 = image(cv::Rect(0, black_rect.y, black_rect.x, black_rect.height));
-        part2 = image(cv::Rect(black_rect.x + black_rect.width, black_rect.y, image.cols - (black_rect.x + black_rect.width), black_rect.height));
+        // é«˜åº¦æ˜¯é•¿è¾¹ï¼ŒæŒ‰å®½åº¦åˆ‡åˆ†æˆå·¦å³ä¸¤éƒ¨åˆ†
+        part1 = image(cv::Rect(0, 0, black_rect.x, image.rows));//cv::Rect(0, black_rect.y, black_rect.x, black_rect.height)
+        part2 = image(cv::Rect(black_rect.x + black_rect.width, 0, image.cols - (black_rect.x + black_rect.width), image.rows));//black_rect.x + black_rect.width, black_rect.y, image.cols - (black_rect.x + black_rect.width), black_rect.height)
     }
     else {
-        // ¿í¶ÈÊÇ³¤±ß£¬°´¸ß¶ÈÇĞ·Ö³ÉÉÏÏÂÁ½²¿·Ö
-        part1 = image(cv::Rect(black_rect.x, 0, black_rect.width, black_rect.y));
-        part2 = image(cv::Rect(black_rect.x, black_rect.y + black_rect.height, black_rect.width, image.rows - (black_rect.y + black_rect.height)));
+        // å®½åº¦æ˜¯é•¿è¾¹ï¼ŒæŒ‰é«˜åº¦åˆ‡åˆ†æˆä¸Šä¸‹ä¸¤éƒ¨åˆ†
+        part1 = image(cv::Rect(0, 0, image.cols, black_rect.y));//black_rect.x, 0, black_rect.width, black_rect.y)
+        part2 = image(cv::Rect(0, black_rect.y + black_rect.height, image.cols, image.rows - (black_rect.y + black_rect.height)));//cv::Rect(black_rect.x, black_rect.y + black_rect.height, black_rect.width, image.rows - (black_rect.y + black_rect.height))
     }
 
-    // ¼ÆËãÁ½²¿·ÖÖĞµÄ°×É«ÏñËØÊıÁ¿
+    // è®¡ç®—ä¸¤éƒ¨åˆ†ä¸­çš„ç™½è‰²åƒç´ æ•°é‡
     int part1WhiteCount = cv::countNonZero(part1);
     int part2WhiteCount = cv::countNonZero(part2);
 
-    // ÔÚÏñËØÊıÁ¿¶àµÄÒ»±ß»­Á½¸öÒı½Å¿ò£¬ÉÙµÄÒ»±ß»­Ò»¸ö
+    // åœ¨åƒç´ æ•°é‡å¤šçš„ä¸€è¾¹ç”»ä¸¤ä¸ªå¼•è„šæ¡†ï¼Œå°‘çš„ä¸€è¾¹ç”»ä¸€ä¸ª
     cv::Rect2f square1, square2, square3;
     bool isPart1More = part1WhiteCount > part2WhiteCount;
 
-    // 90x90´óĞ¡µÄÒı½Å¿ò
+    // 90x90å¤§å°çš„å¼•è„šæ¡†
     float squareSize = 85.0f;
 
     if (isHeightLonger) {
-        // ¸ß¶ÈÊÇ³¤±ß£¬°´¿í¶ÈÇĞ·Ö
+        // é«˜åº¦æ˜¯é•¿è¾¹ï¼ŒæŒ‰å®½åº¦åˆ‡åˆ†
         if (isPart1More) {
-            // µÚÒ»²¿·ÖÏñËØ¶à£¬×ó±ß»­Á½¸öÒı½Å¿ò
+            // ç¬¬ä¸€éƒ¨åˆ†åƒç´ å¤šï¼Œå·¦è¾¹ç”»ä¸¤ä¸ªå¼•è„šæ¡†
             square1 = cv::Rect2f(black_rect.x - squareSize, black_rect.y, squareSize, squareSize);
             square2 = cv::Rect2f(black_rect.x - squareSize, black_rect.y + black_rect.height - squareSize, squareSize, squareSize);
-            // µÚ¶ş²¿·ÖÏñËØÉÙ£¬ÓÒ±ß»­Ò»¸öÒı½Å¿ò
+            // ç¬¬äºŒéƒ¨åˆ†åƒç´ å°‘ï¼Œå³è¾¹ç”»ä¸€ä¸ªå¼•è„šæ¡†
             square3 = cv::Rect2f(black_rect.x + black_rect.width, (image.rows - squareSize) / 2, squareSize, squareSize);
         }
         else {
-            // µÚ¶ş²¿·ÖÏñËØ¶à£¬ÓÒ±ß»­Á½¸öÒı½Å¿ò
+            // ç¬¬äºŒéƒ¨åˆ†åƒç´ å¤šï¼Œå³è¾¹ç”»ä¸¤ä¸ªå¼•è„šæ¡†
             square1 = cv::Rect2f(black_rect.x + black_rect.width, black_rect.y , squareSize, squareSize);
             square2 = cv::Rect2f(black_rect.x + black_rect.width, black_rect.y + black_rect.height - squareSize, squareSize, squareSize);
-            // µÚÒ»²¿·ÖÏñËØÉÙ£¬×ó±ß»­Ò»¸öÒı½Å¿ò
+            // ç¬¬ä¸€éƒ¨åˆ†åƒç´ å°‘ï¼Œå·¦è¾¹ç”»ä¸€ä¸ªå¼•è„šæ¡†
             square3 = cv::Rect2f(black_rect.x - squareSize, (image.rows - squareSize) / 2, squareSize, squareSize);
         }
     }
     else {
-        // ¿í¶ÈÊÇ³¤±ß£¬°´¸ß¶ÈÇĞ·Ö
+        // å®½åº¦æ˜¯é•¿è¾¹ï¼ŒæŒ‰é«˜åº¦åˆ‡åˆ†
         if (isPart1More) {
-            // µÚÒ»²¿·ÖÏñËØ¶à£¬ÉÏ±ß»­Á½¸öÒı½Å¿ò
+            // ç¬¬ä¸€éƒ¨åˆ†åƒç´ å¤šï¼Œä¸Šè¾¹ç”»ä¸¤ä¸ªå¼•è„šæ¡†
             square1 = cv::Rect2f(black_rect.x, black_rect.y - squareSize, squareSize, squareSize);
             square2 = cv::Rect2f(black_rect.x + black_rect.width - squareSize, black_rect.y - squareSize, squareSize, squareSize);
-            // µÚ¶ş²¿·ÖÏñËØÉÙ£¬ÏÂ±ß»­Ò»¸öÒı½Å¿ò
+            // ç¬¬äºŒéƒ¨åˆ†åƒç´ å°‘ï¼Œä¸‹è¾¹ç”»ä¸€ä¸ªå¼•è„šæ¡†
             square3 = cv::Rect2f((image.cols - squareSize) / 2, black_rect.y + black_rect.height, squareSize, squareSize);
         }
         else {
-            // µÚ¶ş²¿·ÖÏñËØ¶à£¬ÏÂ±ß»­Á½¸öÒı½Å¿ò
+            // ç¬¬äºŒéƒ¨åˆ†åƒç´ å¤šï¼Œä¸‹è¾¹ç”»ä¸¤ä¸ªå¼•è„šæ¡†
             square1 = cv::Rect2f(black_rect.x , black_rect.y + black_rect.height, squareSize, squareSize);
             square2 = cv::Rect2f(black_rect.x + black_rect.width - squareSize, black_rect.y + black_rect.height, squareSize, squareSize);
-            // µÚÒ»²¿·ÖÏñËØÉÙ£¬ÉÏ±ß»­Ò»¸öÒı½Å¿ò
+            // ç¬¬ä¸€éƒ¨åˆ†åƒç´ å°‘ï¼Œä¸Šè¾¹ç”»ä¸€ä¸ªå¼•è„šæ¡†
             square3 = cv::Rect2f((image.cols - squareSize) / 2, black_rect.y - squareSize, squareSize, squareSize);
         }
     }
 
-    //// ÔÚÍ¼ÏñÉÏ»æÖÆÒı½Å¿ò
+    //// åœ¨å›¾åƒä¸Šç»˜åˆ¶å¼•è„šæ¡†
     //cv::rectangle(image, square1, cv::Scalar(255), cv::FILLED);
     //cv::rectangle(image, square2, cv::Scalar(255), cv::FILLED);
     //if (isHeightLonger) {
-    //    // ¸ß¶ÈÊÇ³¤±ß£¬»æÖÆµÚÈı¸öÒı½Å¿òÔÚÖĞ¼ä
+    //    // é«˜åº¦æ˜¯é•¿è¾¹ï¼Œç»˜åˆ¶ç¬¬ä¸‰ä¸ªå¼•è„šæ¡†åœ¨ä¸­é—´
     //    cv::rectangle(image, square3, cv::Scalar(255), cv::FILLED);
     //}
     //else {
-    //    // ¿í¶ÈÊÇ³¤±ß£¬»æÖÆµÚÈı¸öÒı½Å¿òÔÚ±ßÉÏ
+    //    // å®½åº¦æ˜¯é•¿è¾¹ï¼Œç»˜åˆ¶ç¬¬ä¸‰ä¸ªå¼•è„šæ¡†åœ¨è¾¹ä¸Š
     //    cv::rectangle(image, square3, cv::Scalar(255), cv::FILLED);
     //}
 
@@ -560,13 +564,13 @@ cv::Mat eliminateYoloBackground::test(cv::Mat& img, std::string types)
 {
     if (types != "T")
     {
-        // ×ª»»Îª»Ò¶ÈÍ¼
+        // è½¬æ¢ä¸ºç°åº¦å›¾
         cv::Mat gray, eroded;
         cv::cvtColor(img, gray, cv::COLOR_BGR2GRAY);
 
         int temp = cv::threshold(gray, gray, 0, 255, cv::THRESH_TRIANGLE);
 
-        // Ó¦ÓÃãĞÖµ²Ù×÷£¬ÒÔ±ãÂÖÀª¼ì²â
+        // åº”ç”¨é˜ˆå€¼æ“ä½œï¼Œä»¥ä¾¿è½®å»“æ£€æµ‹
         cv::Mat thresh;
         cv::threshold(gray, thresh, temp, 255, cv::THRESH_BINARY);
         //cv::Rect rectMask =  { static_cast<int>(img.cols * 0.25), static_cast<int>(img.rows * 0.4), static_cast<int>(img.cols * 0.5), static_cast<int>(img.rows * 0.3)};
@@ -575,30 +579,30 @@ cv::Mat eliminateYoloBackground::test(cv::Mat& img, std::string types)
         int kernelSize = 5;
         cv::Mat kernel = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(kernelSize, kernelSize));
 
-        // Ó¦ÓÃ±ÕÔËËã
+        // åº”ç”¨é—­è¿ç®—
         cv::Mat closed;
         cv::morphologyEx(thresh, closed, cv::MORPH_CLOSE, kernel);
 
-        // Ó¦ÓÃ¿ªÔËËã
+        // åº”ç”¨å¼€è¿ç®—
         cv::Mat opened;
         cv::morphologyEx(closed, opened, cv::MORPH_OPEN, kernel);
 
-        //ÖĞÖµÂË²¨½øĞĞÔëÉùÈ¥³ı
+        //ä¸­å€¼æ»¤æ³¢è¿›è¡Œå™ªå£°å»é™¤
         cv::medianBlur(opened, opened, kernelSize);
 
-        // 2. Á¬Í¨×é¼ş·ÖÎöÈ¥³ıĞ¡¶ÔÏó
+        // 2. è¿é€šç»„ä»¶åˆ†æå»é™¤å°å¯¹è±¡
         cv::Mat labels, stats, centroids;
         //cv::Mat filteredImage = cv::Mat::zeros(opened.size(), CV_8UC1);
         int nLabels = cv::connectedComponentsWithStats(opened, labels, stats, centroids);
 
-        // ÉèÖÃÃæ»ıãĞÖµÀ´¹ıÂËĞ¡×é¼ş
-        int areaThreshold = 600; // ¸ù¾İĞèÒªµ÷Õû´ËãĞÖµ
+        // è®¾ç½®é¢ç§¯é˜ˆå€¼æ¥è¿‡æ»¤å°ç»„ä»¶
+        int areaThreshold = 600; // æ ¹æ®éœ€è¦è°ƒæ•´æ­¤é˜ˆå€¼
 
-        // ±éÀúËùÓĞ¼ì²âµ½µÄ×é¼ş
+        // éå†æ‰€æœ‰æ£€æµ‹åˆ°çš„ç»„ä»¶
         for (int label = 1; label < nLabels; label++) {
             int area = stats.at<int>(label, cv::CC_STAT_AREA);
             if (area < areaThreshold) {
-                // ÔÚfilteredImageÉÏ»æÖÆ×é¼ş
+                // åœ¨filteredImageä¸Šç»˜åˆ¶ç»„ä»¶
                 opened.setTo(0, labels == label);
             }
         }
@@ -618,7 +622,7 @@ cv::Mat eliminateYoloBackground::test(cv::Mat& img, std::string types)
 
 cv::Mat eliminateYoloBackground::useHsvTest(cv::Mat& image)
 {
-    // Ê×ÏÈ½«Í¼Ïñ´ÓBGR×ª»»µ½HSVÑÕÉ«¿Õ¼ä
+    // é¦–å…ˆå°†å›¾åƒä»BGRè½¬æ¢åˆ°HSVé¢œè‰²ç©ºé—´
     cv::Mat hsvImage;
     cv::cvtColor(image, hsvImage, cv::COLOR_BGR2HSV);
     std::vector<cv::Mat> hsvChannels(3);
@@ -631,21 +635,21 @@ cv::Mat eliminateYoloBackground::useHsvTest(cv::Mat& image)
     cv::Mat simg1 = hsvChannels[1];
     cv::threshold(simg, simg, 0, 255, cv::THRESH_TRIANGLE);
     //cv::threshold(hsvChannels[2], hsvChannels[2], temp, 255, cv::THRESH_BINARY);
-    // ¶¨ÒåºìÉ«ºÍ»ÆÉ«µÄHSVÑÕÉ«·¶Î§
+    // å®šä¹‰çº¢è‰²å’Œé»„è‰²çš„HSVé¢œè‰²èŒƒå›´
     //cv::Scalar lowerRed1(0, 120, 70);
     //cv::Scalar upperRed1(10, 255, 255);
     //cv::Scalar lowerRed2(170, 120, 70);
     //cv::Scalar upperRed2(180, 255, 255);
     //cv::Scalar lowerYellow(25, 50, 50);
     //cv::Scalar upperYellow(60, 255, 255);
-    //// ºÚÉ«µÄHSV·¶Î§
+    //// é»‘è‰²çš„HSVèŒƒå›´
     //cv::Scalar lowerBlack(0, 0, 0);
-    //cv::Scalar upperBlack(180, 255, 50); // Ã÷¶ÈÉÏÏŞÉè¶¨½ÏµÍ£¬±¥ºÍ¶È¿ÉÒÔ½Ï¿í·º
-    //// »ÒÉ«µÄHSV·¶Î§
+    //cv::Scalar upperBlack(180, 255, 50); // æ˜åº¦ä¸Šé™è®¾å®šè¾ƒä½ï¼Œé¥±å’Œåº¦å¯ä»¥è¾ƒå®½æ³›
+    //// ç°è‰²çš„HSVèŒƒå›´
     //cv::Scalar lowerGray(0, 0, 50);
-    //cv::Scalar upperGray(180, 50, 220); // ±¥ºÍ¶ÈÉÏÏŞ½ÏµÍ£¬Ã÷¶È¸²¸Ç´Ó½Ï°µµ½½ÏÁÁµÄ·¶Î§
+    //cv::Scalar upperGray(180, 50, 220); // é¥±å’Œåº¦ä¸Šé™è¾ƒä½ï¼Œæ˜åº¦è¦†ç›–ä»è¾ƒæš—åˆ°è¾ƒäº®çš„èŒƒå›´
     //
-    //// É¸Ñ¡ÑÕÉ«·¶Î§²¢´´½¨ÑÚÂë
+    //// ç­›é€‰é¢œè‰²èŒƒå›´å¹¶åˆ›å»ºæ©ç 
     //cv::Mat maskRed1, maskRed2, maskYellow, maskBlack, maskGray;
     //cv::inRange(hsvImage, lowerRed1, upperRed1, maskRed1);
     //cv::inRange(hsvImage, lowerRed2, upperRed2, maskRed2);
@@ -653,12 +657,12 @@ cv::Mat eliminateYoloBackground::useHsvTest(cv::Mat& image)
     //cv::inRange(hsvImage, lowerBlack, upperBlack, maskBlack);
     //cv::inRange(hsvImage, lowerGray, upperGray, maskGray);
 
-    //// ºÏ²¢ºìÉ«ÇøÓòµÄÁ½¸öÑÚÂë£¬È»ºóÓë»ÆÉ«ÑÚÂëºÏ²¢
+    //// åˆå¹¶çº¢è‰²åŒºåŸŸçš„ä¸¤ä¸ªæ©ç ï¼Œç„¶åä¸é»„è‰²æ©ç åˆå¹¶
     //cv::Mat maskRed = maskRed1 | maskRed2;
     //cv::Mat maskCombined = maskRed | maskYellow;
-    //// ½øÒ»²½½«ºÚÉ«ºÍ»ÒÉ«ÑÚÂë¼ÓÈëµ½ºÏ²¢ºóµÄÑÚÂëÖĞ
+    //// è¿›ä¸€æ­¥å°†é»‘è‰²å’Œç°è‰²æ©ç åŠ å…¥åˆ°åˆå¹¶åçš„æ©ç ä¸­
     ////maskCombined = maskCombined | maskBlack | maskGray;
-    //int morph_size = 2;  // ½á¹¹ÔªËØµÄ³ß´ç£¬¸ù¾İĞèÒª½øĞĞµ÷Õû
+    //int morph_size = 2;  // ç»“æ„å…ƒç´ çš„å°ºå¯¸ï¼Œæ ¹æ®éœ€è¦è¿›è¡Œè°ƒæ•´
     //cv::Mat element = cv::getStructuringElement(cv::MORPH_RECT,
     //    cv::Size(2 * morph_size + 1, 2 * morph_size + 1),
     //    cv::Point(morph_size, morph_size));
@@ -669,17 +673,17 @@ cv::Mat eliminateYoloBackground::useHsvTest(cv::Mat& image)
 std::vector<cv::Rect> eliminateYoloBackground::getPinRect(cv::Mat& imgInit, cv::Rect rectInit, char baseline, int closestEdge)
 {
     cv::Mat img = imgInit(rectInit);   
-    // ²éÕÒÂÖÀª
+    // æŸ¥æ‰¾è½®å»“
     std::vector<std::vector<cv::Point>> contours;
     cv::findContours(img, contours, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE);
 
     std::vector<cv::Rect> rectangles;
 
-    // ±éÀúËùÓĞÂÖÀª²¢»ñÈ¡ÆäÍâ½Ó¾ØĞÎ
+    // éå†æ‰€æœ‰è½®å»“å¹¶è·å–å…¶å¤–æ¥çŸ©å½¢
     for (const auto& contour : contours) {
         cv::Rect rect = cv::boundingRect(contour);
         
-        // Ìõ¼ş¹ıÂË
+        // æ¡ä»¶è¿‡æ»¤
         if (std::max(rect.width,rect.height) < std::min(img.rows,img.cols) * 0.2) 
         {
             continue;
@@ -690,7 +694,7 @@ std::vector<cv::Rect> eliminateYoloBackground::getPinRect(cv::Mat& imgInit, cv::
         rectangles.push_back(rect);
     }
 
-    // ¸ù¾İ»ù×¼ÏßºÏ²¢¾ØĞÎ
+    // æ ¹æ®åŸºå‡†çº¿åˆå¹¶çŸ©å½¢
     if (baseline == 'L') {
         mergeRectanglesByLeftEdge(rectangles, 5);
     }
@@ -705,17 +709,17 @@ std::vector<cv::Rect> eliminateYoloBackground::getPinRect(cv::Mat& imgInit, cv::
 std::vector<cv::Rect> eliminateYoloBackground::getPinRect_ofThree(cv::Mat& imgInit, cv::Rect rectInit, char baseline, int closestEdge)
 {
     cv::Mat img = imgInit(rectInit);
-    // ²éÕÒÂÖÀª
+    // æŸ¥æ‰¾è½®å»“
     std::vector<std::vector<cv::Point>> contours;
     cv::findContours(img, contours, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE);
 
     std::vector<cv::Rect> rectangles;
 
-    // ±éÀúËùÓĞÂÖÀª²¢»ñÈ¡ÆäÍâ½Ó¾ØĞÎ
+    // éå†æ‰€æœ‰è½®å»“å¹¶è·å–å…¶å¤–æ¥çŸ©å½¢
     for (const auto& contour : contours) {
         cv::Rect rect = cv::boundingRect(contour);
 
-        // Ìõ¼ş¹ıÂË
+        // æ¡ä»¶è¿‡æ»¤
         if (std::max(rect.width, rect.height) < std::min(img.rows, img.cols) * 0.2)
         {
             continue;
@@ -726,7 +730,7 @@ std::vector<cv::Rect> eliminateYoloBackground::getPinRect_ofThree(cv::Mat& imgIn
         rectangles.push_back(rect);
     }
 
-    // ¸ù¾İ»ù×¼ÏßºÏ²¢¾ØĞÎ
+    // æ ¹æ®åŸºå‡†çº¿åˆå¹¶çŸ©å½¢
     if (baseline == 'L') {
         mergeRectanglesByLeftEdge(rectangles, 5);
     }
@@ -744,7 +748,7 @@ int eliminateYoloBackground::countWhitePixels(const cv::Mat& line)
 
 void eliminateYoloBackground::mergeRectanglesByLeftEdge(std::vector<cv::Rect>& rectangles, int threshold)
 {
-    // ºÏ²¢Âß¼­£¬»ùÓÚ×ó±ß½çµÄ¾àÀë
+    // åˆå¹¶é€»è¾‘ï¼ŒåŸºäºå·¦è¾¹ç•Œçš„è·ç¦»
     std::vector<cv::Rect> merged;
     while (!rectangles.empty()) {
         // Always merge with the first rectangle
@@ -752,7 +756,7 @@ void eliminateYoloBackground::mergeRectanglesByLeftEdge(std::vector<cv::Rect>& r
         auto it = rectangles.begin();
         for (auto jt = rectangles.begin() + 1; jt != rectangles.end();) {
             if (std::abs(jt->x - base.x) < threshold) {
-                base = base | *jt; // ºÏ²¢¾ØĞÎ
+                base = base | *jt; // åˆå¹¶çŸ©å½¢
                 jt = rectangles.erase(jt);
             }
             else {
@@ -767,7 +771,7 @@ void eliminateYoloBackground::mergeRectanglesByLeftEdge(std::vector<cv::Rect>& r
 
 void eliminateYoloBackground::mergeRectanglesByTopEdge(std::vector<cv::Rect>& rectangles, int threshold)
 {
-    // ºÏ²¢Âß¼­£¬»ùÓÚÉÏ±ß½çµÄ¾àÀë
+    // åˆå¹¶é€»è¾‘ï¼ŒåŸºäºä¸Šè¾¹ç•Œçš„è·ç¦»
     std::vector<cv::Rect> merged;
     while (!rectangles.empty()) {
         // Always merge with the first rectangle
@@ -775,7 +779,7 @@ void eliminateYoloBackground::mergeRectanglesByTopEdge(std::vector<cv::Rect>& re
         auto it = rectangles.begin();
         for (auto jt = rectangles.begin() + 1; jt != rectangles.end();) {
             if (std::abs(jt->y - base.y) < threshold) {
-                base = base | *jt; // ºÏ²¢¾ØĞÎ
+                base = base | *jt; // åˆå¹¶çŸ©å½¢
                 jt = rectangles.erase(jt);
             }
             else {
@@ -790,9 +794,9 @@ void eliminateYoloBackground::mergeRectanglesByTopEdge(std::vector<cv::Rect>& re
 
 bool eliminateYoloBackground::containsWhitePixel(const cv::Mat& image, const cv::Rect& rect)
 {
-    // ÌáÈ¡ROI
+    // æå–ROI
     cv::Mat roi = image(rect);
-    // ¼ì²éROIÖĞÊÇ·ñÓĞ·ÇÁãÏñËØ
+    // æ£€æŸ¥ROIä¸­æ˜¯å¦æœ‰éé›¶åƒç´ 
     return cv::countNonZero(roi) > 1;
 }
 
@@ -800,60 +804,60 @@ void eliminateYoloBackground::filterRectangles(std::vector<cv::Rect>& rectangles
 {
     std::vector<double> distances;
 
-    // ¼ÆËãÃ¿¸ö¾ØĞÎÖĞĞÄµãµ½Ö¸¶¨±ßµÄ¾àÀë
+    // è®¡ç®—æ¯ä¸ªçŸ©å½¢ä¸­å¿ƒç‚¹åˆ°æŒ‡å®šè¾¹çš„è·ç¦»
     for (const auto& rect : rectangles) {
         cv::Point rectCenter(rect.x + rect.width / 2, rect.y + rect.height / 2);
         double distance = 0.0;
 
         switch (closestEdge) {
-        case 0: // ÏÂ±ß
+        case 0: // ä¸‹è¾¹
             distance = std::abs(rectCenter.y - rectInit.br().y);
             break;
-        case 1: // ×ó±ß
+        case 1: // å·¦è¾¹
             distance = std::abs(rectCenter.x - rectInit.x);
             break;
-        case 2: // ÉÏ±ß
+        case 2: // ä¸Šè¾¹
             distance = std::abs(rectCenter.y - rectInit.y);
             break;
-        case 3: // ÓÒ±ß
+        case 3: // å³è¾¹
             distance = std::abs(rectCenter.x - rectInit.br().x);
             break;
         }
         distances.push_back(distance);
     }
 
-    // ¼ÆËã¾àÀëµÄÆ½¾ùÖµ
+    // è®¡ç®—è·ç¦»çš„å¹³å‡å€¼
     double averageDistance = std::accumulate(distances.begin(), distances.end(), 0.0) / distances.size();
-    double distanceThreshold = averageDistance * thresholdRatio; // Ê¹ÓÃÆ½¾ùÖµµÄÒ»¶¨±ÈÀı×÷ÎªãĞÖµ
+    double distanceThreshold = averageDistance * thresholdRatio; // ä½¿ç”¨å¹³å‡å€¼çš„ä¸€å®šæ¯”ä¾‹ä½œä¸ºé˜ˆå€¼
 
-    // ÌŞ³ı¾àÀë³¬¹ıãĞÖµÇÒ²»Óë±ß½çÏà½»µÄ¾ØĞÎ
+    // å‰”é™¤è·ç¦»è¶…è¿‡é˜ˆå€¼ä¸”ä¸ä¸è¾¹ç•Œç›¸äº¤çš„çŸ©å½¢
     auto newEnd = std::remove_if(rectangles.begin(), rectangles.end(),
         [&](const cv::Rect& rect) -> bool {
             cv::Point rectCenter(rect.x + rect.width / 2, rect.y + rect.height / 2);
             double distance = 0.0;
             bool intersects = false;
 
-            // ¼ÆËã¾àÀë²¢ÅĞ¶ÏÊÇ·ñÏà½»
+            // è®¡ç®—è·ç¦»å¹¶åˆ¤æ–­æ˜¯å¦ç›¸äº¤
             switch (closestEdge) {
-            case 0: // ÏÂ±ß
+            case 0: // ä¸‹è¾¹
                 distance = std::abs(rectCenter.y - rectInit.br().y);
                 intersects = (rect.br().y > rectInit.br().y - 2);
                 break;
-            case 1: // ×ó±ß
+            case 1: // å·¦è¾¹
                 distance = std::abs(rectCenter.x - rectInit.x);
                 intersects = (rect.x < rectInit.x + 2);
                 break;
-            case 2: // ÉÏ±ß
+            case 2: // ä¸Šè¾¹
                 distance = std::abs(rectCenter.y - rectInit.y);
                 intersects = (rect.y < rectInit.y + 2);
                 break;
-            case 3: // ÓÒ±ß
+            case 3: // å³è¾¹
                 distance = std::abs(rectCenter.x - rectInit.br().x);
                 intersects = (rect.br().x > rectInit.br().x - 2);
                 break;
             }
 
-            // Èç¹û¾ØĞÎµÄ¾àÀë³¬¹ıãĞÖµÇÒ²»Óë±ß½çÏà½»£¬ÔòÓ¦ÌŞ³ı
+            // å¦‚æœçŸ©å½¢çš„è·ç¦»è¶…è¿‡é˜ˆå€¼ä¸”ä¸ä¸è¾¹ç•Œç›¸äº¤ï¼Œåˆ™åº”å‰”é™¤
             return distance > distanceThreshold || !intersects;
         });
 
@@ -862,78 +866,78 @@ void eliminateYoloBackground::filterRectangles(std::vector<cv::Rect>& rectangles
 
 void eliminateYoloBackground::adjustRect(cv::Rect& rect, const cv::Size& imageSize)
 {
-    //// ¶¨Òå"¹ı½ü"µÄãĞÖµ
+    //// å®šä¹‰"è¿‡è¿‘"çš„é˜ˆå€¼
     const float threshold_short = 60.0;
     const float threshold_long = 10.0;
-    //// Í¼Æ¬ÖĞĞÄµã×ø±ê
+    //// å›¾ç‰‡ä¸­å¿ƒç‚¹åæ ‡
     //const float imageCenterX = imageSize.width / 2.0;
     //const float imageCenterY = imageSize.height / 2.0;
 
-    //// ¾ØĞÎÖĞĞÄµã×ø±ê
+    //// çŸ©å½¢ä¸­å¿ƒç‚¹åæ ‡
     //const float rectCenterX = rect.x + rect.width / 2.0;
     //const float rectCenterY = rect.y + rect.height / 2.0;
 
-    //// ¼ì²é¾ØĞÎ¿òÓëÍ¼Æ¬±ßÔµµÄ¾àÀëÊÇ·ñĞ¡ÓÚãĞÖµ
+    //// æ£€æŸ¥çŸ©å½¢æ¡†ä¸å›¾ç‰‡è¾¹ç¼˜çš„è·ç¦»æ˜¯å¦å°äºé˜ˆå€¼
     //bool isCloseToLeftEdge = rect.x < threshold;
     //bool isCloseToRightEdge = imageSize.width - (rect.x + rect.width) < threshold;
 
-    //// Èç¹û×ó±ß»òÓÒ±ßÌ«½ü£¬Ôò½øĞĞµ÷Õû
+    //// å¦‚æœå·¦è¾¹æˆ–å³è¾¹å¤ªè¿‘ï¼Œåˆ™è¿›è¡Œè°ƒæ•´
     //if (isCloseToLeftEdge || isCloseToRightEdge) {
-    //    // Í¼Æ¬¶Ì±ßµÄ³¤¶È
+    //    // å›¾ç‰‡çŸ­è¾¹çš„é•¿åº¦
     //    float shortSideLength = std::min(imageSize.width, imageSize.height);
 
-    //    // µ÷ÕûºóµÄ¾ØĞÎ¿í¶ÈÊÇÍ¼Æ¬¶Ì±ßµÄÈı·ÖÖ®Ò»
+    //    // è°ƒæ•´åçš„çŸ©å½¢å®½åº¦æ˜¯å›¾ç‰‡çŸ­è¾¹çš„ä¸‰åˆ†ä¹‹ä¸€
     //    float newWidth = shortSideLength * 0.625;
 
-    //    // Èç¹ûÁ½±ß¶¼Ì«½ü£¬¾ØĞÎÖĞĞÄÓ¦ÓëÍ¼Æ¬ÖĞĞÄ¶ÔÆë
+    //    // å¦‚æœä¸¤è¾¹éƒ½å¤ªè¿‘ï¼ŒçŸ©å½¢ä¸­å¿ƒåº”ä¸å›¾ç‰‡ä¸­å¿ƒå¯¹é½
     //    if (isCloseToLeftEdge && isCloseToRightEdge) {
     //        rect.x = imageCenterX - newWidth / 2.0;
     //    }
     //    else if (isCloseToLeftEdge) {
-    //        // Èç¹ûÖ»ÓĞ×ó±ßÌ«½ü£¬½«¾ØĞÎÏòÓÒÒÆ¶¯
+    //        // å¦‚æœåªæœ‰å·¦è¾¹å¤ªè¿‘ï¼Œå°†çŸ©å½¢å‘å³ç§»åŠ¨
     //        rect.x = imageCenterX - (imageSize.width - rect.x - rect.width) - newWidth;
     //    }
     //    else {
-    //        // Èç¹ûÖ»ÓĞÓÒ±ßÌ«½ü£¬½«¾ØĞÎÏò×óÒÆ¶¯
+    //        // å¦‚æœåªæœ‰å³è¾¹å¤ªè¿‘ï¼Œå°†çŸ©å½¢å‘å·¦ç§»åŠ¨
     //        rect.x = imageCenterX - rect.x - newWidth;
     //    }
 
-    //    // ¸üĞÂ¾ØĞÎ¿í¶È
+    //    // æ›´æ–°çŸ©å½¢å®½åº¦
     //    rect.width = newWidth;
     //}
 
 
-    // Í¼Æ¬ÖĞĞÄµã×ø±ê
+    // å›¾ç‰‡ä¸­å¿ƒç‚¹åæ ‡
     float imageCenterX = imageSize.width / 2.0f;
     float imageCenterY = imageSize.height / 2.0f;
 
-    // ¼ì²é¾ØĞÎµÄÃ¿Ìõ±ßÊÇ·ñ¹ıÓÚ½Ó½üÍ¼Æ¬±ßÔµ
+    // æ£€æŸ¥çŸ©å½¢çš„æ¯æ¡è¾¹æ˜¯å¦è¿‡äºæ¥è¿‘å›¾ç‰‡è¾¹ç¼˜
     bool isCloseToLeftEdge = rect.x < threshold_long;
     bool isCloseToRightEdge = imageSize.width - (rect.x + rect.width) < threshold_long;
     bool isCloseToTopEdge = rect.y < threshold_short;
     bool isCloseToBottomEdge = imageSize.height - (rect.y + rect.height) < threshold_short;
 
-    // Èç¹û×ó±ß»òÓÒ±ß¹ıÓÚ½Ó½ü±ßÔµ
+    // å¦‚æœå·¦è¾¹æˆ–å³è¾¹è¿‡äºæ¥è¿‘è¾¹ç¼˜
     if (isCloseToLeftEdge || isCloseToRightEdge) {
-        // Ö»ÓĞÒ»±ß¿¿½üÊ±£¬µ÷Õû¸Ã±ßµ½Óë¶Ô±ß¶Ô³ÆµÄÎ»ÖÃ
+        // åªæœ‰ä¸€è¾¹é è¿‘æ—¶ï¼Œè°ƒæ•´è¯¥è¾¹åˆ°ä¸å¯¹è¾¹å¯¹ç§°çš„ä½ç½®
         if (!(isCloseToLeftEdge && isCloseToRightEdge)) {
             rect.x = imageCenterX - rect.width / 2.0f;
         }
         else {
-            // Á½±ß¶¼¹ıÓÚ½Ó½üÊ±£¬µ÷Õû¿í¶ÈÎªÍ¼Æ¬¿í¶ÈµÄÈı·ÖÖ®Ò»
+            // ä¸¤è¾¹éƒ½è¿‡äºæ¥è¿‘æ—¶ï¼Œè°ƒæ•´å®½åº¦ä¸ºå›¾ç‰‡å®½åº¦çš„ä¸‰åˆ†ä¹‹ä¸€
             rect.width = imageSize.width * 0.75f;/// 3.0f
             rect.x = imageCenterX - rect.width / 2.0f;
         }
     }
 
-    // Èç¹û¶¥±ß»òµ×±ß¹ıÓÚ½Ó½ü±ßÔµ
+    // å¦‚æœé¡¶è¾¹æˆ–åº•è¾¹è¿‡äºæ¥è¿‘è¾¹ç¼˜
     if (isCloseToTopEdge || isCloseToBottomEdge) {
-        // Ö»ÓĞÒ»±ß¿¿½üÊ±£¬µ÷Õû¸Ã±ßµ½Óë¶Ô±ß¶Ô³ÆµÄÎ»ÖÃ
+        // åªæœ‰ä¸€è¾¹é è¿‘æ—¶ï¼Œè°ƒæ•´è¯¥è¾¹åˆ°ä¸å¯¹è¾¹å¯¹ç§°çš„ä½ç½®
         if (!(isCloseToTopEdge && isCloseToBottomEdge)) {
             rect.y = imageCenterY - rect.height / 2.0f;
         }
         else {
-            // Á½±ß¶¼¹ıÓÚ½Ó½üÊ±£¬µ÷Õû¸ß¶ÈÎªÍ¼Æ¬¸ß¶ÈµÄÈı·ÖÖ®Ò»
+            // ä¸¤è¾¹éƒ½è¿‡äºæ¥è¿‘æ—¶ï¼Œè°ƒæ•´é«˜åº¦ä¸ºå›¾ç‰‡é«˜åº¦çš„ä¸‰åˆ†ä¹‹ä¸€
             rect.height = imageSize.height / 3.0f;
             rect.y = imageCenterY - rect.height / 2.0f;
         }
@@ -942,7 +946,7 @@ void eliminateYoloBackground::adjustRect(cv::Rect& rect, const cv::Size& imageSi
 
 void eliminateYoloBackground::moveToIntersect(cv::Rect& rectToMove, const cv::Rect& referenceRect)
 {
-    // ¼ì²é¾ØĞÎÊÇ·ñÏà½»
+    // æ£€æŸ¥çŸ©å½¢æ˜¯å¦ç›¸äº¤
     auto isIntersecting = [](const cv::Rect& rect1, const cv::Rect& rect2) -> bool {
         return !(rect1.x > rect2.x + rect2.width ||
             rect1.x + rect1.width < rect2.x ||
@@ -950,18 +954,18 @@ void eliminateYoloBackground::moveToIntersect(cv::Rect& rectToMove, const cv::Re
             rect1.y + rect1.height < rect2.y);
         };
 
-    // Èç¹ûrectToMove²»ÓëreferenceRectÏà½»
+    // å¦‚æœrectToMoveä¸ä¸referenceRectç›¸äº¤
     if (!isIntersecting(rectToMove, referenceRect)) {
-        // ¼ì²érectToMoveÊÇ·ñÔÚreferenceRectµÄÉÏ·½
+        // æ£€æŸ¥rectToMoveæ˜¯å¦åœ¨referenceRectçš„ä¸Šæ–¹
         if (rectToMove.y + rectToMove.height <= referenceRect.y) {
-            // Èç¹ûÊÇ£¬Ôò½«rectToMoveµÄµ×±ßÏÂÒÆÓëreferenceRectµÄ¶¥±ß¶ÔÆë
+            // å¦‚æœæ˜¯ï¼Œåˆ™å°†rectToMoveçš„åº•è¾¹ä¸‹ç§»ä¸referenceRectçš„é¡¶è¾¹å¯¹é½
             rectToMove.height = referenceRect.y - rectToMove.y;
         }
-        // ·ñÔò£¬¼ì²érectToMoveÊÇ·ñÔÚreferenceRectµÄÏÂ·½
+        // å¦åˆ™ï¼Œæ£€æŸ¥rectToMoveæ˜¯å¦åœ¨referenceRectçš„ä¸‹æ–¹
         else if (rectToMove.y >= referenceRect.y + referenceRect.height) {
-            // ¼ÆËãÒÆ¶¯Á¿£¬½«rectToMoveµÄ¶¥±ßÉÏÒÆÓëreferenceRectµÄµ×±ß¶ÔÆë
+            // è®¡ç®—ç§»åŠ¨é‡ï¼Œå°†rectToMoveçš„é¡¶è¾¹ä¸Šç§»ä¸referenceRectçš„åº•è¾¹å¯¹é½
             int moveUpBy = rectToMove.y - (referenceRect.y + referenceRect.height);
-            // ¸üĞÂrectToMoveµÄÎ»ÖÃºÍ´óĞ¡£¬È·±£µ×±ß²»¶¯
+            // æ›´æ–°rectToMoveçš„ä½ç½®å’Œå¤§å°ï¼Œç¡®ä¿åº•è¾¹ä¸åŠ¨
             rectToMove.y -= moveUpBy;
             rectToMove.height += moveUpBy;
         }
@@ -984,14 +988,14 @@ void eliminateYoloBackground::rectTooSmall(cv::Point& topLeft, cv::Point& bottom
 
 void eliminateYoloBackground::transformRectCoordinates(cv::Rect& rect)
 {
-    // ½«ÊúÖ±·½ÏòµÄ x ×ø±ê¸³Öµ¸øĞÂµÄ y ×ø±ê
+    // å°†ç«–ç›´æ–¹å‘çš„ x åæ ‡èµ‹å€¼ç»™æ–°çš„ y åæ ‡
     float x = rect.y;
-    // ½«ÊúÖ±·½ÏòµÄ y ×ø±ê×ª»»ÎªĞÂµÄ x ×ø±ê
+    // å°†ç«–ç›´æ–¹å‘çš„ y åæ ‡è½¬æ¢ä¸ºæ–°çš„ x åæ ‡
     float y = rect.x;
     rect.x = x;
     rect.y = y;
 
-    // ½»»»¿í¶ÈºÍ¸ß¶È
+    // äº¤æ¢å®½åº¦å’Œé«˜åº¦
     float temp = rect.width;
     rect.width = rect.height;
     rect.height = temp;
@@ -1001,7 +1005,7 @@ bool eliminateYoloBackground::compareRectsCloseToSquare(const cv::Rect2f& a, con
 {
     float diffA = std::abs(a.width - a.height);
     float diffB = std::abs(b.width - b.height);
-    return diffA < diffB; // °´ÕÕ½Ó½üÒı½Å¿òµÄ³Ì¶ÈÅÅĞò
+    return diffA < diffB; // æŒ‰ç…§æ¥è¿‘å¼•è„šæ¡†çš„ç¨‹åº¦æ’åº
 }
 
 bool eliminateYoloBackground::rectsAreSimilar(const cv::Rect2f& a, const cv::Rect2f& b)
@@ -1014,8 +1018,8 @@ bool eliminateYoloBackground::rectsAreSimilar(const cv::Rect2f& a, const cv::Rec
 
 cv::Rect2f eliminateYoloBackground::findTemplateRect(const std::vector<cv::Rect2f>& rects, cv::Rect2f black_rect)
 {
-    //¸ù¾İ³öÏÖÆµÂÊÅĞ¶Ï
-    //std::vector<std::pair<cv::Rect2f, int>> frequency; // ¾ØĞÎ¼°Æä³öÏÖÆµÂÊ
+    //æ ¹æ®å‡ºç°é¢‘ç‡åˆ¤æ–­
+    //std::vector<std::pair<cv::Rect2f, int>> frequency; // çŸ©å½¢åŠå…¶å‡ºç°é¢‘ç‡
     //for (const auto& rect : rects) {
     //    bool found = false;
     //    for (auto& item : frequency) {
@@ -1036,50 +1040,50 @@ cv::Rect2f eliminateYoloBackground::findTemplateRect(const std::vector<cv::Rect2
     //    });
 
     //return maxElem->first;
-    //¸ù¾İÊÇ·ñ½Ó½ü¹Ì¶¨Ä£°åÅĞ¶Ï
+    //æ ¹æ®æ˜¯å¦æ¥è¿‘å›ºå®šæ¨¡æ¿åˆ¤æ–­
     int count_vertical = 0;
     int count_horizontal = 0;
 
-    // È·¶¨black_rectµÄ³¤±ßÊÇË®Æ½»¹ÊÇ´¹Ö±
+    // ç¡®å®šblack_rectçš„é•¿è¾¹æ˜¯æ°´å¹³è¿˜æ˜¯å‚ç›´
     bool black_rect_is_horizontal = black_rect.width > black_rect.height;
 
     for (const auto& rect : rects) {
-        // ¼ÆËã¾ØĞÎµÄ³¤¿í±È
+        // è®¡ç®—çŸ©å½¢çš„é•¿å®½æ¯”
         float aspectRatioRect = rect.width / rect.height;
         float aspectRatioTemplate = templateWidth / templateHeight;
 
-        // Èç¹ûblack_rectµÄ³¤±ßÊÇË®Æ½µÄ£¬ÎÒÃÇÆÚÍûÄ£°åµÄ³¤±ßÊÇ´¹Ö±µÄ£¬·´Ö®ÒàÈ»
+        // å¦‚æœblack_rectçš„é•¿è¾¹æ˜¯æ°´å¹³çš„ï¼Œæˆ‘ä»¬æœŸæœ›æ¨¡æ¿çš„é•¿è¾¹æ˜¯å‚ç›´çš„ï¼Œåä¹‹äº¦ç„¶
         if (black_rect_is_horizontal) {
-            // Ä£°åÓ¦Îª´¹Ö±£¬³¤±ß/¿í±ß±ÈÓ¦½Ó½üÓÚaspectRatioTemplate
+            // æ¨¡æ¿åº”ä¸ºå‚ç›´ï¼Œé•¿è¾¹/å®½è¾¹æ¯”åº”æ¥è¿‘äºaspectRatioTemplate
             if (aspectRatioRect < 1) {
                 count_vertical++;
             }
         }
         else {
-            // Ä£°åÓ¦ÎªË®Æ½£¬¿í±ß/³¤±ß±ÈÓ¦½Ó½üÓÚ1/aspectRatioTemplate
+            // æ¨¡æ¿åº”ä¸ºæ°´å¹³ï¼Œå®½è¾¹/é•¿è¾¹æ¯”åº”æ¥è¿‘äº1/aspectRatioTemplate
             if (aspectRatioRect > 1) {
                 count_horizontal++;
             }
         }
     }
 
-    // ¸ù¾İÍ³¼ÆµÄÆµÂÊ¾ö¶¨Ä£°å³ß´ç£¬Í¬Ê±¿¼ÂÇblack_rectµÄ³¤±ß·½Ïò
+    // æ ¹æ®ç»Ÿè®¡çš„é¢‘ç‡å†³å®šæ¨¡æ¿å°ºå¯¸ï¼ŒåŒæ—¶è€ƒè™‘black_rectçš„é•¿è¾¹æ–¹å‘
     if (black_rect_is_horizontal) {
-        // Èç¹ûblack_rectµÄ³¤±ßÊÇË®Æ½µÄ£¬·µ»Ø´¹Ö±Ä£°å
+        // å¦‚æœblack_rectçš„é•¿è¾¹æ˜¯æ°´å¹³çš„ï¼Œè¿”å›å‚ç›´æ¨¡æ¿
         if (count_vertical > count_horizontal) {
-            return cv::Rect2f(0, 0, templateHeight, templateWidth); // ´¹Ö±
+            return cv::Rect2f(0, 0, templateHeight, templateWidth); // å‚ç›´
         }
         else {
-            return cv::Rect2f(0, 0, templateWidth, templateHeight); // Ë®Æ½
+            return cv::Rect2f(0, 0, templateWidth, templateHeight); // æ°´å¹³
         }
     }
     else {
-        // Èç¹ûblack_rectµÄ³¤±ßÊÇ´¹Ö±µÄ£¬·µ»ØË®Æ½Ä£°å
+        // å¦‚æœblack_rectçš„é•¿è¾¹æ˜¯å‚ç›´çš„ï¼Œè¿”å›æ°´å¹³æ¨¡æ¿
         if (count_horizontal > count_vertical) {
-            return cv::Rect2f(0, 0, templateWidth, templateHeight); // Ë®Æ½
+            return cv::Rect2f(0, 0, templateWidth, templateHeight); // æ°´å¹³
         }
         else {
-            return cv::Rect2f(0, 0, templateHeight, templateWidth); // ´¹Ö±
+            return cv::Rect2f(0, 0, templateHeight, templateWidth); // å‚ç›´
         }
     }
 }
@@ -1087,23 +1091,23 @@ cv::Rect2f eliminateYoloBackground::findTemplateRect(const std::vector<cv::Rect2
 void eliminateYoloBackground::filterRects(std::vector<cv::Rect2f>& rects, const cv::Rect2f& templateRect, cv::Rect2f black_rect)
 {
     float templateArea = templateRect.area();
-    //Õâ¶ÎÊÇÎªÁËµ÷ÕûĞ¡ÓÚÄ£°åÒ»°ëµÄ¾ØĞÎÎ»ÖÃ
+    //è¿™æ®µæ˜¯ä¸ºäº†è°ƒæ•´å°äºæ¨¡æ¿ä¸€åŠçš„çŸ©å½¢ä½ç½®
     for (auto& rect : rects) {
         float area = rect.area();
 
-        // Èç¹û¾ØĞÎĞ¡ÓÚÄ£°åµÄÒ»°ë£¬Ôòµ÷ÕûËü
+        // å¦‚æœçŸ©å½¢å°äºæ¨¡æ¿çš„ä¸€åŠï¼Œåˆ™è°ƒæ•´å®ƒ
         if (area < templateArea / 2) {
-            // ¼ì²é²¢µ÷ÕûrectÒÔÌù½üblack_rect
+            // æ£€æŸ¥å¹¶è°ƒæ•´rectä»¥è´´è¿‘black_rect
             bool isLeftClose = std::abs(rect.x - black_rect.br().x) < 5;
             bool isRightClose = std::abs(rect.br().x - black_rect.x) < 5;
             bool isTopClose = std::abs(rect.y - black_rect.br().y) < 5;
             bool isBottomClose = std::abs(rect.br().y - black_rect.y) < 5;
 
-            // µ÷Õû´óĞ¡ÎªÄ£°å´óĞ¡
+            // è°ƒæ•´å¤§å°ä¸ºæ¨¡æ¿å¤§å°
             rect.width = templateRect.width;
             rect.height = templateRect.height;
 
-            // ¸ù¾İ¿¿½üblack_rectµÄ±ß¶ÔÆë
+            // æ ¹æ®é è¿‘black_rectçš„è¾¹å¯¹é½
             if (isLeftClose) {
                 rect.x = black_rect.br().x;
             }
@@ -1144,11 +1148,11 @@ cv::Rect2f eliminateYoloBackground::calculateSymmetricRect(const cv::Rect2f& sou
     cv::Point2f source_center = cv::Point2f(sourceRect.x + sourceRect.width / 2, sourceRect.y + sourceRect.height / 2);
     cv::Point2f sym_center;
 
-    // ¼ÆËã¶Ô³ÆÖĞĞÄµã
+    // è®¡ç®—å¯¹ç§°ä¸­å¿ƒç‚¹
     sym_center.x = center_of_black.x + (center_of_black.x - source_center.x);
     sym_center.y = center_of_black.y + (center_of_black.y - source_center.y);
 
-    // ¸ù¾İ¶Ô³ÆÖĞĞÄµã´´½¨¶Ô³Æ¾ØĞÎ
+    // æ ¹æ®å¯¹ç§°ä¸­å¿ƒç‚¹åˆ›å»ºå¯¹ç§°çŸ©å½¢
     cv::Rect2f symmetricRect(sym_center.x - sourceRect.width / 2, sym_center.y - sourceRect.height / 2, sourceRect.width, sourceRect.height);
 
     return symmetricRect;
@@ -1163,7 +1167,7 @@ bool eliminateYoloBackground::isOverlappingMoreThanHalf(const cv::Rect2f& rect1,
 
 void eliminateYoloBackground::addSymmetricRectsIfNeeded(std::vector<cv::Rect2f>& rects, const cv::Rect2f& black_rect)
 {
-    // ÅĞ¶Ïblack_rectµÄ³¤±ß·½Ïò
+    // åˆ¤æ–­black_rectçš„é•¿è¾¹æ–¹å‘
     bool isHorizontalLongEdge = black_rect.width > black_rect.height;
     float symmetryAxis = isHorizontalLongEdge ? (black_rect.y + black_rect.height / 2.0f) : (black_rect.x + black_rect.width / 2.0f);
     std::vector<cv::Rect2f> newRects;
@@ -1171,26 +1175,26 @@ void eliminateYoloBackground::addSymmetricRectsIfNeeded(std::vector<cv::Rect2f>&
     for (const auto& rect : rects) {
         cv::Rect2f symmetricalRect;
         if (isHorizontalLongEdge) {
-            // Èç¹ûblack_rectµÄ³¤±ßÊÇË®Æ½µÄ£¬½øĞĞ´¹Ö±·½ÏòÉÏµÄ¾µÏñ
+            // å¦‚æœblack_rectçš„é•¿è¾¹æ˜¯æ°´å¹³çš„ï¼Œè¿›è¡Œå‚ç›´æ–¹å‘ä¸Šçš„é•œåƒ
             float centerY = rect.y + (rect.height / 2.0f);
             float symmetricalCenterY = (symmetryAxis - centerY) + symmetryAxis;
             symmetricalRect = cv::Rect2f(rect.x, symmetricalCenterY - (rect.height / 2.0f), rect.width, rect.height);
         }
         else {
-            // Èç¹ûblack_rectµÄ³¤±ßÊÇ´¹Ö±µÄ£¬½øĞĞË®Æ½·½ÏòÉÏµÄ¾µÏñ
+            // å¦‚æœblack_rectçš„é•¿è¾¹æ˜¯å‚ç›´çš„ï¼Œè¿›è¡Œæ°´å¹³æ–¹å‘ä¸Šçš„é•œåƒ
             float centerX = rect.x + (rect.width / 2.0f);
             float symmetricalCenterX = (symmetryAxis - centerX) + symmetryAxis;
             symmetricalRect = cv::Rect2f(symmetricalCenterX - (rect.width / 2.0f), rect.y, rect.width, rect.height);
         }
 
-        // ¼ì²éÊÇ·ñÒÑ¾­´æÔÚ¶Ô³ÆµÄ¾ØĞÎ
+        // æ£€æŸ¥æ˜¯å¦å·²ç»å­˜åœ¨å¯¹ç§°çš„çŸ©å½¢
         bool exists = std::any_of(rects.begin(), rects.end(), [&symmetricalRect](const cv::Rect2f& r) {
             float rCenter = r.y + (r.height / 2.0f);
             float symRectCenter = symmetricalRect.y + (symmetricalRect.height / 2.0f);
-            // ¶ÔÓÚ´¹Ö±¾µÏñ£¬¼ì²éY·½ÏòÖĞĞÄµãÊÇ·ñ½Ó½ü£»¶ÔÓÚË®Æ½¾µÏñ£¬ÀàËÆµØ¼ì²éX·½Ïò
-            if (std::abs(rCenter - symRectCenter) <= r.height * 0.8) {  // ´Ë´¦µÄÌõ¼ş¿ÉÒÔ¸ù¾İĞèÒªµ÷Õû
+            // å¯¹äºå‚ç›´é•œåƒï¼Œæ£€æŸ¥Yæ–¹å‘ä¸­å¿ƒç‚¹æ˜¯å¦æ¥è¿‘ï¼›å¯¹äºæ°´å¹³é•œåƒï¼Œç±»ä¼¼åœ°æ£€æŸ¥Xæ–¹å‘
+            if (std::abs(rCenter - symRectCenter) <= r.height * 0.8) {  // æ­¤å¤„çš„æ¡ä»¶å¯ä»¥æ ¹æ®éœ€è¦è°ƒæ•´
                 cv::Rect2f intersection = r & symmetricalRect;
-                // ¼ì²éÖØµşÃæ»ıÊÇ·ñ³¬¹ıÄ³¸öãĞÖµ£¬´Ë´¦ÉèÎª10%£¬¿ÉÒÔ¸ù¾İ¾ßÌåÇé¿öµ÷Õû
+                // æ£€æŸ¥é‡å é¢ç§¯æ˜¯å¦è¶…è¿‡æŸä¸ªé˜ˆå€¼ï¼Œæ­¤å¤„è®¾ä¸º10%ï¼Œå¯ä»¥æ ¹æ®å…·ä½“æƒ…å†µè°ƒæ•´
                 return (intersection.area() >= r.area() * 0.1 || intersection.area() >= symmetricalRect.area() * 0.1);
             }
             return false;
@@ -1201,7 +1205,7 @@ void eliminateYoloBackground::addSymmetricRectsIfNeeded(std::vector<cv::Rect2f>&
         }
     }
 
-    // ½«²»´æÔÚµÄ¶Ô³Æ¾ØĞÎÌí¼Óµ½Ô­ÁĞ±íÖĞ
+    // å°†ä¸å­˜åœ¨çš„å¯¹ç§°çŸ©å½¢æ·»åŠ åˆ°åŸåˆ—è¡¨ä¸­
     rects.insert(rects.end(), newRects.begin(), newRects.end());
 }
 

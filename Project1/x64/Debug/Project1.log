@@ -1,8 +1,16 @@
 ﻿  正在扫描源以查找模块依赖项...
   main.cpp
-E:\visualworkplace\LH\Project1\main.cpp(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-E:\visualworkplace\LH\Project1\main.cpp(745,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-E:\visualworkplace\LH\Project1\main.cpp(1349,30): warning C4305: “初始化”: 从“double”到“float”截断
-E:\visualworkplace\LH\Project1\main.cpp(1349,35): warning C4305: “初始化”: 从“double”到“float”截断
-E:\visualworkplace\LH\Project1\main.cpp(1349,40): warning C4305: “初始化”: 从“double”到“float”截断
+E:\visualworkplace\LH\Project1\main.cpp(1173,29): warning C4244: “参数”: 从“int”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+E:\visualworkplace\LH\Project1\main.cpp(1173,26): warning C4244: “参数”: 从“int”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+E:\visualworkplace\LH\Project1\main.cpp(1369,66): warning C4305: “参数”: 从“double”到“float”截断
+E:\visualworkplace\LH\Project1\main.cpp(1200,19): warning C4101: “end”: 未引用的局部变量
+E:\visualworkplace\LH\Project1\main.cpp(1200,13): warning C4101: “start”: 未引用的局部变量
   Project1.vcxproj -> E:\visualworkplace\LH\x64\Debug\Project1.exe

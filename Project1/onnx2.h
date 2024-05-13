@@ -1,23 +1,30 @@
-#pragma once
+ï»¿#pragma once
 #include <fstream>
 #include <sstream>
 #include <iostream>
 #include <opencv2/imgproc.hpp>
 #include <opencv2/highgui.hpp>
 #include <onnxruntime_cxx_api.h>
+#include <onnxruntime_c_api.h>
+#include <cuda_provider_factory.h>
 #include <tuple>
+#include <thread>
+#include <mutex>
+#include <queue>
+#include <condition_variable>
+#include <chrono>
 #include "eliminateYoloBackground.h"
 
 
-//using namespace std;yoloÒ»¼şËÑË÷
+//using namespace std;yoloä¸€ä»¶æœç´¢
 //using namespace cv;
 using namespace Ort;
 
 struct Net_config
 {
-	float confThreshold; // Confidence thresholdÖÃĞÅ¶ÈãĞÖµ
-	float nmsThreshold;  // Non-maximum suppression threshold ·Ç¼«´óÒÖÖÆ
-	float objThreshold;  //Object Confidence threshold ¶ÔÏóÖÃĞÅ¶È
+	float confThreshold; // Confidence thresholdç½®ä¿¡åº¦é˜ˆå€¼
+	float nmsThreshold;  // Non-maximum suppression threshold éæå¤§æŠ‘åˆ¶
+	float objThreshold;  //Object Confidence threshold å¯¹è±¡ç½®ä¿¡åº¦
 	std::string modelpath;
 };
 
@@ -47,13 +54,13 @@ public:
 public:
 
 	/*
-	* std::vector<std::pair<cv::Rect2f, std::vector<cv::Rect2f>>>
-	* <ºÚ¿é£¬vector<Òı½Å>>
+	* std::vector<std::tuple<cv::Rect2f, cv::Rect2f, std::vector<cv::Rect2f>>>
+	* <å¤–æ¡†ï¼Œé»‘å—ï¼Œvector<å¼•è„š>>
 	*/
-	std::vector<std::pair<cv::Rect2f, std::vector<cv::Rect2f>>> getCPCoordinate(cv::Mat& img);
+	std::vector<std::tuple<cv::Rect2f, cv::Rect2f, std::vector<cv::Rect2f>>> getCPCoordinate(cv::Mat& img);
 
 	int endsWith(std::string s, std::string sub);
-	std::vector<std::vector<cv::Rect2f>> changeBoxInfoToRect(std::vector<BoxInfo> temp);//×ª¸ñÊ½
+	std::vector<std::vector<cv::Rect2f>> changeBoxInfoToRect(std::vector<BoxInfo> temp);//è½¬æ ¼å¼
 private:
 	float* anchors;
 	int num_stride;
@@ -75,7 +82,7 @@ private:
 	void nms(std::vector<BoxInfo>& input_boxes);
 	cv::Mat resize_image(cv::Mat srcimg, int* newh, int* neww, int* top, int* left);
 
-	Env env = Env(ORT_LOGGING_LEVEL_ERROR, "yolov5-6.1");//´´½¨»·¾³
+	Env env = Env(ORT_LOGGING_LEVEL_ERROR, "yolov5-6.1");//åˆ›å»ºç¯å¢ƒ
 	//Env env1;
 	Ort::Session* ort_session = nullptr;
 	SessionOptions sessionOptions = SessionOptions();
@@ -84,21 +91,33 @@ private:
 	std::vector<std::vector<int64_t>> input_node_dims; // >=1 outputs
 	std::vector<std::vector<int64_t>> output_node_dims; // >=1 outputs
 
-	std::vector<cv::Mat>images;//Í¼ÏñÈİÆ÷ 
-	std::vector<BoxInfo> generate_boxes;// ¿ò
+	//std::vector<cv::Mat>images;//å›¾åƒå®¹å™¨ 
+	//std::vector<BoxInfo> generate_boxes;// æ¡†
 
 	eliminateYoloBackground eliminateYoloBackground;
 
+	std::mutex queue_mutex;
+	std::condition_variable cv;
+	std::queue<std::tuple<cv::Mat, int, int>> task_queue;
+	std::vector<std::tuple<cv::Rect2f, cv::Rect2f, std::vector<cv::Rect2f>>> results;
+	std::mutex results_mutex;
+	bool finished = false;
+	int num_threads = 2;  // çº¿ç¨‹æ•°é‡
+
 
 	/*
-	* ÕÒµ½ËùÓĞÒı½Å
+	* æ‰¾åˆ°æ‰€æœ‰å¼•è„š
 	*/
-	std::vector<std::pair<cv::Rect2f, std::vector<cv::Rect2f>>> getBlackPosition(std::vector<BoxInfo> generate_boxes, cv::Mat& frame);
+	std::vector<std::tuple<cv::Rect2f, cv::Rect2f, std::vector<cv::Rect2f>>> getBlackPosition(std::vector<BoxInfo> generate_boxes, cv::Mat& frame);
 
 	/*
-	* ·Ö¸îÍ¼Æ¬
+	* åˆ†å‰²å›¾ç‰‡
 	*/
-	std::vector<std::tuple<cv::Mat, int, int>> splitImage(const cv::Mat& img, int max_width = 2500, int max_height = 2500, float overlap = 0.0);
+	std::vector<std::tuple<cv::Mat, int, int>> splitImage(const cv::Mat& img, int max_width = 3000, int max_height = 3000, float overlap = 0.0);
 
-	std::vector<std::pair<cv::Rect2f, std::vector<cv::Rect2f>>> detect(cv::Mat& frame);
+	//std::vector<std::pair<cv::Rect2f, std::vector<cv::Rect2f>>> detect(cv::Mat& frame);
+	std::vector<std::tuple<cv::Rect2f,cv::Rect2f, std::vector<cv::Rect2f>>> detect(cv::Mat& frame);
+
+	/*ç”Ÿäº§è€…æ¶ˆè´¹è€…æ¨¡å‹---æ¶ˆè´¹è€…ï¼Œæ¶ˆè´¹ä»»åŠ¡é˜Ÿåˆ—é‡Œçš„ä»»åŠ¡*/
+	void splitWork();
 };

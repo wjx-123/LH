@@ -1,0 +1,4 @@
+E:\visualworkplace\LH\x64\Debug\onnxruntime.dll
+E:\visualworkplace\LH\x64\Debug\onnxruntime_providers_shared.dll
+E:\visualworkplace\LH\x64\Debug\onnxruntime_providers_cuda.dll
+E:\visualworkplace\LH\x64\Debug\onnxruntime_providers_tensorrt.dll

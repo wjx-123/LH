@@ -3,6 +3,8 @@
 #include<opencv2/core/core.hpp>
 #include<opencv2/highgui/highgui.hpp>
 #include <opencv2/opencv.hpp>
+//#include <opencv2/features2d.hpp>
+//#include <opencv2/xfeatures2d.hpp>
 #include "HalconCpp.h"
 #include <iostream>
 
@@ -37,6 +39,12 @@ public:
     * result:返回运行图中模板图的坐标
     */
     void getMaskShift(int numberOfPanel, cv::Mat dMask, cv::Mat mMask, cv::Rect2f &result );
+
+    /*
+    * 模板图和上面得到的拼板框特征点匹配算偏移
+    */
+    std::vector<std::pair<float, float>> matchRectangles(const cv::Mat& srcImage, const cv::Rect2f& templateRect, const std::vector<cv::Rect2f>& rectangles, float scale);
+
 private:
     //转为单通道
     void singleImage(cv::Mat& Image);
@@ -53,12 +61,21 @@ private:
     //根据转化系数转化rect
     void ZoomChange(cv::Rect2f &rect,double temp);
     /*
-    * 基于halcon的相关性模板匹配
+    * 基于halcon的相关性模板匹配ncc
     * numberOfPanel:拼板框数量
     * Himage:压缩后的大图
     * model:模板位置
     */
-    std::vector<cv::Point2f> HalconMatch(int numberOfPanel, HalconCpp::HObject Himage, cv::Rect2f modelRect);
+    std::vector<cv::Point2f> HalconMatch_ncc(int numberOfPanel, HalconCpp::HObject Himage, cv::Rect2f modelRect);
+
+    /*
+    * 基于halcon的形状匹配
+    * numberOfPanel:拼板框数量
+    * Himage:压缩后的大图
+    * model:模板位置
+    */
+    std::vector<cv::Point2f> HalconMatch_shape(int numberOfPanel, HalconCpp::HObject Himage, cv::Rect2f modelRect);
+
     /*
     * 根据中心点返回rect
     * points : 中心点集合
@@ -93,5 +110,10 @@ private:
     * MMaskImg:模板图
     */
     std::vector<cv::Point2f> HalconMatch_Ncc_MaskShift(int numberOfPanel, HalconCpp::HObject DMaskImg, HalconCpp::HObject MMaskImg);
+
+    /*
+    * 得到拼板框之后，根据置信度顺序调整位置
+    */
+    void alignRectangles(std::vector<cv::Rect2f>& rects, cv::Rect2f modelRect);
 };
 

@@ -1,4 +1,4 @@
-//#include"onnx.h"
+ï»¿//#include"onnx.h"
 //#include "fov_puzzle.h"
 //#include<opencv2/opencv.hpp>
 //#include<time.h>
@@ -8,7 +8,7 @@
 ////
 //int main()
 //{
-//    //²âÊÔfovÆ´Í¼
+//    //æµ‹è¯•fovæ‹¼å›¾
 //    fov_scan fov;
 //    vector<Rect2f> fov1;
 //    vector<Mat> temp;
@@ -184,7 +184,7 @@
 
 
 
-//    //²âÊÔÌùÆ¬Ò»¼üËÑË÷
+//    //æµ‹è¯•è´´ç‰‡ä¸€é”®æœç´¢
 //    clock_t start, endd;
 //    Net_config yolo_nets = { 0.4, 0.4, 0.4,"best17.onnx" };//best_rpc.onnx   10.12_rpc
 //    YOLO yolo_model(yolo_nets);
@@ -202,14 +202,14 @@
 //    vector<cv::Rect2f> smt_frame;
 //    for (int i = 0; i < img_path.size(); i++)
 //    {
-//        string a = to_string(i + 1);// 1¿ªÊ¼ÃüÃû´æ´¢
+//        string a = to_string(i + 1);// 1å¼€å§‹å‘½åå­˜å‚¨
 //        Mat srcimg = cv::imread(img_path[i]);
-//        start = clock();//¿ªÊ¼¼ÆÊ±
+//        start = clock();//å¼€å§‹è®¡æ—¶
 //        smt_frame = yolo_model.detect(srcimg);
 //        cv::imwrite(a + "10_31_2dst_rpc.jpg", srcimg);
-//        endd = clock();//½áÊø¼ÆÊ±
+//        endd = clock();//ç»“æŸè®¡æ—¶
 //        double endtime = (double)(endd - start);
-//        cout << "Total time:" << endtime << "ms" << endl;	//msÎªµ¥Î»
+//        cout << "Total time:" << endtime << "ms" << endl;	//msä¸ºå•ä½
 //
 //    }
 //    for (int i = 0; i < smt_frame.size(); i++)
@@ -222,7 +222,7 @@
 
 
 
-    //²âÊÔÈ±Ïİ¼ì²âÖÇÄÜ·½·¨
+    //æµ‹è¯•ç¼ºé™·æ£€æµ‹æ™ºèƒ½æ–¹æ³•
 //#include <fstream>
 //#include <sstream>
 //#include <iostream>
@@ -236,22 +236,22 @@
 //using namespace Ort;
 //
 ///****************************************
-//@brief     :  ·Ö¸îonnxruntime
-//@input	   :  Í¼Ïñ
-//@output    :  ÑÚÄ¤
+//@brief     :  åˆ†å‰²onnxruntime
+//@input	   :  å›¾åƒ
+//@output    :  æ©è†œ
 //*****************************************/
 //
-//void center_resize(cv::Mat& src)//ÖĞĞÄ²Ã¼ô·½·¨2
+//void center_resize(cv::Mat& src)//ä¸­å¿ƒè£å‰ªæ–¹æ³•2
 //{
 //	int width = src.cols;
 //	int height = src.rows;
-//	Point center(width / 2, height / 2); // Ö¸¶¨µÄÖĞĞÄµã 
-//	Size size(300, 300); // ²Ã¼ô³öµÄÍ¼Æ¬´óĞ¡ 
-//	getRectSubPix(src, size, center, src); // ²Ã¼ô³öÄ¿±êÍ¼Æ¬
+//	Point center(width / 2, height / 2); // æŒ‡å®šçš„ä¸­å¿ƒç‚¹ 
+//	Size size(300, 300); // è£å‰ªå‡ºçš„å›¾ç‰‡å¤§å° 
+//	getRectSubPix(src, size, center, src); // è£å‰ªå‡ºç›®æ ‡å›¾ç‰‡
 //}
 //void SegmentAIONNX(Mat& imgSrc, int width, int height)
 //{
-//	//Ä£ĞÍĞÅÏ¢ /
+//	//æ¨¡å‹ä¿¡æ¯ /
 //	Ort::Env env(ORT_LOGGING_LEVEL_WARNING, "OnnxModel");
 //	Ort::SessionOptions session_options;
 //	session_options.SetIntraOpNumThreads(1);
@@ -264,30 +264,30 @@
 //	size_t num_output_nodes = session.GetOutputCount();
 //	const char* input_name = session.GetInputName(0, allocator);
 //	const char* output_name = session.GetOutputName(0, allocator);
-//	auto input_dims = session.GetInputTypeInfo(0).GetTensorTypeAndShapeInfo().GetShape();	//ÊäÈëÊä³öÎ¬¶È
+//	auto input_dims = session.GetInputTypeInfo(0).GetTensorTypeAndShapeInfo().GetShape();	//è¾“å…¥è¾“å‡ºç»´åº¦
 //	auto output_dims = session.GetOutputTypeInfo(0).GetTensorTypeAndShapeInfo().GetShape();
 //	std::vector<const char*> input_names{ input_name };
 //	std::vector<const char*> output_names = { output_name };
-//	clock_t startTime, endTime;	//¼ÆËãÍÆÀíÊ±¼ä
+//	clock_t startTime, endTime;	//è®¡ç®—æ¨ç†æ—¶é—´
 //	//startTime = clock();
-//	//ÊäÈë´¦Àí//
-//	Mat imgBGR = imgSrc;	//ÊäÈëÍ¼Æ¬Ô¤´¦Àí
+//	//è¾“å…¥å¤„ç†//
+//	Mat imgBGR = imgSrc;	//è¾“å…¥å›¾ç‰‡é¢„å¤„ç†
 //	Mat imgRGBresize;
 //	center_resize(imgBGR);
 //	//resize(imgBGR, imgBGRresize, Size(input_dims[3], input_dims[2]), InterpolationFlags::INTER_CUBIC);
 //
-//	cvtColor(imgBGR, imgRGBresize, COLOR_BGR2RGB);	//smpÎ´×ªRGB
+//	cvtColor(imgBGR, imgRGBresize, COLOR_BGR2RGB);	//smpæœªè½¬RGB
 //	Mat resize_img;
-//	imgRGBresize.convertTo(resize_img, CV_32F, 1.0 / 255);  //divided by 255×ªfloat
-//	cv::Mat channels[3]; //·ÖÀëÍ¨µÀ½øĞĞHWC->CHW
+//	imgRGBresize.convertTo(resize_img, CV_32F, 1.0 / 255);  //divided by 255è½¬float
+//	cv::Mat channels[3]; //åˆ†ç¦»é€šé“è¿›è¡ŒHWC->CHW
 //	cv::split(resize_img, channels);
 //	std::vector<float> inputTensorValues;
 //	float mean[] = { 0.485f, 0.456f, 0.406f };	//
 //	float std_val[] = { 0.229f, 0.224f, 0.225f };
-//	for (int i = 0; i < resize_img.channels(); i++)	//±ê×¼»¯ImageNet
+//	for (int i = 0; i < resize_img.channels(); i++)	//æ ‡å‡†åŒ–ImageNet
 //	{
-//		channels[i] -= mean[i];  // mean¾ùÖµ
-//		channels[i] /= std_val[i];   // std·½²î
+//		channels[i] -= mean[i];  // meanå‡å€¼
+//		channels[i] /= std_val[i];   // stdæ–¹å·®
 //	}
 //	for (int i = 0; i < resize_img.channels(); i++)  //HWC->CHW
 //	{
@@ -298,9 +298,9 @@
 //	vector<Ort::Value> inputTensors;
 //	inputTensors.push_back(Ort::Value::CreateTensor<float>(memoryInfo, inputTensorValues.data(), inputTensorValues.size(), input_dims.data(), input_dims.size()));
 //	startTime = clock();
-//	auto outputTensor = session.Run(Ort::RunOptions{ nullptr }, input_names.data(), inputTensors.data(), 1, output_names.data(), 1);   // ¿ªÊ¼ÍÆÀí
+//	auto outputTensor = session.Run(Ort::RunOptions{ nullptr }, input_names.data(), inputTensors.data(), 1, output_names.data(), 1);   // å¼€å§‹æ¨ç†
 //	//endTime = clock();
-//	//´òÓ¡Ä£ĞÍĞÅÏ¢ /
+//	//æ‰“å°æ¨¡å‹ä¿¡æ¯ /
 //		//printf("Using Onnxruntime C++ API\n");
 //		//printf("Number of inputs = %zu\n", num_input_nodes);
 //		//printf("Number of output = %zu\n", num_output_nodes);
@@ -310,15 +310,15 @@
 //		//std::cout << "output_dims:" << output_dims[0] << output_dims[1] << output_dims[2] << output_dims[3] << std::endl;
 //		//std::cout << "The run time is:" << (double)(endTime - startTime) / CLOCKS_PER_SEC << "s" << std::endl;
 //
-//	//Êä³ö´¦Àí//
+//	//è¾“å‡ºå¤„ç†//
 //	const int num_classes = 4;
-//	float* prob = outputTensor[0].GetTensorMutableData<float>(); //outtensorÊ×µØÖ·
-//	int predict_label = std::max_element(prob, prob + num_classes) - prob;  // È·¶¨Ô¤²âÀà±ğµÄÏÂ±ê
+//	float* prob = outputTensor[0].GetTensorMutableData<float>(); //outtensoré¦–åœ°å€
+//	int predict_label = std::max_element(prob, prob + num_classes) - prob;  // ç¡®å®šé¢„æµ‹ç±»åˆ«çš„ä¸‹æ ‡
 //
-//	float confidence = prob[predict_label];    // »ñµÃÔ¤²âÖµµÄÖÃĞÅ¶È
+//	float confidence = prob[predict_label];    // è·å¾—é¢„æµ‹å€¼çš„ç½®ä¿¡åº¦
 //	printf("confidence = %f, label = %d\n", confidence, predict_label);
-//	endTime = clock();//¼ÆÊ±½áÊø
-//	std::cout << "totalÍÆÀíÊ±¼ä: " << (double)(endTime - startTime) / CLOCKS_PER_SEC << "s" << std::endl;
+//	endTime = clock();//è®¡æ—¶ç»“æŸ
+//	std::cout << "totalæ¨ç†æ—¶é—´: " << (double)(endTime - startTime) / CLOCKS_PER_SEC << "s" << std::endl;
 //	//vector< unsigned char >results(512 * 512);
 //	//for (int i = 0; i < 512 * 512; i++)
 //	//{
@@ -334,18 +334,18 @@
 //	//unsigned char* ptr = &results[0];
 //	//Mat mask = Mat(output_dims[2], output_dims[3], CV_8U, ptr);
 //	//resize(mask, imgSrc, Size(imgBGR.cols, imgBGR.rows));
-//	//Ô­Í¼Õ¹Ê¾·Ö¸î½á¹û//
+//	//åŸå›¾å±•ç¤ºåˆ†å‰²ç»“æœ//
 //	//cvtColor(imgSrc, imgSrc, COLOR_GRAY2BGR);
 //	//Mat imgAdd;
 //	//addWeighted(imgBGR, 1, imgSrc, 0.3, 0, imgAdd);
 //}
 
-//ÖÇÄÜ·½·¨·Ö³É.hÖ®ºó²âÊÔ
+//æ™ºèƒ½æ–¹æ³•åˆ†æˆ.hä¹‹åæµ‹è¯•
 //#include "AIAlgorithmToDetectSolderJointDefects.h"
 //int main()
 //{
 //	double he = 0;
-//	cv::String pattern = "C:\\Users\\LENOVO\\Pictures\\image\\*.png";//²âÊÔÍ¼Æ¬Â·¾¶
+//	cv::String pattern = "C:\\Users\\LENOVO\\Pictures\\image\\*.png";//æµ‹è¯•å›¾ç‰‡è·¯å¾„
 //	std::vector<std::string>img_path;
 //	std::vector<cv::String>fn;
 //	cv::glob(pattern, fn, false);
@@ -357,32 +357,32 @@
 //
 //	for (int i = 0; i < img_path.size(); i++)
 //	{
-//		std::string a = std::to_string(i + 1);// 1¿ªÊ¼ÃüÃû´æ´¢
+//		std::string a = std::to_string(i + 1);// 1å¼€å§‹å‘½åå­˜å‚¨
 //		cv::Mat input_img = cv::imread(img_path[i]);
-//		//start = clock();//¿ªÊ¼¼ÆÊ±
+//		//start = clock();//å¼€å§‹è®¡æ—¶
 //		clock_t startTime, endTime;
 //		startTime = clock();
 //		SegmentAIONNX(input_img, 300, 300);
-//		endTime = clock();//¼ÆÊ±½áÊø
+//		endTime = clock();//è®¡æ—¶ç»“æŸ
 //		double tem = (static_cast<double>(endTime) - startTime) / CLOCKS_PER_SEC;
 //		he += tem;
 //
 //		//center_resize(input_img);
 //		//imwrite(a + ".png", input_img);
 //	}
-//	std::cout << "Æ½¾ùÃ¿ÕÅÍÆÀíÊ±¼ä: " << he / fn.size() << "s" << std::endl;
+//	std::cout << "å¹³å‡æ¯å¼ æ¨ç†æ—¶é—´: " << he / fn.size() << "s" << std::endl;
 //	return 0;
 //
 //}
 
 
 
-//Ò»¼ü±ê¶¨²âÊÔ
+//ä¸€é”®æ ‡å®šæµ‹è¯•
 //#include "CameraCalibration.h"
 //#include <cmath>
 //int main() 
 //{
-//    //Ò»¼ü±ê¶¨
+//    //ä¸€é”®æ ‡å®š
 //    std::vector<cv::Point2f> phy;
 //    std::vector<cv::Point2f> pix;
 //    cv::Point2f a(-50,250);
@@ -412,7 +412,7 @@
 //    return 0;
 //}
 
-//ÌùÆ¬ÖĞµÄĞ¡ºÚ¿é¼ì²â
+//è´´ç‰‡ä¸­çš„å°é»‘å—æ£€æµ‹
 //#include <iostream>
 //#include "blackBlock.h"
 //
@@ -428,7 +428,7 @@
 //}
 
 //
-////Æ´°æ¿òµÄÄ£°åÆ¥Åä
+////æ‹¼ç‰ˆæ¡†çš„æ¨¡æ¿åŒ¹é…
 //#include <iostream>
 //#include "splicingBoard.h"
 //
@@ -441,7 +441,7 @@
 //}
 
 
-//edline²âÊÔ
+//edlineæµ‹è¯•
 //#include<iostream>
 //#include"edline.h"
 //#include <algorithm>
@@ -455,7 +455,7 @@
 //    Mat imageRGB = imread("C:/Users/LENOVO/Pictures/pinban.jpg");
 //    Mat image = imread("C:/Users/LENOVO/Pictures/pinban.jpg", 0);
 //    int x = 0, y = 0;
-//    std::cout << " ÊäÈë¹æ¸ñ(x * y) :" << std::endl;
+//    std::cout << " è¾“å…¥è§„æ ¼(x * y) :" << std::endl;
 //    std::cin >> x >> y;
 //    EDLines ed;
 //    std::vector<cv::Rect> roiRects = ed.getROIs(imageRGB,x,y);
@@ -508,7 +508,7 @@
     //std::cout << "size:" << lines.size()<<std::endl;
     //for (int i = 0; i < lines.size(); i++)
     //{
-    //    if (std::abs(lines[i].start.x - lines[i].end.x) < 10 && std::abs(lines[i].start.y - lines[i].end.y) > 50) //ËµÃ÷ÊÇË®Æ½µÄ
+    //    if (std::abs(lines[i].start.x - lines[i].end.x) < 10 && std::abs(lines[i].start.y - lines[i].end.y) > 50) //è¯´æ˜æ˜¯æ°´å¹³çš„
     //    {
     //        verticalLines.push_back(lines[i]);
     //    }
@@ -523,19 +523,19 @@
 
     //std::vector<int> xCoordinates;
 
-    //// ±éÀúÏß¶Î¼¯ºÏ£¬»ñÈ¡ËùÓĞX×ø±ê
+    //// éå†çº¿æ®µé›†åˆï¼Œè·å–æ‰€æœ‰Xåæ ‡
     //for (const auto& ls : lines) {
     //    xCoordinates.push_back(ls.start.x);
     //    xCoordinates.push_back(ls.end.x);
     //}
 
-    //// ¶ÔX×ø±ê½øĞĞÅÅĞò
+    //// å¯¹Xåæ ‡è¿›è¡Œæ’åº
     //std::sort(xCoordinates.begin(), xCoordinates.end());//, compare
 
     //int maxGap = 0;
     //int densestX = 0;
 
-    //// Ñ°ÕÒ×î´ó¼ä¸ô²¢¼ÆËã×îÃÜ¼¯µÄX×ø±ê
+    //// å¯»æ‰¾æœ€å¤§é—´éš”å¹¶è®¡ç®—æœ€å¯†é›†çš„Xåæ ‡
     //for (int i = 0; i < xCoordinates.size() - 1; i++) {
     //    int gap = xCoordinates[i + 1] - xCoordinates[i];
     //    if (gap > maxGap) {
@@ -544,7 +544,7 @@
     //    }
     //}
 
-    //std::cout << "×îÃÜ¼¯µÄX×ø±êÊÇ: " << densestX << std::endl;
+    //std::cout << "æœ€å¯†é›†çš„Xåæ ‡æ˜¯: " << densestX << std::endl;
 
 //    return 0;
 //}
@@ -636,11 +636,11 @@
 //        //Matching 01: Obtain the test image
 //        ReadImage(&ho_Image, HalconCpp::HTuple(hv_TestImages[hv_T]));
 //        //
-//        //Matching 01: Find the modelImage£¨in£©£ºµ¥Í¨µÀÍ¼Ïñ£¬ËüµÄÇøÓò¿É±»´´½¨ÎªÄ£°å
-////ModelID£¨in£©£ºÄ£°å¾ä±ú         AngleStart£¨in£©£ºÄ£°åµÄ×îĞ¡Ğı×ª        AngleExtent£¨in£©£ºĞı×ª½Ç¶È·¶Î§          MinScore£¨in£©£º±»ÕÒµ½µÄÄ£°å×îĞ¡·ÖÊı 
-////NumMatches£¨in£©£º±»ÕÒµ½µÄÄ£°å¸öÊı          MaxOverlap£¨in£©£º±»ÕÒµ½µÄÄ£°åÊµÀı×î´óÖØµş²¿·Ö           SubPixel£¨in£©£ºÑÇÏñËØ¼¶±ğ±êÖ¾,true, false     
-////NumLevels£¨in£©£º½ğ×ÖËş²ã¼¶Êı          Row£¨out£©£º±»ÕÒµ½µÄÄ£°åÊµÀıĞĞ×ø±ê
-////Column£¨out£©£º±»ÕÒµ½µÄÄ£°åÊµÀıÁĞ×ø±ê       Angle£¨out£©£º±»ÕÒµ½µÄÄ£°åÊµÀıµÄĞı×ª½Ç¶È        Score£¨out£©£º±»ÕÒµ½µÄÄ£°åÊµÀıµÄ·ÖÊı
+//        //Matching 01: Find the modelImageï¼ˆinï¼‰ï¼šå•é€šé“å›¾åƒï¼Œå®ƒçš„åŒºåŸŸå¯è¢«åˆ›å»ºä¸ºæ¨¡æ¿
+////ModelIDï¼ˆinï¼‰ï¼šæ¨¡æ¿å¥æŸ„         AngleStartï¼ˆinï¼‰ï¼šæ¨¡æ¿çš„æœ€å°æ—‹è½¬        AngleExtentï¼ˆinï¼‰ï¼šæ—‹è½¬è§’åº¦èŒƒå›´          MinScoreï¼ˆinï¼‰ï¼šè¢«æ‰¾åˆ°çš„æ¨¡æ¿æœ€å°åˆ†æ•° 
+////NumMatchesï¼ˆinï¼‰ï¼šè¢«æ‰¾åˆ°çš„æ¨¡æ¿ä¸ªæ•°          MaxOverlapï¼ˆinï¼‰ï¼šè¢«æ‰¾åˆ°çš„æ¨¡æ¿å®ä¾‹æœ€å¤§é‡å éƒ¨åˆ†           SubPixelï¼ˆinï¼‰ï¼šäºšåƒç´ çº§åˆ«æ ‡å¿—,true, false     
+////NumLevelsï¼ˆinï¼‰ï¼šé‡‘å­—å¡”å±‚çº§æ•°          Rowï¼ˆoutï¼‰ï¼šè¢«æ‰¾åˆ°çš„æ¨¡æ¿å®ä¾‹è¡Œåæ ‡
+////Columnï¼ˆoutï¼‰ï¼šè¢«æ‰¾åˆ°çš„æ¨¡æ¿å®ä¾‹åˆ—åæ ‡       Angleï¼ˆoutï¼‰ï¼šè¢«æ‰¾åˆ°çš„æ¨¡æ¿å®ä¾‹çš„æ—‹è½¬è§’åº¦        Scoreï¼ˆoutï¼‰ï¼šè¢«æ‰¾åˆ°çš„æ¨¡æ¿å®ä¾‹çš„åˆ†æ•°
 //        FindNccModel(ho_Image, hv_ModelID, HalconCpp::HTuple(0).TupleRad(), HalconCpp::HTuple(360).TupleRad(),
 //            0.5, 3, 0.5, "true", 0, &hv_Row, &hv_Column, &hv_Angle, &hv_Score);
 //        for (int i = 0; i < hv_Row.Length(); i++)
@@ -733,27 +733,27 @@
 //#include "fovTest.h"
 //#include"edline.h"
 //int main() {
-    // ÔØÈëÔ­Í¼ºÍÄ£°åÍ¼
+    // è½½å…¥åŸå›¾å’Œæ¨¡æ¿å›¾
     //cv::Mat img = cv::imread("C:\\Users\\LENOVO\\Pictures\\smt\\black\\1699863082241.png", cv::IMREAD_COLOR);
     //cv::Mat templ = cv::imread("C:\\Users\\LENOVO\\Pictures\\smt\\black\\1699863164939.png", cv::IMREAD_COLOR);
 
-    //ÊÇ·ñ´í¼ş
+    //æ˜¯å¦é”™ä»¶
     //pathDetection pa;
     //std::cout<<pa.ifDetectionWrong(img,templ)<<std::endl;
 
-    //ÕâÒ»¶ÎÊÇ¼ì²âĞ¡ºÚ¿éÊÇ·ñ´æÔÚ
-    //// ¼ì²éÍ¼Æ¬ÊÇ·ñÕıÈ·ÔØÈë
+    //è¿™ä¸€æ®µæ˜¯æ£€æµ‹å°é»‘å—æ˜¯å¦å­˜åœ¨
+    //// æ£€æŸ¥å›¾ç‰‡æ˜¯å¦æ­£ç¡®è½½å…¥
     //if (img.empty() || templ.empty()) {
     //    std::cout << "Could not read the image." << std::endl;
     //    return 1;
     //}
 
-    //// ½øĞĞÄ£°åÆ¥Åä
+    //// è¿›è¡Œæ¨¡æ¿åŒ¹é…
     //patchAlgorithm pA;
     ////bool isMatchFound = pA.ifBlackBlockExist(img, templ) || pA.ifBlackBlockExist(img, pA.rotateImg(templ, 90));
 
     //bool isMatchFound = pA.variousAngleExist(img, templ, 90);
-    //// Êä³ö½á¹û
+    //// è¾“å‡ºç»“æœ
     //if (isMatchFound) {
     //    std::cout << "Match found." << std::endl;
     //}
@@ -761,11 +761,11 @@
     //    std::cout << "No match found." << std::endl;
     //}
 
-    //Æ«ÒÆ½Ç¶È
+    //åç§»è§’åº¦
     //pathDetection pa;
     //std::cout << pa.detectOffsetAngle(img) << std::endl;
 
-    //edline·½·¨
+    //edlineæ–¹æ³•
     //EDLines lineHandler = EDLines(img);
     //cv::Mat outputImage;
     //std::vector<LS> lines, verticalLines;
@@ -778,7 +778,7 @@
 
 
 
-    //ÕÒºÚ¿é
+    //æ‰¾é»‘å—
     //std::vector<std::string> path;
     //clock_t start, end;
     //cv::glob("C:\\Users\\LENOVO\\Pictures\\smt\\black\\*png",path);
@@ -791,7 +791,7 @@
     //    std::cout << "model init use:" << (static_cast<double>(end) - start) / CLOCKS_PER_SEC << "s" << std::endl;
     //}
 
-    //ĞŞ¸ÄºóµÄº¸µãÖÇÄÜ·½·¨²âÊÔ
+    //ä¿®æ”¹åçš„ç„Šç‚¹æ™ºèƒ½æ–¹æ³•æµ‹è¯•
  //   double he = 0;
  //   std::string model_path = "acc-76.onnx";
  //   clock_t sttime, endtime;
@@ -799,7 +799,7 @@
  //   OnnxModelAI model(model_path);
  //   endtime = clock();
  //   std::cout << "model init use:" << (static_cast<double>(endtime) - sttime) / CLOCKS_PER_SEC << "s" << std::endl;
-	//cv::String pattern = "C:\\Users\\LENOVO\\Pictures\\image\\*.png";//²âÊÔÍ¼Æ¬Â·¾¶
+	//cv::String pattern = "C:\\Users\\LENOVO\\Pictures\\image\\*.png";//æµ‹è¯•å›¾ç‰‡è·¯å¾„
 	//std::vector<std::string>img_path;
 	//std::vector<cv::String>fn;
 	//cv::glob(pattern, fn, false);
@@ -811,30 +811,30 @@
 
 	//for (int i = 0; i < img_path.size(); i++)
 	//{
-	//	std::string a = std::to_string(i + 1);// 1¿ªÊ¼ÃüÃû´æ´¢
+	//	std::string a = std::to_string(i + 1);// 1å¼€å§‹å‘½åå­˜å‚¨
 	//	cv::Mat input_img = cv::imread(img_path[i]);
  //       clock_t startTime, endTime;
  //       startTime = clock();
  //       auto result = model.predict(input_img);
- //       endTime = clock();//¼ÆÊ±½áÊø
+ //       endTime = clock();//è®¡æ—¶ç»“æŸ
  //       double tem = (static_cast<double>(endTime) - startTime) / CLOCKS_PER_SEC;
 	//	he += tem;
  //       std::cout << "Label: " << result.first << ", Confidence: " << result.second << ", time:"<<tem << std::endl;
 	//	//center_resize(input_img);
 	//}
- //   std::cout << "Æ½¾ùÃ¿ÕÅÍÆÀíÊ±¼ä: " << he / fn.size() << "s" << std::endl;
+ //   std::cout << "å¹³å‡æ¯å¼ æ¨ç†æ—¶é—´: " << he / fn.size() << "s" << std::endl;
 
 
     //std::string model_path = "SmtAi.onnx";
     //OnnxModelAI model(model_path);
 
-    //cv::Mat imgSrc = cv::imread("C:\\Users\\LENOVO\\Pictures\\smt\\3.jpg"); // ÊäÈëÍ¼Ïñ
+    //cv::Mat imgSrc = cv::imread("C:\\Users\\LENOVO\\Pictures\\smt\\3.jpg"); // è¾“å…¥å›¾åƒ
     //auto result = model.predict(imgSrc);
 
     //std::cout << "Label: " << result.first << ", Confidence: " << result.second << std::endl;
 
-    //fovrouteplan²âÊÔ
-    ////»ñÈ¡Ò»ÏÂ×ø±ê
+    //fovrouteplanæµ‹è¯•
+    ////è·å–ä¸€ä¸‹åæ ‡
     //Net_config yolo_nets = { 0.4, 0.4, 0.4,"best6.onnx" };//best_rpc.onnx   10.12_rpc
     //YOLO yolo_model(yolo_nets);
 
@@ -850,7 +850,7 @@
     //}
 
     //fovRoute fr;
-    //// µ÷ÓÃº¯Êı
+    //// è°ƒç”¨å‡½æ•°
     //
     //std::vector<cv::Point> temp;
     //for (int i = 0; i < smt_frame.size(); i++)
@@ -867,7 +867,7 @@
     //}
     //cv::imwrite("C:\\Users\\LENOVO\\Pictures\\1122.jpg", img1);
 
-    //fovTest ²âÊÔ
+    //fovTest æµ‹è¯•
 //    Net_config yolo_nets = { 0.4, 0.4, 0.4,"best6.onnx" };//best_rpc.onnx   10.12_rpc
 //    YOLO yolo_model(yolo_nets);
 //
@@ -904,7 +904,7 @@
 //   
 //    cv::imwrite("C:\\Users\\LENOVO\\Pictures\\1122TestRect.jpg", img1);
 
-//Ğ¡ºÚ¿é×ø±ê×ª»¯
+//å°é»‘å—åæ ‡è½¬åŒ–
     //Net_config yolo_nets = { 100, 0.4, 0.4,"12_21onlyrc.onnx" };//best_rpc.onnx   10.12_rpc
     //YOLO yolo_model(yolo_nets);
 
@@ -915,11 +915,11 @@
     //
     //cv::Mat img1 = cv::imread("C:\\Users\\LENOVO\\Pictures\\1\\1\\1.jpg");
     //startTime1 = clock();
-    ////·Ö¸î
-    //std::vector<cv::Rect2f> temp = pa.splitImage(img1.size());//µÃµ½·Ö¸îµÄĞ¡Í¼µÄrect
+    ////åˆ†å‰²
+    //std::vector<cv::Rect2f> temp = pa.splitImage(img1.size());//å¾—åˆ°åˆ†å‰²çš„å°å›¾çš„rect
     //endTime1 = clock();
     //double tem = (static_cast<double>(endTime1) - startTime1) / CLOCKS_PER_SEC;
-    //std::cout <<"·Ö¸îÍ¼Æ¬:" << tem << std::endl;
+    //std::cout <<"åˆ†å‰²å›¾ç‰‡:" << tem << std::endl;
     //startTime2 = clock();
     //for (auto rect : temp)
     //{
@@ -930,7 +930,7 @@
     //    smt_frame = yolo_model.detect(smallImg);
     //    
     //    endd = clock();
-    //    std::cout << "Ğ¡Í¼:" << (static_cast<double>(endd) - sta) / CLOCKS_PER_SEC << std::endl;;
+    //    std::cout << "å°å›¾:" << (static_cast<double>(endd) - sta) / CLOCKS_PER_SEC << std::endl;;
     //    cv::rectangle(img1, rect, cv::Scalar(2, 255, 255), 10);
     //    if (smt_frame.size() != 0) 
     //    {
@@ -963,10 +963,10 @@
     //}
     //endTime2 = clock();
     //double tem1 = (static_cast<double>(endTime2) - startTime2) / CLOCKS_PER_SEC;
-    //std::cout << "µÃµ½×ø±ê:" << tem1 << std::endl;
+    //std::cout << "å¾—åˆ°åæ ‡:" << tem1 << std::endl;
     
     //fov_scan fs;
-    //// ¶ÁÈ¡Í¼Æ¬
+    //// è¯»å–å›¾ç‰‡
     //cv::Mat img11 = cv::imread("C:\\Users\\LENOVO\\Pictures\\smt\\mask1.jpg", cv::IMREAD_GRAYSCALE);
     //cv::Mat img22 = cv::imread("C:\\Users\\LENOVO\\Pictures\\smt\\mask2.jpg", cv::IMREAD_GRAYSCALE);
     //fs.getSHift(img11,img22);
@@ -1015,24 +1015,24 @@
 //    return 0;
 //}
 
-//unet²âÊÔ
+//unetæµ‹è¯•
 //#include "uNetOnnx.h"
 //#include <time.h>
 //int main() 
 //{
-    //// Ä£ĞÍÂ·¾¶ºÍÊäÈëÍ¼ÏñÊı¾İ
+    //// æ¨¡å‹è·¯å¾„å’Œè¾“å…¥å›¾åƒæ•°æ®
     //std::string model_path = "unetmodel.onnx";
     //cv::Mat image = cv::imread("C:\\Users\\LENOVO\\Pictures\\smt\\2499.jpg", cv::IMREAD_COLOR);
-    //std::vector<int64_t> input_shape = { 1, 3, 512, 512 }; // ¸ù¾İĞèÒªµ÷Õû³ß´ç
+    //std::vector<int64_t> input_shape = { 1, 3, 512, 512 }; // æ ¹æ®éœ€è¦è°ƒæ•´å°ºå¯¸
 
-    //// ´´½¨Ò»¸öÄ£ĞÍÍÆ¶ÏÆ÷
+    //// åˆ›å»ºä¸€ä¸ªæ¨¡å‹æ¨æ–­å™¨
     //uNetOnnx inferer(model_path);
 
-    //std::vector<float> input_data = inferer.getInputData(image);; // ÓÃÍ¼ÏñÊı¾İÌî³äÕâ¸ö
-    //// ÔËĞĞÍÆ¶Ï
+    //std::vector<float> input_data = inferer.getInputData(image);; // ç”¨å›¾åƒæ•°æ®å¡«å……è¿™ä¸ª
+    //// è¿è¡Œæ¨æ–­
     //std::vector<float> output_data = inferer.RunInference(input_data, input_shape);
 
-    //// Êä³ö½á¹û£¬»òÕß½øÒ»²½´¦Àí
+    //// è¾“å‡ºç»“æœï¼Œæˆ–è€…è¿›ä¸€æ­¥å¤„ç†
     //cv::Mat res = inferer.getImageFromFloat(output_data);
     //cv::imwrite("C:\\Users\\LENOVO\\Pictures\\smt\\niubi.jpg",res);
 
@@ -1052,7 +1052,7 @@
 //}
 
 
-//markµã¸ù¾İhalconËãÆ«ÒÆ
+//markç‚¹æ ¹æ®halconç®—åç§»
 //#include"halconMatch.h"
 //#include<time.h>
 //void main() 
@@ -1063,7 +1063,7 @@
 //    cv::Mat Image = cv::imread("C:\\Users\\LENOVO\\Pictures\\smt\\fov1.jpg");
 //    cv::Mat mask = cv::imread("C:\\Users\\LENOVO\\Pictures\\smt\\mask1.jpg");
 //    //cv::Rect2f rect(658, 594, 341, 337);//999 931
-//    cv::Rect2f res;//ÕÒµ½µÄÎ»ÖÃrect
+//    cv::Rect2f res;//æ‰¾åˆ°çš„ä½ç½®rect
 //    hm.getMaskShift(1, Image, mask, res);
 //    endtime = clock();
 //    std::cout << "model init use:" << (static_cast<double>(endtime) - sttime) / CLOCKS_PER_SEC << "s" << std::endl;
@@ -1072,12 +1072,12 @@
 //   
 //}
 
-//yoloÔ¤²âµÄÊ±ºòÓÃÑÕÉ«ãĞÖµÍ¬Ê±µÃµ½Ğ¡ºÚ¿éµÄ×ø±ê  ¿ÉÒÔÓÃÑÕÉ«·½·¨µÃµ½×Ó¿ò£¬Ò²¿ÉÓÃunet
+//yoloé¢„æµ‹çš„æ—¶å€™ç”¨é¢œè‰²é˜ˆå€¼åŒæ—¶å¾—åˆ°å°é»‘å—çš„åæ ‡  å¯ä»¥ç”¨é¢œè‰²æ–¹æ³•å¾—åˆ°å­æ¡†ï¼Œä¹Ÿå¯ç”¨unet
 //#include "onnx.h"
 //
 //int main() 
 //{
-//    //³õÊ¼»¯Ò»ÏÂunetÄ£ĞÍ
+//    //åˆå§‹åŒ–ä¸€ä¸‹unetæ¨¡å‹
 //    uNetOnnx aaa;
 //    std::string modelFile = "unetmodel.onnx";
 //    cv::dnn::Net bbbb = aaa.loadUnetModel(modelFile);
@@ -1105,16 +1105,16 @@
 //    return 0;
 //}
 
-//¼ì²âÊ±ºòÍ¼Æ¬µÄĞı×ª
+//æ£€æµ‹æ—¶å€™å›¾ç‰‡çš„æ—‹è½¬
 //#include "fov_puzzle.h"
 //int main() 
 //{
 //    fov_scan fs;
-//    //ÕâÁ½ĞĞÊÇĞı×ªÍ¼Æ¬
+//    //è¿™ä¸¤è¡Œæ˜¯æ—‹è½¬å›¾ç‰‡
 // /*   cv::Mat Image = cv::imread("C:\\Users\\LENOVO\\Pictures\\smt\\fov1.jpg");
 //    auto roateImage = fs.RotateImg(Image,-0.8);*/
 //
-//    //¸ù¾İÁ½¸öµãµÄÆ«ÒÆÊı¾İËãÆ½ÒÆÁ¿ºÍĞı×ª½Ç¶È
+//    //æ ¹æ®ä¸¤ä¸ªç‚¹çš„åç§»æ•°æ®ç®—å¹³ç§»é‡å’Œæ—‹è½¬è§’åº¦
 //    std::pair<int, int> offset1 = { -18, 577 };
 //    std::pair<int, int> offset2 = { -28, 588 };
 //
@@ -1125,7 +1125,7 @@
 //}
 
 
-//bisenet²âÊÔ-onnx
+//bisenetæµ‹è¯•-onnx
 //#include "biSeNetOpenvion.h"
 ////#include <openvino/openvino.hpp>
 ////#include <iostream>
@@ -1134,7 +1134,7 @@
 //    biSeNetOpenvino bisenet;
 //    bisenet.test();
 //    //ov::Core ie;
-//    ////»ñÈ¡µ±Ç°Ö§³ÖµÄËùÓĞµÄAIÓ²¼şÍÆÀíÉè±¸
+//    ////è·å–å½“å‰æ”¯æŒçš„æ‰€æœ‰çš„AIç¡¬ä»¶æ¨ç†è®¾å¤‡
 //    //std::vector<std::string> devices = ie.get_available_devices();
 //    //for (int i = 0; i < devices.size(); i++) {
 //    //    std::cout << devices[i] << std::endl;
@@ -1143,7 +1143,7 @@
 //}
 
 
-//ÓÅ»¯yolo Ë¼Â· Ïû³ı±³¾°Ó°Ïì
+//ä¼˜åŒ–yolo æ€è·¯ æ¶ˆé™¤èƒŒæ™¯å½±å“
 #include "eliminateYoloBackground.h"
 #include "patchDetection.h"
 #include "halconMatch.h"
@@ -1153,11 +1153,46 @@
 
 namespace fs = std::filesystem;
 
+cv::Mat imagegg = cv::imread("C:\\Users\\LENOVO\\Pictures\\3_29\\7.jpg");
+cv::Mat resized_image;
+cv::Rect2f box;
+bool drawing_box = false;
+
+void mouse_callback(int event, int x, int y, int flags, void* param) {
+    x = static_cast<int>(x * (imagegg.size().width / (double)resized_image.size().width));
+    y = static_cast<int>(y * (imagegg.size().height / (double)resized_image.size().height));
+    switch (event) {
+    case cv::EVENT_MOUSEMOVE:
+        if (drawing_box) {
+            box.width = x - box.x;
+            box.height = y - box.y;
+        }
+        break;
+    case cv::EVENT_LBUTTONDOWN:
+        drawing_box = true;
+        box = cv::Rect2f(x, y, 0, 0);
+        break;
+    case cv::EVENT_LBUTTONUP:
+        drawing_box = false;
+        if (box.width < 0) {
+            box.x += box.width;
+            box.width *= -1;
+        }
+        if (box.height < 0) {
+            box.y += box.height;
+            box.height *= -1;
+        }
+        cv::rectangle(resized_image, box, cv::Scalar(0, 255, 0));
+        break;
+    }
+}
+
+
 int main() 
 {
     eliminateYoloBackground e;
     // Load your image C://Users//LENOVO//Pictures//smt//compimg//compimg//0.jpg
-    cv::Mat image = cv::imread("C:\\Users\\LENOVO\\Pictures\\smt\\289.jpg");//C:\\Users\\LENOVO\\Pictures\\smt\\4.jpg
+    //cv::Mat image = cv::imread("C:\\Users\\LENOVO\\Pictures\\smt\\289.jpg");//C:\\Users\\LENOVO\\Pictures\\smt\\4.jpg
 
  //   // Define the color range for BFS
  //   int colorRange = 10; 
@@ -1188,7 +1223,7 @@ int main()
  //       cv::rectangle(image, rect, cv::Scalar(0, 255, 0), 2);
  //   }
 
- //   //È«²¿É¸Ñ¡µÄ·½·¨
+ //   //å…¨éƒ¨ç­›é€‰çš„æ–¹æ³•
  //   pathDetection p;
  //   start = clock();
  //   auto res = p.getBlackBlock(image);
@@ -1198,7 +1233,7 @@ int main()
 
 
     
-    //ÂÖÀªĞÅÏ¢²âÊÔ---µ¥ÕÅÍ¼Æ¬²âÊÔ---ÖĞĞÄµãÏòÍâÀ©É¢£¬Åöµ½±ß½çºÍÄ³Ìõ±ß°×É«ÏñËØÕ¼±È³¬¹ıãĞÖµÍ£Ö¹
+    //è½®å»“ä¿¡æ¯æµ‹è¯•---å•å¼ å›¾ç‰‡æµ‹è¯•---ä¸­å¿ƒç‚¹å‘å¤–æ‰©æ•£ï¼Œç¢°åˆ°è¾¹ç•Œå’ŒæŸæ¡è¾¹ç™½è‰²åƒç´ å æ¯”è¶…è¿‡é˜ˆå€¼åœæ­¢
     //start = clock();
     //cv::Mat heibai = e.test(image);
     //end = clock();
@@ -1208,7 +1243,7 @@ int main()
     //end = clock();
     //std::cout << "bfs:" << (static_cast<double>(end) - start) / CLOCKS_PER_SEC << std::endl;
 
-    //cv::Mat hsvImage = e.useHsvTest(image);//ÓÃhsv´¦ÀíµÄÍ¼×öÒ»ÏÂ½»¼¯
+    //cv::Mat hsvImage = e.useHsvTest(image);//ç”¨hsvå¤„ç†çš„å›¾åšä¸€ä¸‹äº¤é›†
     //cv::rectangle(image, topLeft, bottomRight, cv::Scalar(0, 255, 0), 2);
 
     //cv::Rect2f recttt = cv::Rect(topLeft.x, topLeft.y, bottomRight.x - topLeft.x, bottomRight.y - topLeft.y);
@@ -1222,16 +1257,16 @@ int main()
     //}
 
 
-    //ÂÖÀªĞÅÏ¢²âÊÔ--¶àÕÅÍ¼Æ¬²âÊÔ---ÖĞĞÄµãÏòÍâÀ©É¢£¬Åöµ½±ß½çºÍÄ³Ìõ±ß°×É«ÏñËØÕ¼±È³¬¹ıãĞÖµÍ£Ö¹
+    //è½®å»“ä¿¡æ¯æµ‹è¯•--å¤šå¼ å›¾ç‰‡æµ‹è¯•---ä¸­å¿ƒç‚¹å‘å¤–æ‰©æ•£ï¼Œç¢°åˆ°è¾¹ç•Œå’ŒæŸæ¡è¾¹ç™½è‰²åƒç´ å æ¯”è¶…è¿‡é˜ˆå€¼åœæ­¢
 
-    //std::string inputDirectory = "F:\\AOI-namespace\\¶àÒı½Å\\¶àÒı½Å\\";
+    //std::string inputDirectory = "F:\\AOI-namespace\\å¤šå¼•è„š\\å¤šå¼•è„š\\";
     //std::string outputDirectory = "C:\\Users\\LENOVO\\Pictures\\smt\\test\\";
 
-    //// ´´½¨Êä³öÄ¿Â¼
+    //// åˆ›å»ºè¾“å‡ºç›®å½•
     //fs::create_directory(outputDirectory);
 
     //std::vector<std::string> fileNames;
-    //cv::glob(inputDirectory + "*.jpg", fileNames); // »ñÈ¡ËùÓĞ.pngÎÄ¼ş
+    //cv::glob(inputDirectory + "*.jpg", fileNames); // è·å–æ‰€æœ‰.pngæ–‡ä»¶
 
     //double totalIniTime = 0;
     //double totalBfsTime = 0;
@@ -1241,7 +1276,7 @@ int main()
     //for (const auto& fileName : fileNames) {
     //    cv::Mat image = cv::imread(fileName);
 
-    //    // ¿ªÊ¼´¦ÀíÍ¼Æ¬²¢¼ÆÊ±
+    //    // å¼€å§‹å¤„ç†å›¾ç‰‡å¹¶è®¡æ—¶
     //    clock_t start, end;
     //    start = clock();
     //    cv::Mat heibai = e.test(image); 
@@ -1258,11 +1293,11 @@ int main()
 
     //    std::cout << "bfs:" << bfsTime << std::endl;
 
-    //    // »æÖÆ¾ØĞÎ²¢±£´æÍ¼Ïñ
+    //    // ç»˜åˆ¶çŸ©å½¢å¹¶ä¿å­˜å›¾åƒ
     //    cv::rectangle(image, topLeft, bottomRight, cv::Scalar(0, 255, 0), 2);
     //    cv::imwrite(outputDirectory + fs::path(fileName).filename().string(), image);
 
-    //    // ¼ÆËã²¢´òÓ¡Ã¿ÕÅÍ¼Æ¬µÄ×Ü´¦ÀíÊ±¼ä
+    //    // è®¡ç®—å¹¶æ‰“å°æ¯å¼ å›¾ç‰‡çš„æ€»å¤„ç†æ—¶é—´
     //    double processTime = iniTime + bfsTime;
     //    totalProcessTime += processTime;
     //    std::cout << "Processing time for image " << fileName << ": " << processTime << " seconds." << std::endl;
@@ -1270,14 +1305,14 @@ int main()
     //    imageCount++;
     //}
 
-    //// ¼ÆËãÆ½¾ù´¦ÀíÊ±¼ä
+    //// è®¡ç®—å¹³å‡å¤„ç†æ—¶é—´
     //if (imageCount > 0) {
     //    std::cout << "Average ini time: " << totalIniTime / imageCount << std::endl;
     //    std::cout << "Average bfs time: " << totalBfsTime / imageCount << std::endl;
     //    std::cout << "Average total processing time per image: " << totalProcessTime / imageCount << std::endl;
     //}
 
-    //µ¥ÕÅµ÷ÓÃº¯Êı²âÊÔ
+    //å•å¼ è°ƒç”¨å‡½æ•°æµ‹è¯•
     
     //start = clock();
     //auto res = e.getBoundAndPin(image,"T");//T/R/D
@@ -1292,23 +1327,62 @@ int main()
 
 
 
-    //hsvÉ¸Ñ¡Ô­Í¼Òı½Å²âÊÔ
+    //hsvç­›é€‰åŸå›¾å¼•è„šæµ‹è¯•
     //e.useHsvTest(image);
 
-    /*ËãÆ´°æÊıÁ¿*/
-    //std::vector<cv::Rect2f> res;
-    //HMatch halcon;
-    //cv::Mat imagegg = cv::imread("C:\\Users\\LENOVO\\Pictures\\pinban.jpg");
-    //cv::Rect2f firstRect(843,1530,5941,8206);
-    //int aaa = halcon.getNumberOfPanel(firstRect, imagegg.size());
-    //halcon.getPanelFrames(aaa,imagegg,firstRect,res);
-    ////cv::rectangle(imagegg, firstRect, cv::Scalar(0, 255, 0), 10);
-    //for (auto temp : res)
-    //{
-    //    cv::rectangle(imagegg, temp, cv::Scalar(0, 255, 0), 10);
-    //}
+    /*ç®—æ‹¼ç‰ˆæ•°é‡*/
+    std::cout << CV_VERSION << std::endl;
+    std::vector<cv::Rect2f> res;
+    HMatch halcon;
+   /* cv::Mat imagegg = cv::imread("C:\\Users\\LENOVO\\Pictures\\pinban.jpg");
+    cv::Mat resized_image;*/
 
-    /*ºÚÉ«ÑÚÄ¤¸²¸Ç*/
+    double scale = min(800.0 / imagegg.cols, 600.0 / imagegg.rows);
+    cv::resize(imagegg, resized_image, cv::Size(), scale, scale, cv::INTER_LINEAR);
+    // Create a window
+    cv::namedWindow("Image Window", cv::WINDOW_AUTOSIZE);
+
+    // Set the mouse callback for this window
+    cv::setMouseCallback("Image Window", mouse_callback, nullptr);
+
+    // Display the image and wait until user draws a box
+    while (true) {
+        cv::imshow("Image Window", resized_image);
+        int key = cv::waitKey(10);
+        if (key == 27) break;  // Break the loop when user presses 'ESC'
+        if (!cv::getWindowProperty("Image Window", cv::WND_PROP_VISIBLE)) {
+            break;  // Check if the window has been closed
+        }
+    }
+
+    std::cout << "Selected Box: " << box << std::endl;
+
+    // Cleanup and close the window
+    cv::destroyAllWindows();
+
+
+    //cv::Rect2f firstRect(855,1518,5965,8458);
+    cv::Rect2f firstRect = box;
+    int aaa = halcon.getNumberOfPanel(firstRect, imagegg.size());
+    halcon.getPanelFrames(3,imagegg,firstRect,res);
+
+    auto pianyi = halcon.matchRectangles(imagegg,firstRect, res, 0.2);//(dx, dy) = (10, -5)ï¼Œåˆ™è¡¨ç¤ºç›®æ ‡åŒºåŸŸç›¸å¯¹äºæ¨¡æ¿åŒºåŸŸå‘å³ç§»åŠ¨äº† 10 ä¸ªåƒç´ å•ä½ï¼Œå‘ä¸Šç§»åŠ¨äº† 5 ä¸ªåƒç´ å•ä½
+
+    for (auto temp : res)
+    {
+        cv::rectangle(imagegg, temp, cv::Scalar(0, 255, 0), 10);
+    }
+    cv::rectangle(imagegg, firstRect, cv::Scalar(100, 255, 100), 10);
+
+    // åº”ç”¨åç§»å¹¶ç»˜åˆ¶æ–°çŸ©å½¢
+    for (size_t i = 0; i < res.size(); ++i) {
+        cv::Rect2f newRect = res[i];
+        newRect.x += pianyi[i].first;  // åº”ç”¨Xåç§»
+        newRect.y += pianyi[i].second; // åº”ç”¨Yåç§»
+
+        cv::rectangle(imagegg, newRect, cv::Scalar(255, 0, 0), 10); // ä½¿ç”¨çº¢è‰²ç»˜åˆ¶æ–°ä½ç½®çŸ©å½¢
+    }
+    /*é»‘è‰²æ©è†œè¦†ç›–*/
     //cv::Mat heibai = e.test(image);
     //auto [topLeft, bottomRight] = e.findBoundingRectangle_heibai(heibai, 0.01);
     //cv::Rect2f recttt = cv::Rect(topLeft.x, topLeft.y, bottomRight.x - topLeft.x, bottomRight.y - topLeft.y);
@@ -1323,7 +1397,7 @@ int main()
     //std::vector<std::vector<cv::Point>> contours;
 
     //cv::findContours(topImg, contours, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE);
-    //// ¼ÆËãËùÓĞÂÖÀªµÄ×îĞ¡Íâ½Ó¾ØĞÎ
+    //// è®¡ç®—æ‰€æœ‰è½®å»“çš„æœ€å°å¤–æ¥çŸ©å½¢
     //cv::Rect boundingBox;
     //for (size_t i = 0; i < contours.size(); i++) {
     //    boundingBox |= cv::boundingRect(contours[i]);
@@ -1341,36 +1415,37 @@ int main()
     //    boundingBox1 |= cv::boundingRect(contours[i]);
     //}
 
-    //// »æÖÆÍâ½Ó¾ØĞÎ
+    //// ç»˜åˆ¶å¤–æ¥çŸ©å½¢
     //cv::rectangle(bottomImg, boundingBox1, cv::Scalar(255), 2);
     //cv::rectangle(image, { boundingBox1.x, static_cast<int>(boundingBox1.y + (recttt.y + recttt.height)) ,boundingBox1 .width,boundingBox1.height}, cv::Scalar(0, 255, 0), 4);
     
-    /*ÓÃÄ£ĞÍ²âÊÔ·ÖÀàÒÔ¼°¼ì²âĞ§¹û*/
-    Net_config yolo_nets = { 0.4, 0.4, 0.4,"best_rtp.onnx" };//bestrpc.onnx   10.12_rpc
-    YOLO yolo_model(yolo_nets);
-    cv::Mat img1 = cv::imread("C:\\Users\\LENOVO\\Pictures\\3_29\\1\\thumb2.jpg");//image\\1.jpg
-    start = clock();
-    auto smt_frame = yolo_model.getCPCoordinate(img1);
-    end = clock();
-    //cv::imwrite("C:\\Users\\LENOVO\\Pictures\\1\\1\\5.jpg", img1);
-    std::cout << "all:" << (static_cast<double>(end) - start) / CLOCKS_PER_SEC << std::endl;
-    int nums = 0;
-    for (int i = 0; i < smt_frame.size(); i++)
-    {
-        cv::rectangle(img1, smt_frame[i].first, cv::Scalar(0, 255, 0), 4);
-        for (int j = 0; j < smt_frame[i].second.size(); j++)
-        {
-            if (smt_frame[i].second[j].x > 0 && smt_frame[i].second[j].y > 0 && smt_frame[i].second[j].width > 0 && smt_frame[i].second[j].height > 0)
-            {
-                cv::rectangle(img1, smt_frame[i].second[j], cv::Scalar(255, 255, 0), 4);
-            }
-            else
-            {
-                nums++;
-            }
-        }
-    }
-    std::cout << "³¬³ö·¶Î§:" <<nums<< std::endl;
-    cv::imwrite("C:\\Users\\LENOVO\\Pictures\\1\\1\\7.jpg", img1);
+    /*ç”¨æ¨¡å‹æµ‹è¯•åˆ†ç±»ä»¥åŠæ£€æµ‹æ•ˆæœ*/
+    //Net_config yolo_nets = { 0.4, 0.4, 0.4,"best_rtp.onnx" };//bestrpc.onnx   10.12_rpc
+    //YOLO yolo_model(yolo_nets);
+    //cv::Mat img1 = cv::imread("C:\\Users\\LENOVO\\Pictures\\3_29\\3.jpg");//image\\1.jpg
+    //start = clock();
+    //auto smt_frame = yolo_model.getCPCoordinate(img1);
+    //end = clock();
+    ////cv::imwrite("C:\\Users\\LENOVO\\Pictures\\1\\1\\5.jpg", img1);
+    //std::cout << "all:" << (static_cast<double>(end) - start) / CLOCKS_PER_SEC << std::endl;
+    //int nums = 0;
+    //for (int i = 0; i < smt_frame.size(); i++)
+    //{
+    //    cv::rectangle(img1, std::get<0>(smt_frame[i]), cv::Scalar(0, 255, 0), 4);
+    //    cv::rectangle(img1, std::get<1>(smt_frame[i]), cv::Scalar(0, 255, 0), 4);
+    //    for (int j = 0; j < std::get<2>(smt_frame[i]).size(); j++)
+    //    {
+    //        if (std::get<2>(smt_frame[i])[j].x > 0 && std::get<2>(smt_frame[i])[j].y > 0 && std::get<2>(smt_frame[i])[j].width > 0 && std::get<2>(smt_frame[i])[j].height > 0)
+    //        {
+    //            cv::rectangle(img1, std::get<2>(smt_frame[i])[j], cv::Scalar(255, 255, 0), 4);
+    //        }
+    //        else
+    //        {
+    //            nums++;
+    //        }
+    //    }
+    //}
+    //std::cout << "è¶…å‡ºèŒƒå›´:" <<nums<< std::endl;
+    //cv::imwrite("C:\\Users\\LENOVO\\Desktop\\result\\6.jpg", img1);
     return 0;
 }

@@ -6,7 +6,6 @@
 #include <opencv2/highgui.hpp>
 #include <onnxruntime_cxx_api.h>
 #include <onnxruntime_c_api.h>
-#include <cuda_provider_factory.h>
 #include <tuple>
 #include <thread>
 #include <mutex>

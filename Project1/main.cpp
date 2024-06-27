@@ -1144,60 +1144,61 @@
 
 
 //优化yolo 思路 消除背景影响
-#include "eliminateYoloBackground.h"
-#include "patchDetection.h"
-#include "halconMatch.h"
-#include <time.h>
-#include <filesystem>
-#include "onnx2.h"
+//#include "eliminateYoloBackground.h"
+//#include "patchDetection.h"
+//#include "halconMatch.h"
+//#include <time.h>
+//#include <filesystem>
+//#include "onnx2.h"
 
-namespace fs = std::filesystem;
+//
+//namespace fs = std::filesystem;
+//
+//cv::Mat imagegg = cv::imread("C:\\Users\\LENOVO\\Pictures\\3_29\\7.jpg");
+//cv::Mat resized_image;
+//cv::Rect2f box;
+//bool drawing_box = false;
+//
+//void mouse_callback(int event, int x, int y, int flags, void* param) {
+//    x = static_cast<int>(x * (imagegg.size().width / (double)resized_image.size().width));
+//    y = static_cast<int>(y * (imagegg.size().height / (double)resized_image.size().height));
+//    switch (event) {
+//    case cv::EVENT_MOUSEMOVE:
+//        if (drawing_box) {
+//            box.width = x - box.x;
+//            box.height = y - box.y;
+//        }
+//        break;
+//    case cv::EVENT_LBUTTONDOWN:
+//        drawing_box = true;
+//        box = cv::Rect2f(x, y, 0, 0);
+//        break;
+//    case cv::EVENT_LBUTTONUP:
+//        drawing_box = false;
+//        if (box.width < 0) {
+//            box.x += box.width;
+//            box.width *= -1;
+//        }
+//        if (box.height < 0) {
+//            box.y += box.height;
+//            box.height *= -1;
+//        }
+//        cv::rectangle(resized_image, box, cv::Scalar(0, 255, 0));
+//        break;
+//    }
+//}
 
-cv::Mat imagegg = cv::imread("C:\\Users\\LENOVO\\Pictures\\3_29\\7.jpg");
-cv::Mat resized_image;
-cv::Rect2f box;
-bool drawing_box = false;
 
-void mouse_callback(int event, int x, int y, int flags, void* param) {
-    x = static_cast<int>(x * (imagegg.size().width / (double)resized_image.size().width));
-    y = static_cast<int>(y * (imagegg.size().height / (double)resized_image.size().height));
-    switch (event) {
-    case cv::EVENT_MOUSEMOVE:
-        if (drawing_box) {
-            box.width = x - box.x;
-            box.height = y - box.y;
-        }
-        break;
-    case cv::EVENT_LBUTTONDOWN:
-        drawing_box = true;
-        box = cv::Rect2f(x, y, 0, 0);
-        break;
-    case cv::EVENT_LBUTTONUP:
-        drawing_box = false;
-        if (box.width < 0) {
-            box.x += box.width;
-            box.width *= -1;
-        }
-        if (box.height < 0) {
-            box.y += box.height;
-            box.height *= -1;
-        }
-        cv::rectangle(resized_image, box, cv::Scalar(0, 255, 0));
-        break;
-    }
-}
-
-
-int main() 
-{
-    eliminateYoloBackground e;
+//int main() 
+//{
+    //eliminateYoloBackground e;
     // Load your image C://Users//LENOVO//Pictures//smt//compimg//compimg//0.jpg
     //cv::Mat image = cv::imread("C:\\Users\\LENOVO\\Pictures\\smt\\289.jpg");//C:\\Users\\LENOVO\\Pictures\\smt\\4.jpg
 
  //   // Define the color range for BFS
  //   int colorRange = 10; 
 
-    clock_t start,end;
+    //clock_t start,end;
  //   start = clock();
  //   // Get the bounding rectangle
  //   auto [topLeft, bottomRight] = e.findBoundingRectangle(image, colorRange);
@@ -1331,57 +1332,59 @@ int main()
     //e.useHsvTest(image);
 
     /*算拼版数量*/
-    std::cout << CV_VERSION << std::endl;
-    std::vector<cv::Rect2f> res;
-    HMatch halcon;
-   /* cv::Mat imagegg = cv::imread("C:\\Users\\LENOVO\\Pictures\\pinban.jpg");
-    cv::Mat resized_image;*/
+   // std::cout << CV_VERSION << std::endl;
+   // std::vector<cv::Rect2f> res;
+   // HMatch halcon;
+   ///* cv::Mat imagegg = cv::imread("C:\\Users\\LENOVO\\Pictures\\pinban.jpg");
+   // cv::Mat resized_image;*/
 
-    double scale = min(800.0 / imagegg.cols, 600.0 / imagegg.rows);
-    cv::resize(imagegg, resized_image, cv::Size(), scale, scale, cv::INTER_LINEAR);
-    // Create a window
-    cv::namedWindow("Image Window", cv::WINDOW_AUTOSIZE);
+   // double scale = min(800.0 / imagegg.cols, 600.0 / imagegg.rows);
+   // cv::resize(imagegg, resized_image, cv::Size(), scale, scale, cv::INTER_LINEAR);
+   // // Create a window
+   // cv::namedWindow("Image Window", cv::WINDOW_AUTOSIZE);
 
-    // Set the mouse callback for this window
-    cv::setMouseCallback("Image Window", mouse_callback, nullptr);
+   // // Set the mouse callback for this window
+   // cv::setMouseCallback("Image Window", mouse_callback, nullptr);
 
-    // Display the image and wait until user draws a box
-    while (true) {
-        cv::imshow("Image Window", resized_image);
-        int key = cv::waitKey(10);
-        if (key == 27) break;  // Break the loop when user presses 'ESC'
-        if (!cv::getWindowProperty("Image Window", cv::WND_PROP_VISIBLE)) {
-            break;  // Check if the window has been closed
-        }
-    }
+   // // Display the image and wait until user draws a box
+   // while (true) {
+   //     cv::imshow("Image Window", resized_image);
+   //     int key = cv::waitKey(10);
+   //     if (key == 27) break;  // Break the loop when user presses 'ESC'
+   //     if (!cv::getWindowProperty("Image Window", cv::WND_PROP_VISIBLE)) {
+   //         break;  // Check if the window has been closed
+   //     }
+   // }
 
-    std::cout << "Selected Box: " << box << std::endl;
+   // std::cout << "Selected Box: " << box << std::endl;
 
-    // Cleanup and close the window
-    cv::destroyAllWindows();
+   // // Cleanup and close the window
+   // cv::destroyAllWindows();
 
 
-    //cv::Rect2f firstRect(855,1518,5965,8458);
-    cv::Rect2f firstRect = box;
-    int aaa = halcon.getNumberOfPanel(firstRect, imagegg.size());
-    halcon.getPanelFrames(3,imagegg,firstRect,res);
+   // //cv::Rect2f firstRect(855,1518,5965,8458);
+   // cv::Rect2f firstRect = box;
+   // int aaa = halcon.getNumberOfPanel(firstRect, imagegg.size());
+   // halcon.getPanelFrames(3,imagegg,firstRect,res);
 
-    auto pianyi = halcon.matchRectangles(imagegg,firstRect, res, 0.2);//(dx, dy) = (10, -5)，则表示目标区域相对于模板区域向右移动了 10 个像素单位，向上移动了 5 个像素单位
+   // auto pianyi = halcon.matchRectangles(imagegg,firstRect, res, 0.2);//(dx, dy) = (10, -5)，则表示目标区域相对于模板区域向右移动了 10 个像素单位，向上移动了 5 个像素单位
 
-    for (auto temp : res)
-    {
-        cv::rectangle(imagegg, temp, cv::Scalar(0, 255, 0), 10);
-    }
-    cv::rectangle(imagegg, firstRect, cv::Scalar(100, 255, 100), 10);
+   // for (auto temp : res)
+   // {
+   //     cv::rectangle(imagegg, temp, cv::Scalar(0, 255, 0), 10);
+   // }
+   // cv::rectangle(imagegg, firstRect, cv::Scalar(100, 255, 100), 10);
 
-    // 应用偏移并绘制新矩形
-    for (size_t i = 0; i < res.size(); ++i) {
-        cv::Rect2f newRect = res[i];
-        newRect.x += pianyi[i].first;  // 应用X偏移
-        newRect.y += pianyi[i].second; // 应用Y偏移
+   // // 应用偏移并绘制新矩形
+   // for (size_t i = 0; i < res.size(); ++i) {
+   //     cv::Rect2f newRect = res[i];
+   //     newRect.x += pianyi[i].first;  // 应用X偏移
+   //     newRect.y += pianyi[i].second; // 应用Y偏移
 
-        cv::rectangle(imagegg, newRect, cv::Scalar(255, 0, 0), 10); // 使用红色绘制新位置矩形
-    }
+   //     cv::rectangle(imagegg, newRect, cv::Scalar(255, 0, 0), 10); // 使用红色绘制新位置矩形
+   // }
+
+
     /*黑色掩膜覆盖*/
     //cv::Mat heibai = e.test(image);
     //auto [topLeft, bottomRight] = e.findBoundingRectangle_heibai(heibai, 0.01);
@@ -1447,5 +1450,86 @@ int main()
     //}
     //std::cout << "超出范围:" <<nums<< std::endl;
     //cv::imwrite("C:\\Users\\LENOVO\\Desktop\\result\\6.jpg", img1);
+//    return 0;
+//}
+
+
+//#include"onnxInit.h"
+///*初始onnx测试*/
+//int main()
+//{
+//    clock_t start, end;
+//    Net_config yolo_nets = { 0.75, 0.15, 0.4,"5_28_best_rtp_2048.onnx" };//bestrpc.onnx   10.12_rpc
+//    YOLOInit yolo_model(yolo_nets);
+//    cv::Mat img1 = cv::imread("C:\\Users\\LENOVO\\Pictures\\3_29\\3.jpg");//image\\1.jpg
+//    start = clock();
+//    auto smt_frame = yolo_model.detectInit(img1);
+//    end = clock();
+//    //cv::imwrite("C:\\Users\\LENOVO\\Pictures\\1\\1\\5.jpg", img1);
+//    std::cout << "all:" << (static_cast<double>(end) - start) / CLOCKS_PER_SEC << std::endl;
+//}
+
+#include "circularDetection.h"
+
+using namespace std;
+using namespace cv;
+
+// 全局变量，用于存储第一个圆的信息和用户点击的点
+Point circleCenter;
+int circleRadius;
+bool circleDetected = false;
+bool pointSelected = false;
+Point selectedPoint;
+int doubleCircleRadius;
+
+
+// 鼠标回调函数
+void onMouse(int event, int x, int y, int, void* userdata) {
+    Mat& img = *(Mat*)userdata;
+    if (event == EVENT_LBUTTONDOWN && circleDetected) {
+        selectedPoint = Point(x, y);
+        pointSelected = true;
+
+        // 计算到第一个圆心的距离作为新圆的半径
+        doubleCircleRadius = (int)sqrt((x - circleCenter.x) * (x - circleCenter.x) + (y - circleCenter.y) * (y - circleCenter.y));
+
+        // 画新圆
+        circle(img, circleCenter, doubleCircleRadius, Scalar(255, 0, 0), 3, 8, 0);
+        imshow("Detected Circles", img);
+    }
+}
+
+int main() 
+{
+    // 读取图像
+        Mat img = imread("C:\\Users\\LENOVO\\Pictures\\circle\\1.jpg");
+    if (img.empty()) {
+        cout << "Could not open or find the image" << endl;
+        return -1;
+    }
+
+    circular c;
+    auto circle1 = c.detectAndDrawCircles(img);
+    // 获取第一个圆的信息
+    circleCenter = Point(cvRound(circle1[0][0]), cvRound(circle1[0][1]));
+    circleRadius = cvRound(circle1[0][2]);
+    circleDetected = true;
+    circle(img, circleCenter, 3, cv::Scalar(0, 255, 0), -1, 8, 0);
+    // 画圆周
+    circle(img, circleCenter, circleRadius, cv::Scalar(0, 0, 255), 3, 8, 0);
+    // 设置鼠标回调函数
+    namedWindow("Detected Circles", WINDOW_AUTOSIZE);
+    imshow("Detected Circles", img);
+    setMouseCallback("Detected Circles", onMouse, &img);
+
+    // 等待用户按键
+    waitKey(0);
+
+    namedWindow("init", WINDOW_AUTOSIZE);
+    //int width = doubleCircleRadius - circleRadius;
+    cv::Mat rectImg = c.circleToRectangle(img,circleCenter, circleRadius, doubleCircleRadius);
+    imshow("init", img);
+    imshow("Detected Circles", rectImg);
+    waitKey(0);
     return 0;
 }

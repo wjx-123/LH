@@ -72,6 +72,12 @@
     <ClCompile Include="onnx2.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="onnxInit.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="circularDetection.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="onnx.h">
@@ -119,8 +125,18 @@
     <ClInclude Include="onnx2.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="onnxInit.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="circularDetection.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="$(MSBuildThisFileDirectory)..\..\runtimes\win-x64\native\onnxruntime.dll" />
+    <None Include="$(MSBuildThisFileDirectory)..\..\runtimes\win-x64\native\onnxruntime_providers_shared.dll" />
+    <None Include="$(MSBuildThisFileDirectory)..\..\runtimes\win-x64\native\onnxruntime_providers_cuda.dll" />
+    <None Include="$(MSBuildThisFileDirectory)..\..\runtimes\win-x64\native\onnxruntime_providers_tensorrt.dll" />
   </ItemGroup>
 </Project>

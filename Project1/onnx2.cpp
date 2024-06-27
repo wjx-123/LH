@@ -348,7 +348,7 @@ std::vector<std::tuple<cv::Rect2f, cv::Rect2f, std::vector<cv::Rect2f>>> YOLO::d
 		// Perform non maximum suppression to eliminate redundant overlapping boxes with
 		// lower confidences
 		nms(generate_boxes);
-		/*for (size_t i = 0; i < generate_boxes.size(); ++i)
+		for (size_t i = 0; i < generate_boxes.size(); ++i)
 		{
 			int xmin = int(generate_boxes[i].x1);
 			int ymin = int(generate_boxes[i].y1);
@@ -356,7 +356,7 @@ std::vector<std::tuple<cv::Rect2f, cv::Rect2f, std::vector<cv::Rect2f>>> YOLO::d
 			std::string label = std::format("%.2f", generate_boxes[i].score);
 			label = this->class_names[generate_boxes[i].label] + ":" + label;
 			putText(img, label, cv::Point(xmin, ymin - 5), cv::FONT_HERSHEY_SIMPLEX, 0.75, cv::Scalar(0, 255, 0), 1);
-		}*/
+		}
 		//cv::imwrite("C:\\Users\\LENOVO\\Pictures\\1\\1\\7_ini.jpg", img);
 		auto smt_frame = getBlackPosition(generate_boxes, frame);
 		generate_boxes.clear();

@@ -1,16 +1,8 @@
 ﻿  正在扫描源以查找模块依赖项...
+  circularDetection.cpp
+E:\visualworkplace\LH\Project1\circularDetection.cpp(15,27): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
+E:\visualworkplace\LH\Project1\circularDetection.cpp(24,22): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
+E:\visualworkplace\LH\Project1\circularDetection.cpp(25,22): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
   main.cpp
-E:\visualworkplace\LH\Project1\main.cpp(1173,29): warning C4244: “参数”: 从“int”转换到“_Tp”，可能丢失数据
-          with
-          [
-              _Tp=float
-          ]
-E:\visualworkplace\LH\Project1\main.cpp(1173,26): warning C4244: “参数”: 从“int”转换到“_Tp”，可能丢失数据
-          with
-          [
-              _Tp=float
-          ]
-E:\visualworkplace\LH\Project1\main.cpp(1369,66): warning C4305: “参数”: 从“double”到“float”截断
-E:\visualworkplace\LH\Project1\main.cpp(1200,19): warning C4101: “end”: 未引用的局部变量
-E:\visualworkplace\LH\Project1\main.cpp(1200,13): warning C4101: “start”: 未引用的局部变量
+  正在生成代码...
   Project1.vcxproj -> E:\visualworkplace\LH\x64\Debug\Project1.exe

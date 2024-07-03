@@ -63,3 +63,21 @@ std::vector<cv::Vec3f> circular::detectAndDrawCircles(const cv::Mat src)
     cv::waitKey(0)*/;
 	return circles;
 }
+
+cv::Point circular::rectToCircle(const cv::Point& rectPoint, const cv::Point& center, int innerRadius, int outerRadius)
+{
+    // 计算外周长
+    int ringCircumference = 2 * CV_PI * outerRadius;
+
+    // 计算角度 theta
+    double theta = 2 * CV_PI * rectPoint.x / ringCircumference;
+
+    // 计算半径 r
+    int r = innerRadius + rectPoint.y;
+
+    // 将极坐标转换为笛卡尔坐标
+    int srcX = center.x + r * cos(theta);
+    int srcY = center.y + r * sin(theta);
+
+    return cv::Point(srcX, srcY);
+}

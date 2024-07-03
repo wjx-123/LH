@@ -20,4 +20,13 @@ public:
 	* 输入图片找圆
 	*/
 	std::vector<cv::Vec3f> detectAndDrawCircles(const cv::Mat src);
+
+	/*
+	* 展开的矩形图坐标点转为环形图片的坐标点
+	* rectPoint 矩形坐标
+	* center 环形中心点的坐标
+	* innerRadius 环形的内半径
+	* outerRadius 外半径
+	*/
+	cv::Point rectToCircle(const cv::Point& rectPoint, const cv::Point& center, int innerRadius, int outerRadius);
 };

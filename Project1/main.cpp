@@ -1482,12 +1482,17 @@ bool pointSelected = false;
 Point selectedPoint;
 int doubleCircleRadius;
 
+Point clickP;
 
 // 鼠标回调函数
 void onMouse(int event, int x, int y, int, void* userdata) {
     Mat& img = *(Mat*)userdata;
     if (event == EVENT_LBUTTONDOWN && circleDetected) {
         selectedPoint = Point(x, y);
+
+        clickP = selectedPoint;
+        
+
         pointSelected = true;
 
         // 计算到第一个圆心的距离作为新圆的半径
@@ -1496,6 +1501,12 @@ void onMouse(int event, int x, int y, int, void* userdata) {
         // 画新圆
         circle(img, circleCenter, doubleCircleRadius, Scalar(255, 0, 0), 3, 8, 0);
         imshow("Detected Circles", img);
+    }
+    if (event == event == EVENT_LBUTTONDOWN && circleDetected == false) 
+    {
+
+        clickP = Point(x, y);
+
     }
 }
 
@@ -1524,10 +1535,22 @@ int main()
 
     // 等待用户按键
     waitKey(0);
-
+    circle(img, circleCenter, doubleCircleRadius, Scalar(255, 0, 0), 3, 8, 0);
     namedWindow("init", WINDOW_AUTOSIZE);
     //int width = doubleCircleRadius - circleRadius;
     cv::Mat rectImg = c.circleToRectangle(img,circleCenter, circleRadius, doubleCircleRadius);
+    circleDetected = false;
+    imshow("init", img);
+    imshow("Detected Circles", rectImg);
+    setMouseCallback("Detected Circles", onMouse, &rectImg);
+    
+    //circle(rectImg, clickP, 3, cv::Scalar(0, 255, 0), -1, 8, 0);
+    
+
+    waitKey(0);
+    Point newP = c.rectToCircle(clickP, circleCenter, circleRadius, doubleCircleRadius);
+    circle(rectImg, clickP, 3, cv::Scalar(0, 255, 0), -1, 8, 0);
+    circle(img, newP, 3, cv::Scalar(0, 255, 0), -1, 8, 0);
     imshow("init", img);
     imshow("Detected Circles", rectImg);
     waitKey(0);

@@ -1499,7 +1499,7 @@ void onMouse(int event, int x, int y, int, void* userdata) {
         doubleCircleRadius = (int)sqrt((x - circleCenter.x) * (x - circleCenter.x) + (y - circleCenter.y) * (y - circleCenter.y));
 
         // 画新圆
-        circle(img, circleCenter, doubleCircleRadius, Scalar(255, 0, 0), 3, 8, 0);
+        //circle(img, circleCenter, doubleCircleRadius, Scalar(255, 0, 0), 3, 8, 0);
         imshow("Detected Circles", img);
     }
     if (event == event == EVENT_LBUTTONDOWN && circleDetected == false) 
@@ -1513,21 +1513,21 @@ void onMouse(int event, int x, int y, int, void* userdata) {
 int main() 
 {
     // 读取图像
-        Mat img = imread("C:\\Users\\LENOVO\\Pictures\\circle\\1.jpg");
+        Mat img = imread("C:\\Users\\LENOVO\\Pictures\\circle\\3.jpg");
     if (img.empty()) {
         cout << "Could not open or find the image" << endl;
         return -1;
     }
-
+    cv::Mat img1 = img.clone();
     circular c;
     auto circle1 = c.detectAndDrawCircles(img);
     // 获取第一个圆的信息
     circleCenter = Point(cvRound(circle1[0][0]), cvRound(circle1[0][1]));
     circleRadius = cvRound(circle1[0][2]);
     circleDetected = true;
-    circle(img, circleCenter, 3, cv::Scalar(0, 255, 0), -1, 8, 0);
+    //circle(img, circleCenter, 3, cv::Scalar(0, 255, 0), -1, 8, 0);
     // 画圆周
-    circle(img, circleCenter, circleRadius, cv::Scalar(0, 0, 255), 3, 8, 0);
+    //circle(img, circleCenter, circleRadius, cv::Scalar(0, 0, 255), 3, 8, 0);
     // 设置鼠标回调函数
     namedWindow("Detected Circles", WINDOW_AUTOSIZE);
     imshow("Detected Circles", img);
@@ -1539,6 +1539,7 @@ int main()
     namedWindow("init", WINDOW_AUTOSIZE);
     //int width = doubleCircleRadius - circleRadius;
     cv::Mat rectImg = c.circleToRectangle(img,circleCenter, circleRadius, doubleCircleRadius);
+    cv::Mat testQImg = rectImg.clone();
     circleDetected = false;
     imshow("init", img);
     imshow("Detected Circles", rectImg);
@@ -1548,11 +1549,36 @@ int main()
     
 
     waitKey(0);
-    Point newP = c.rectToCircle(clickP, circleCenter, circleRadius, doubleCircleRadius);
+    /*Point newP = c.rectToCircle(clickP, circleCenter, circleRadius, doubleCircleRadius);
     circle(rectImg, clickP, 3, cv::Scalar(0, 255, 0), -1, 8, 0);
     circle(img, newP, 3, cv::Scalar(0, 255, 0), -1, 8, 0);
     imshow("init", img);
     imshow("Detected Circles", rectImg);
-    waitKey(0);
+    waitKey(0);*/
+
+    cv::Mat test2 = testQImg.clone();
+    auto defects = c.detectDefects(testQImg);
+    for (size_t i = 0; i < defects.size(); ++i) {
+        cv::drawContours(testQImg, defects, static_cast<int>(i), cv::Scalar(0, 0, 255), 2); // 用红色绘制轮廓
+    }
+
+    // 显示结果
+    cv::imshow("Original Image", test2);
+    cv::imshow("Defects Detected", testQImg);
+    cv::waitKey(0);
+
+    //展平
+    for (const auto& contour : defects) {
+        for (const auto& point : contour) {
+            cv::Point circularPoint = c.rectToCircle(point, circleCenter, circleRadius, doubleCircleRadius);
+            std::cout << "Original Point: " << point << " -> Circular Point: " << circularPoint << std::endl;
+
+            // 可选：在图像上绘制转换后的点
+            cv::circle(img1, circularPoint, 3, cv::Scalar(0, 255, 0), -1);
+        }
+    }
+    cv::imshow("Original Image", img1);
+    cv::waitKey(0);
+    cv::imwrite("C:\\Users\\LENOVO\\Pictures\\circle\\00.jpg",img1);
     return 0;
 }

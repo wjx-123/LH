@@ -29,4 +29,22 @@ public:
 	* outerRadius 外半径
 	*/
 	cv::Point rectToCircle(const cv::Point& rectPoint, const cv::Point& center, int innerRadius, int outerRadius);
+
+	/*
+	* 找出缺陷位置
+	* 输入 图片
+	* 输出缺陷
+	*/
+	std::vector<std::vector<cv::Point>> detectDefects(const cv::Mat& img);
+
+
+
+private:
+	/*
+	* rect转为四个point
+	*/
+	std::vector<std::vector<cv::Point>> convertRectsToPoints(const std::vector<cv::Rect>& defectRects);
+
+	/*找中位数*/
+	double findMedian(std::vector<int> nums);
 };
